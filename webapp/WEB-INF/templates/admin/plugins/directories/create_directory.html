@@ -1,0 +1,26 @@
+<#include "directoriesmanager_tabs.html" />
+<@box>
+	<@boxHeader title='#i18n{directories.create_directory.title}' />
+	<@boxBody>
+		<@tform name='create_directory' action='jsp/admin/plugins/directories/ManageDirectories.jsp'>
+			<@messages errors=errors />
+			<input type="hidden" id="id" name="id" />
+			<@formGroup labelKey='#i18n{directories.create_directory.labelName}'
+				helpKey='#i18n{directories.create_directory.labelName.help}' mandatory=true>
+				<@input type='text' name='name' value='${directory.name!\' \'}' />
+			</@formGroup>
+			<@formGroup labelKey='#i18n{directories.create_directory.labelDescription}'
+				helpKey='#i18n{directories.create_directory.labelDescription.help}' mandatory=true>
+				<@input type='text' name='description' value='${directory.description!\' \'}' />
+			</@formGroup>
+			<@formGroup>
+				<@button name='action_createDirectory' id='' type='submit'
+					title='#i18n{directories.create_directory.createBtn}' />
+				<@button name='action_createDirectory_to_view_manage_directory_form' id='' type='submit'
+					title='#i18n{directories.create_directory.createBtnAndManageForm}' />
+				<@aButton href='jsp/admin/plugins/directories/ManageDirectories.jsp' buttonIcon='close'
+					title='#i18n{portal.util.labelCancel}' color='secondary' />
+			</@formGroup>
+		</@tform>
+	</@boxBody>
+</@box>

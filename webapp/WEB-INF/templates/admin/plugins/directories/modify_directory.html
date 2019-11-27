@@ -1,0 +1,54 @@
+<#include "directoriesmanager_tabs.html" />
+<@tabs>
+	<@tabList>
+		<@tabLink active=true
+			href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=modifyDirectory&id=${directory.id}'
+			title='#i18n{directories.modify_directory.directoryTabName}' />
+		<@tabLink
+			href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=manageDirectoryEntries&id=${directory.id}'
+			title='#i18n{directories.modify_directory.directoryEntriesTabName}' />
+			<@tabLink href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id=${directory.id}'
+			title='#i18n{directories.manage_directory_response.directoryResponseTabName}' />
+			<@tabLink href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=manageDirectorySearchEngine&id=${directory.id}'
+			title='#i18n{directories.modify_directory.directorySearchEngineTabName}' />
+	</@tabList>
+	<@tabContent>
+		<@box>
+			<@boxHeader title='#i18n{directories.modify_directory.title}' />
+			<@boxBody>
+				<@tform class="form-horizontal" method="post" name="modify_directory"
+					action="jsp/admin/plugins/directories/ManageDirectories.jsp">
+					<@messages errors=errors />
+					<input type="hidden" id="id" name="id" value="${directory.id}" />
+					<@formGroup labelKey='#i18n{directories.modify_directory.labelName}'
+						helpKey='#i18n{directories.modify_directory.labelName.help}' mandatory=true>
+						<@input type='text' name='name' value='${directory.name}' />
+					</@formGroup>
+					<@formGroup labelKey='#i18n{directories.modify_directory.labelDescription}'
+						helpKey='#i18n{directories.modify_directory.labelDescription.help}' mandatory=true>
+						<@input type='text' name='description' value='${directory.description}' />
+					</@formGroup>
+					<@formGroup>
+						<@button name='action_modifyDirectory' id='' type='submit'
+							title='#i18n{directories.modify_directory.modifyBtn}' />
+						<@aButton href='jsp/admin/plugins/directories/ManageDirectories.jsp' buttonIcon='close'
+							title='#i18n{portal.util.labelCancel}' color='secondary' />
+					</@formGroup>
+				</@tform>
+			</@boxBody>
+		</@box>
+	</@tabContent>
+</@tabs>
+
+<script>
+	// fix tabs with wrong macro
+
+	const elements = document.querySelectorAll("a");
+	const attr = "data-toggle";
+
+	elements && elements.forEach(element => {
+		if (element.hasAttribute(attr)) {
+			element.setAttribute(attr, "#")
+		}
+	});
+</script>

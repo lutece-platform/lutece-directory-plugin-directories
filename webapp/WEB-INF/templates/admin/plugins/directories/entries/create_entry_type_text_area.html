@@ -1,0 +1,60 @@
+<#include "/admin/plugins/directories/commons.html" />
+<@row>
+    <@columns>
+        <@box color='primary'>
+            <@boxHeader title='#i18n{directories.type.name} : ${entry.entryType.title}' />
+            <@boxBody>
+                <@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp' method='post'>
+                    <fieldset>
+                        
+                            <input name="id" value="${id}" type="hidden">
+                        <input name="action" value="doCreateEntry" type="hidden">
+                        <input name="id_type" value="${entry.entryType.idType}" type="hidden">
+                        <#if entry.fieldDepend?exists>
+                            <input name="id_field" value="${entry.fieldDepend.idField}" type="hidden">
+                        </#if>
+                        <@formGroup labelFor='title' labelKey='#i18n{directories.createEntry.labelTitle}' mandatory=true helpKey='#i18n{directories.createEntry.labelTitleComment}'>
+                            <@input type='text' name='title' id='title' value='' maxlength=255 />
+                        </@formGroup>
+                        <@formGroup labelFor='help_message' labelKey='#i18n{directories.createEntry.labelHelpMessage}' helpKey='#i18n{directories.createEntry.labelHelpMessageComment}'>
+                            <@input type='textarea' name='help_message' id='help_message' rows=5 />
+                        </@formGroup>
+                        <@formGroup labelFor='comment' labelKey='#i18n{directories.comment.name}'>
+                            <@input type='textarea' name='comment' rows=2 />
+                        </@formGroup>
+                        <@formGroup labelFor='value' labelKey='#i18n{directories.defaultValue.name}'>
+                            <@input type='textarea' name='value' id='value' rows=5 />
+                        </@formGroup>
+                        <@formGroup labelFor='mandatory' labelKey='#i18n{directories.createEntry.labelMandatory}'>
+                            <@checkBox name='mandatory' value='1' />
+                        </@formGroup>
+                        <@formGroup labelFor='only_display_in_back' labelKey='#i18n{directories.createEntry.labelOnlyDisplayInBack}'>
+                            <@checkBox name='only_display_in_back' value='1' />
+                        </@formGroup>
+                        <@formGroup labelFor='width' labelKey='#i18n{directories.createEntry.labelWidth}' mandatory=true>
+                            <@input type='text' name='width' id='width' value='' inputSize=5 />
+                        </@formGroup>
+                        <@formGroup labelFor='height' labelKey='#i18n{directories.createEntry.labelHeight}' mandatory=true>
+                            <@input type='text' name='height' id='height' value='' inputSize=5 />
+                        </@formGroup>
+                        <@formGroup labelFor='max_size_enter' labelKey='#i18n{directories.createEntry.labelMaxSizeEnter}'>
+                            <@input type='text' name='max_size_enter' id='max_size_enter' value='' inputSize=5 />
+                        </@formGroup>
+                        <@formGroup labelFor='css_class' labelKey='#i18n{directories.createEntry.labelCSSClass}' helpKey='#i18n{directories.createEntry.labelCSSClassComment}'>
+                            <@input type='text' name='css_class' value='' maxlength=255 />
+                        </@formGroup>
+                        <@formGroup labelFor='useRichText' labelKey='#i18n{directories.createEntry.labelUseRichText}' helpKey='#i18n{directories.createEntry.labelUseRichTextComment}'>
+                            <@checkBox name='useRichText' value='true' />
+                        </@formGroup>
+                        <@formGroup>
+                            <@button type='submit' name='save' buttonIcon='save' title='#i18n{directories.labelSave}' size='' />
+                            <@button type='button' name='cancel' value='cancel' buttonIcon='times' title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
+                        </@formGroup>
+                    </fieldset>
+                </@tform>
+            </@boxBody>
+        </@box>
+    </@columns>
+</@row>
+<#include "/admin/util/editor/editor.html" />
+<@initEditor />

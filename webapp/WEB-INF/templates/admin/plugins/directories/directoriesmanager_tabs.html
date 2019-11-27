@@ -1,0 +1,10 @@
+<#macro tabs2 tab >
+<@tabs>
+	<@listTabs>
+			<li <#if tab="directory">class="active"</#if>>
+				<a href="jsp/admin/plugins/directories/ManageDirectories.jsp">#i18n{directories.manage_directories.pageTitle}</a>
+			</li>
+	</@listTabs>
+</@tabs>
+
+</#macro>

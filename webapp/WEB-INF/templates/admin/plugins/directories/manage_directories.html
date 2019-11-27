@@ -1,0 +1,48 @@
+<#include "directoriesmanager_tabs.html" />
+<@box>
+    <@boxHeader title='#i18n{directories.manage_directory.title}' boxTools=true>
+        <@tform class='form-inline pull-right' name='manage_directory'
+            action='jsp/admin/plugins/directories/ManageDirectories.jsp'>
+            <@button type='submit' name='view_createDirectory' buttonIcon='plus'
+                title='#i18n{directories.manage_directories.buttonAdd}' />
+        </@tform>
+    </@boxHeader>
+    <@boxBody>
+        <@messages infos=infos />
+        <@paginationAdmin paginator=paginator combo=1 />
+        <div class="clearfix"></div>
+        <@table>
+            <tr>
+                <input type="hidden" id="id" name="id" />
+                <th>#i18n{directories.manage_directories.columnName}</th>
+                <th>#i18n{directories.manage_directories.columnDescription}</th>
+                <th>#i18n{portal.util.labelActions}</th>
+            </tr>
+            <@tableHeadBodySeparator />
+            <#list directory_list as directory>
+                <tr>
+                    <input type="hidden" id="id" name="id" />
+                    <td>
+                        ${directory.name}
+                    </td>
+                    <td>
+                        ${directory.description}
+                    </td>
+                    <td>
+                        <@aButton
+                            href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=modifyDirectory&id=${directory.id}'
+                            title='#i18n{portal.util.labelModify}' buttonIcon='pencil' showTitle=false />
+                        <@aButton
+                            href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=createDirectoryResponse&id=${directory.id}'
+                            title='#i18n{directories.manage_directories.labelAddResponse}' buttonIcon='plus'
+                            color='success' showTitle=false />
+                        <@aButton
+                            href='jsp/admin/plugins/directories/ManageDirectories.jsp?action=confirmRemoveDirectory&id=${directory.id}'
+                            title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='danger' showTitle=false />
+                    </td>
+                </tr>
+            </#list>
+        </@table>
+        <@paginationAdmin paginator=paginator />
+    </@boxBody>
+</@box>
