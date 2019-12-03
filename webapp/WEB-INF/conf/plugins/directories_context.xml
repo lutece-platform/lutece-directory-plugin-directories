@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="directories.directoryDAO" class="fr.paris.lutece.plugins.directories.business.DirectoryDAO" />
+    <bean id="directories.directoryResponseDAO" class="fr.paris.lutece.plugins.directories.business.DirectoryResponseDAO" />
+    <bean id="directories.directoryEntityDAO" class="fr.paris.lutece.plugins.directories.business.DirectoryEntityDAO" />
+    <bean id="directories.directoryItemFormAsynchronousUploadHandler" class="fr.paris.lutece.plugins.directories.service.upload.DirectoryItemFormAsynchronousUploadHandler" />
+    <bean id="directories.entryService" class="fr.paris.lutece.plugins.directories.service.EntryService" />
+    <bean id="directories.entryTypeText" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeText" />
+    <!-- <bean id="directories.entryTypeCheckBox" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeCheckBox" />
+    <bean id="directories.entryTypeComment" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeComment" />
+    <bean id="directories.entryTypeDate" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeDate" />
+    <bean id="directories.entryTypeGeolocation" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeGeolocation" />
+    <bean id="directories.entryTypeGroup" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeGroup" />
+    <bean id="directories.entryTypeNumbering" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeNumbering" />
+    <bean id="directories.entryTypeRadioButton" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeRadioButton" />
+    <bean id="directories.entryTypeSelect" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeSelect" />
+    <bean id="directories.entryTypeSelectSQL" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeSelectSQL" />
+    <bean id="directories.entryTypeSession" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeSession" />
+    <bean id="directories.entryTypeTextArea" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeTextArea" />
+    <bean id="directories.entryTypeImage" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeImage" />
+    <bean id="directories.entryTypeFile" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeFile" />
+    <bean id="directories.entryTypePhone" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypePhone" /> -->
+</beans>

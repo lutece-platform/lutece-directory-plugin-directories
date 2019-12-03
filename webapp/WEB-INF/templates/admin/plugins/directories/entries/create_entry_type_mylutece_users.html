@@ -1,0 +1,36 @@
+<#include "/admin/plugins/directories/commons.html" />
+<@row>
+    <@columns>
+        <@box color='primary'>
+            <@boxHeader title='#i18n{directories.type.name} : ${entry.entryType.title}' />
+            <@boxBody>
+                <@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp' method='post'>
+                    <input name="id" value="${id}" type="hidden">
+                    <input name="action" value="doCreateEntry" type="hidden">
+                    <input name="id_type" value="${entry.entryType.idType}" type="hidden">
+                    <#if entry.fieldDepend?exists>
+                        <input name="id_field" value="${entry.fieldDepend.idField}" type="hidden">
+                    </#if>
+                    <fieldset>
+                        <@formGroup labelKey='Nom' mandatory=true
+                            helpKey='#i18n{portal.features.external_features.create_external_features.name_key.help}'>
+                            <@input type='text' name='name_key' value='' />
+                        </@formGroup>
+                        <@formGroup labelFor='only_display_in_back' labelKey='Selectionner un attribut MyLuteceUser'>
+                            <@select name='myluteceusers_attribute' default_value=''
+                                items=entryTypeService.getLuteceUserAttributesRefList() />
+                        </@formGroup>
+                    </fieldset>
+                    <@formGroup>
+                        <@button type='submit' name='save' buttonIcon='save' title='#i18n{directories.labelSave}'
+                            size='' />
+                        <@button type='button' name='cancel' buttonIcon='times' title='#i18n{directories.labelCancel}'
+                            params='onclick="javascript:window.history.back();"' color='btn-secondary' size='' />
+                    </@formGroup>
+                </@tform>
+            </@boxBody>
+        </@box>
+    </@columns>
+</@row>
+<#include "/admin/util/editor/editor.html" />
+<@initEditor />

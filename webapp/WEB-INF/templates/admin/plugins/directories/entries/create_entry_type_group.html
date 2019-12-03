@@ -1,0 +1,26 @@
+<@row>
+    <@columns>
+        <@box color='primary'>
+        <@boxHeader title='#i18n{directories.type.name} : ${entry.entryType.title}' />
+            <@boxBody>
+                <@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp' method='post'>
+                    <fieldset>
+                            <input name="id" value="${id}" type="hidden">
+                        <input name="action" value="doCreateEntry" type="hidden" />
+                        <input name="id_type" value="${entry.entryType.idType}" type="hidden">
+                        <@formGroup labelFor='title' labelKey='#i18n{directories.createEntry.labelTitle}' mandatory=true>
+                            <@input type='text' name='title' id='title' value='' maxlength=255 />
+                        </@formGroup>
+                        <@formGroup labelFor='css_class' labelKey='#i18n{directories.createEntry.labelCSSClass}' helpKey='#i18n{directories.createEntry.labelCSSClassComment}'>
+                            <@input type='text' name='css_class' value='' maxlength=255 />
+                        </@formGroup>
+                        <@formGroup>
+                            <@button type='submit' name='save' buttonIcon='save' title='#i18n{directories.labelSave}' size='' />
+                            <@button type='button' name='cancel' buttonIcon='times' title='#i18n{directories.labelCancel}' params='onclick="javascript:window.history.back();"' color='btn-secondary' size='' />
+                        </@formGroup>
+                    </fieldset>
+                </@tform>
+            </@boxBody>
+        </@box>
+    </@columns>
+</@row>
