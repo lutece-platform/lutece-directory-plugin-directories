@@ -34,7 +34,6 @@
 package fr.paris.lutece.plugins.directories.web;
 
 import fr.paris.lutece.portal.web.xpages.XPage;
-import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.portal.util.mvc.xpage.MVCApplication;
 import fr.paris.lutece.plugins.directories.business.DirectoryEntity;
 import fr.paris.lutece.plugins.directories.business.DirectoryEntityHome;
@@ -61,6 +60,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller( xpageName = "directories", pageTitleI18nKey = "directories.xpage.directories.pageTitle", pagePathI18nKey = "directories.xpage.directories.pagePathLabel" )
 public class DirectoriesApp extends MVCApplication
 {
+
+    private static final long serialVersionUID = -7930244683357483911L;
     private static final String TEMPLATE_XPAGE = "/skin/plugins/directories/directories_directory_search.html";
     private static final String TEMPLATE_ENTITY = "/skin/plugins/directories/directories_directory_entity.html";
     private static final String VIEW_SEARCH_DIRECTORY = "searchDirectoryResponse";
@@ -147,8 +148,8 @@ public class DirectoriesApp extends MVCApplication
     private ArrayList<List<Response>> getDistinctResponses( int nidDirectory )
     {
         List<Entry> listEntryFirstLevel = EntryService.getFilter( nidDirectory, true );
-        ArrayList<List<Response>> listListResponse = new ArrayList<List<Response>>( );
-        ArrayList<List<Response>> listListResponseDistinct = new ArrayList<List<Response>>( );
+        ArrayList<List<Response>> listListResponse = new ArrayList<>( );
+        ArrayList<List<Response>> listListResponseDistinct = new ArrayList<>( );
         for ( Entry entry : listEntryFirstLevel )
         {
             ResponseFilter responseFilter = new ResponseFilter( );

@@ -31,14 +31,12 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.directories.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.sql.DAOUtil;
 import java.sql.Statement;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,22 +59,16 @@ public final class DirectoryDAO implements IDirectoryDAO
     @Override
     public void insert( Directory directory, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin );
-        try
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin ) )
         {
             int nIndex = 1;
             daoUtil.setString( nIndex++, directory.getName( ) );
             daoUtil.setString( nIndex++, directory.getDescription( ) );
-
             daoUtil.executeUpdate( );
             if ( daoUtil.nextGeneratedKey( ) )
             {
                 directory.setId( daoUtil.getGeneratedKeyInt( 1 ) );
             }
-        }
-        finally
-        {
-            daoUtil.free( );
         }
     }
 
@@ -86,22 +78,20 @@ public final class DirectoryDAO implements IDirectoryDAO
     @Override
     public Directory load( int nKey, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
-        daoUtil.setInt( 1, nKey );
-        daoUtil.executeQuery( );
         Directory directory = null;
-
-        if ( daoUtil.next( ) )
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin ) )
         {
-            directory = new Directory( );
-            int nIndex = 1;
-
-            directory.setId( daoUtil.getInt( nIndex++ ) );
-            directory.setName( daoUtil.getString( nIndex++ ) );
-            directory.setDescription( daoUtil.getString( nIndex++ ) );
+            daoUtil.setInt( 1, nKey );
+            daoUtil.executeQuery( );
+            if ( daoUtil.next( ) )
+            {
+                directory = new Directory( );
+                int nIndex = 1;
+                directory.setId( daoUtil.getInt( nIndex++ ) );
+                directory.setName( daoUtil.getString( nIndex++ ) );
+                directory.setDescription( daoUtil.getString( nIndex++ ) );
+            }
         }
-
-        daoUtil.free( );
         return directory;
     }
 
@@ -111,10 +101,11 @@ public final class DirectoryDAO implements IDirectoryDAO
     @Override
     public void delete( int nKey, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
-        daoUtil.setInt( 1, nKey );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
+        {
+            daoUtil.setInt( 1, nKey );
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
@@ -123,16 +114,15 @@ public final class DirectoryDAO implements IDirectoryDAO
     @Override
     public void store( Directory directory, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
-        int nIndex = 1;
-
-        daoUtil.setInt( nIndex++, directory.getId( ) );
-        daoUtil.setString( nIndex++, directory.getName( ) );
-        daoUtil.setString( nIndex++, directory.getDescription( ) );
-        daoUtil.setInt( nIndex, directory.getId( ) );
-
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
+        {
+            int nIndex = 1;
+            daoUtil.setInt( nIndex++, directory.getId( ) );
+            daoUtil.setString( nIndex++, directory.getName( ) );
+            daoUtil.setString( nIndex++, directory.getDescription( ) );
+            daoUtil.setInt( nIndex, directory.getId( ) );
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
@@ -141,23 +131,20 @@ public final class DirectoryDAO implements IDirectoryDAO
     @Override
     public List<Directory> selectDirectoriesList( Plugin plugin )
     {
-        List<Directory> directoryList = new ArrayList<Directory>( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
-        daoUtil.executeQuery( );
-
-        while ( daoUtil.next( ) )
+        List<Directory> directoryList = new ArrayList<>( );
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
-            Directory directory = new Directory( );
-            int nIndex = 1;
-
-            directory.setId( daoUtil.getInt( nIndex++ ) );
-            directory.setName( daoUtil.getString( nIndex++ ) );
-            directory.setDescription( daoUtil.getString( nIndex++ ) );
-
-            directoryList.add( directory );
+            daoUtil.executeQuery( );
+            while ( daoUtil.next( ) )
+            {
+                Directory directory = new Directory( );
+                int nIndex = 1;
+                directory.setId( daoUtil.getInt( nIndex++ ) );
+                directory.setName( daoUtil.getString( nIndex++ ) );
+                directory.setDescription( daoUtil.getString( nIndex++ ) );
+                directoryList.add( directory );
+            }
         }
-
-        daoUtil.free( );
         return directoryList;
     }
 
@@ -167,16 +154,15 @@ public final class DirectoryDAO implements IDirectoryDAO
     @Override
     public List<Integer> selectIdDirectoriesList( Plugin plugin )
     {
-        List<Integer> directoryList = new ArrayList<Integer>( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin );
-        daoUtil.executeQuery( );
-
-        while ( daoUtil.next( ) )
+        List<Integer> directoryList = new ArrayList<>( );
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin ) )
         {
-            directoryList.add( daoUtil.getInt( 1 ) );
+            daoUtil.executeQuery( );
+            while ( daoUtil.next( ) )
+            {
+                directoryList.add( daoUtil.getInt( 1 ) );
+            }
         }
-
-        daoUtil.free( );
         return directoryList;
     }
 
@@ -187,15 +173,14 @@ public final class DirectoryDAO implements IDirectoryDAO
     public ReferenceList selectDirectoriesReferenceList( Plugin plugin )
     {
         ReferenceList directoryList = new ReferenceList( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
-        daoUtil.executeQuery( );
-
-        while ( daoUtil.next( ) )
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
-            directoryList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
+            daoUtil.executeQuery( );
+            while ( daoUtil.next( ) )
+            {
+                directoryList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
+            }
         }
-
-        daoUtil.free( );
         return directoryList;
     }
 }

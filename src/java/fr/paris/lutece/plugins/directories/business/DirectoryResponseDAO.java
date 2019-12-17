@@ -31,14 +31,12 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.plugins.directories.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.sql.DAOUtil;
 import java.sql.Statement;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,8 +60,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     @Override
     public void insert( DirectoryResponse directoryResponse, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin );
-        try
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin ) )
         {
             int nIndex = 1;
             daoUtil.setInt( nIndex++, directoryResponse.getIdDirectory( ) );
@@ -75,10 +72,6 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
                 directoryResponse.setId( daoUtil.getGeneratedKeyInt( 1 ) );
             }
         }
-        finally
-        {
-            daoUtil.free( );
-        }
     }
 
     /**
@@ -87,23 +80,21 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     @Override
     public DirectoryResponse load( int nKey, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
-        daoUtil.setInt( 1, nKey );
-        daoUtil.executeQuery( );
         DirectoryResponse directoryResponse = null;
-
-        if ( daoUtil.next( ) )
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin ) )
         {
-            directoryResponse = new DirectoryResponse( );
-            int nIndex = 1;
-
-            directoryResponse.setId( daoUtil.getInt( nIndex++ ) );
-            directoryResponse.setIdDirectory( daoUtil.getInt( nIndex++ ) );
-            directoryResponse.setIdResponse( daoUtil.getInt( nIndex++ ) );
-            directoryResponse.setIdEntity( daoUtil.getInt( nIndex++ ) );
+            daoUtil.setInt( 1, nKey );
+            daoUtil.executeQuery( );
+            if ( daoUtil.next( ) )
+            {
+                directoryResponse = new DirectoryResponse( );
+                int nIndex = 1;
+                directoryResponse.setId( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdDirectory( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdResponse( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdEntity( daoUtil.getInt( nIndex++ ) );
+            }
         }
-
-        daoUtil.free( );
         return directoryResponse;
     }
 
@@ -113,10 +104,11 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     @Override
     public void delete( int nKey, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
-        daoUtil.setInt( 1, nKey );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
+        {
+            daoUtil.setInt( 1, nKey );
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
@@ -125,17 +117,16 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     @Override
     public void store( DirectoryResponse directoryResponse, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
-        int nIndex = 1;
-
-        daoUtil.setInt( nIndex++, directoryResponse.getId( ) );
-        daoUtil.setInt( nIndex++, directoryResponse.getIdDirectory( ) );
-        daoUtil.setInt( nIndex++, directoryResponse.getIdResponse( ) );
-        daoUtil.setInt( nIndex++, directoryResponse.getIdEntity( ) );
-        daoUtil.setInt( nIndex, directoryResponse.getId( ) );
-
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
+        {
+            int nIndex = 1;
+            daoUtil.setInt( nIndex++, directoryResponse.getId( ) );
+            daoUtil.setInt( nIndex++, directoryResponse.getIdDirectory( ) );
+            daoUtil.setInt( nIndex++, directoryResponse.getIdResponse( ) );
+            daoUtil.setInt( nIndex++, directoryResponse.getIdEntity( ) );
+            daoUtil.setInt( nIndex, directoryResponse.getId( ) );
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
@@ -144,24 +135,21 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     @Override
     public List<DirectoryResponse> selectDirectoryResponsesList( Plugin plugin )
     {
-        List<DirectoryResponse> directoryResponseList = new ArrayList<DirectoryResponse>( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
-        daoUtil.executeQuery( );
-
-        while ( daoUtil.next( ) )
+        List<DirectoryResponse> directoryResponseList = new ArrayList<>( );
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
-            DirectoryResponse directoryResponse = new DirectoryResponse( );
-            int nIndex = 1;
-
-            directoryResponse.setId( daoUtil.getInt( nIndex++ ) );
-            directoryResponse.setIdDirectory( daoUtil.getInt( nIndex++ ) );
-            directoryResponse.setIdResponse( daoUtil.getInt( nIndex++ ) );
-            directoryResponse.setIdEntity( daoUtil.getInt( nIndex++ ) );
-
-            directoryResponseList.add( directoryResponse );
+            daoUtil.executeQuery( );
+            while ( daoUtil.next( ) )
+            {
+                DirectoryResponse directoryResponse = new DirectoryResponse( );
+                int nIndex = 1;
+                directoryResponse.setId( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdDirectory( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdResponse( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdEntity( daoUtil.getInt( nIndex++ ) );
+                directoryResponseList.add( directoryResponse );
+            }
         }
-
-        daoUtil.free( );
         return directoryResponseList;
     }
 
@@ -171,16 +159,15 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     @Override
     public List<Integer> selectIdDirectoryResponsesList( Plugin plugin )
     {
-        List<Integer> directoryResponseList = new ArrayList<Integer>( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin );
-        daoUtil.executeQuery( );
-
-        while ( daoUtil.next( ) )
+        List<Integer> directoryResponseList = new ArrayList<>( );
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin ) )
         {
-            directoryResponseList.add( daoUtil.getInt( 1 ) );
+            daoUtil.executeQuery( );
+            while ( daoUtil.next( ) )
+            {
+                directoryResponseList.add( daoUtil.getInt( 1 ) );
+            }
         }
-
-        daoUtil.free( );
         return directoryResponseList;
     }
 
@@ -191,40 +178,36 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     public ReferenceList selectDirectoryResponsesReferenceList( Plugin plugin )
     {
         ReferenceList directoryResponseList = new ReferenceList( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
-        daoUtil.executeQuery( );
-
-        while ( daoUtil.next( ) )
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
-            directoryResponseList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
+            daoUtil.executeQuery( );
+            while ( daoUtil.next( ) )
+            {
+                directoryResponseList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
+            }
         }
-
-        daoUtil.free( );
         return directoryResponseList;
     }
 
     @Override
     public List<DirectoryResponse> selectDirectoryResponsesListByIdEntity( int nKey, Plugin plugin )
     {
-        List<DirectoryResponse> directoryResponseList = new ArrayList<DirectoryResponse>( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_BY_ENTITY, plugin );
-        daoUtil.setInt( 1, nKey );
-        daoUtil.executeQuery( );
-
-        while ( daoUtil.next( ) )
+        List<DirectoryResponse> directoryResponseList = new ArrayList<>( );
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_BY_ENTITY, plugin ) )
         {
-            DirectoryResponse directoryResponse = new DirectoryResponse( );
-            int nIndex = 1;
-
-            directoryResponse.setId( daoUtil.getInt( nIndex++ ) );
-            directoryResponse.setIdDirectory( daoUtil.getInt( nIndex++ ) );
-            directoryResponse.setIdResponse( daoUtil.getInt( nIndex++ ) );
-            directoryResponse.setIdEntity( daoUtil.getInt( nIndex++ ) );
-
-            directoryResponseList.add( directoryResponse );
+            daoUtil.setInt( 1, nKey );
+            daoUtil.executeQuery( );
+            while ( daoUtil.next( ) )
+            {
+                DirectoryResponse directoryResponse = new DirectoryResponse( );
+                int nIndex = 1;
+                directoryResponse.setId( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdDirectory( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdResponse( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdEntity( daoUtil.getInt( nIndex++ ) );
+                directoryResponseList.add( directoryResponse );
+            }
         }
-
-        daoUtil.free( );
         return directoryResponseList;
     }
 }

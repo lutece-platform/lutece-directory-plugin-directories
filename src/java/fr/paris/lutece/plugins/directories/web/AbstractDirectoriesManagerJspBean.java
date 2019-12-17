@@ -49,6 +49,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class AbstractDirectoriesManagerJspBean extends MVCAdminJspBean
 {
+    private static final long serialVersionUID = 1609588697176220802L;
     // Rights
     public static final String RIGHT_DIRECTORIESMANAGER = "DIRECTORIES_MANAGEMENT";
 
@@ -90,7 +91,7 @@ public abstract class AbstractDirectoriesManagerJspBean extends MVCAdminJspBean
         String strUrl = url.getUrl( );
 
         // PAGINATOR
-        LocalizedPaginator<T> paginator = new LocalizedPaginator<T>( list, _nItemsPerPage, strUrl, PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale( ) );
+        LocalizedPaginator<T> paginator = new LocalizedPaginator<>( list, _nItemsPerPage, strUrl, PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale( ) );
 
         Map<String, Object> model = getModel( );
 
