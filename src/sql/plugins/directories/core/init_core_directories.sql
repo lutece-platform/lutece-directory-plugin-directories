@@ -9,8 +9,3 @@ INSERT INTO core_admin_right (id_right,name,level_right,admin_url,description,is
 --
 DELETE FROM core_user_right WHERE id_right = 'DIRECTORIES_MANAGEMENT';
 INSERT INTO core_user_right (id_right,id_user) VALUES ('DIRECTORIES_MANAGEMENT',1);
---
--- Data for table genatt_entry_type
---
-INSERT  INTO genatt_entry_type (id_type,title,is_group,is_comment,is_mylutece_user,class_name,icon_name,plugin) VALUES
-(206,'Zone de texte court',0,0,0,'directories.entryTypeText',NULL,'directories');
