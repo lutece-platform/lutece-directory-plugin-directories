@@ -34,9 +34,6 @@
 package fr.paris.lutece.plugins.directories.business;
 
 import java.io.Serializable;
-import java.util.List;
-
-import fr.paris.lutece.plugins.genericattributes.business.Response;
 
 /**
  * This is the business class for the object DirectoryResponse

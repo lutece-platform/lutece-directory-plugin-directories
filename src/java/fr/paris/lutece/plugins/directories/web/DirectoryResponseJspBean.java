@@ -61,10 +61,11 @@ import javax.servlet.http.HttpServletRequest;
 @Controller( controllerJsp = "ManageDirectoryResponse.jsp", controllerPath = "jsp/admin/plugins/directories/", right = "DIRECTORIES_MANAGEMENT" )
 public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
 {
+    private static final long serialVersionUID = -2119684946497061605L;
     // Views
     private static final String VIEW_CREATE_DIRECTORY_RESPONSE = "createDirectoryResponse";
     private static final String VIEW_MANAGE_DIRECTORY_RESPONSE = "manageDirectoryResponse";
-    private static final String ACTION_CREATE_DIRECTORY_RESPONSE = "createDirectoryResponse";;
+    private static final String ACTION_CREATE_DIRECTORY_RESPONSE = "createDirectoryResponse";
     // Templates
     private static final String TEMPLATE_CREATE_DIRECTORY_RESPONSE = "/admin/plugins/directories/create_directory_response.html";
     private static final String TEMPLATE_MANAGE_DIRECTORY_RESPONSE = "/admin/plugins/directories/manage_directory_response.html";
@@ -75,8 +76,6 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
     // messages
     private static final String PROPERTY_PAGE_TITLE_MANAGE_DIRECTORY_RESPONSE = "directories.entity.title";
     private static final String INFO_REFERENCE_CREATED = "directories.entity.created";
-    private static final String INFO_REFERENCE_UPDATED = "directories.entity.updated";
-    private static final String INFO_REFERENCE_REMOVED = "directories.entity.removed";
     // Parameters
     private static final String PARAMETER_ID_DIRECTORY = "id";
 

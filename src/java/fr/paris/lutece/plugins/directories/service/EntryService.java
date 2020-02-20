@@ -54,30 +54,26 @@ import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
 /**
- * Service to manage entries
+ * Service to manage entries.
  * 
  * @author
- *
  */
 public final class EntryService extends RemovalListenerService implements Serializable
 {
-    /**
-     * Name of the bean of this service
-     */
+    /** Name of the bean of this service. */
     public static final String BEAN_NAME = "directories.entryService";
     private static final long serialVersionUID = -5378918040356139703L;
     private static final String MARK_ENTRY_LIST = "entry_list";
     private static final String MARK_ENTRY_TYPE_LIST = "entry_type_list";
     private static final String MARK_GROUP_ENTRY_LIST = "entry_group_list";
     private static final String MARK_LIST_ORDER_FIRST_LEVEL = "listOrderFirstLevel";
-    private static final String MARK_FIELD = "field";
     private static final String MARK_LOCALE = "locale";
     private static final String MARK_ENTRY = "entry";
     private static final String RESOURCE_TYPE = "DIRECTORIES";
     private static final String MARK_UPLOAD_HANDLER = "uploadHandler";
 
     /**
-     * Get an instance of the service
+     * Get an instance of the service.
      * 
      * @return An instance of the service
      */
@@ -87,7 +83,7 @@ public final class EntryService extends RemovalListenerService implements Serial
     }
 
     /**
-     * Get the html part of the additional entry of the form
+     * Get the html part of the additional entry of the form.
      * 
      * @param nIdEntry
      *            the entry id
@@ -102,7 +98,7 @@ public final class EntryService extends RemovalListenerService implements Serial
     {
         HtmlTemplate template;
         Entry entry = EntryHome.findByPrimaryKey( nIdEntry );
-        List<Field> listField = new ArrayList<Field>( entry.getFields( ).size( ) );
+        List<Field> listField = new ArrayList<>( entry.getFields( ).size( ) );
         for ( Field field : entry.getFields( ) )
         {
             field = FieldHome.findByPrimaryKey( field.getIdField( ) );
@@ -122,7 +118,7 @@ public final class EntryService extends RemovalListenerService implements Serial
     }
 
     /**
-     * Add the entries to the model
+     * Add the entries to the model.
      * 
      * @param nIdForm
      *            The form Id
@@ -137,8 +133,8 @@ public final class EntryService extends RemovalListenerService implements Serial
         entryFilter.setEntryParentNull( EntryFilter.FILTER_TRUE );
         entryFilter.setFieldDependNull( EntryFilter.FILTER_TRUE );
         List<Entry> listEntryFirstLevel = EntryHome.getEntryList( entryFilter );
-        List<Entry> listEntry = new ArrayList<Entry>( listEntryFirstLevel.size( ) );
-        List<Integer> listOrderFirstLevel = new ArrayList<Integer>( listEntryFirstLevel.size( ) );
+        List<Entry> listEntry = new ArrayList<>( listEntryFirstLevel.size( ) );
+        List<Integer> listOrderFirstLevel = new ArrayList<>( listEntryFirstLevel.size( ) );
         for ( Entry entry : listEntryFirstLevel )
         {
             listEntry.add( entry );
@@ -162,7 +158,7 @@ public final class EntryService extends RemovalListenerService implements Serial
     }
 
     /**
-     * Get the reference list of groups
+     * Get the reference list of groups.
      * 
      * @param nIdForm
      *            the id of the directories form
@@ -184,7 +180,7 @@ public final class EntryService extends RemovalListenerService implements Serial
     }
 
     /**
-     * Change the attribute's order to a greater one (move down in the list)
+     * Change the attribute's order to a greater one (move down in the list).
      * 
      * @param nOrderToSet
      *            the new order for the attribute
@@ -203,7 +199,7 @@ public final class EntryService extends RemovalListenerService implements Serial
             filter.setEntryParentNull( EntryFilter.FILTER_TRUE );
             filter.setFieldDependNull( EntryFilter.FILTER_TRUE );
             List<Entry> listEntryFirstLevel = EntryHome.findEntriesWithoutParent( entryToChangeOrder.getIdResource( ), entryToChangeOrder.getResourceType( ) );
-            List<Integer> orderFirstLevel = new ArrayList<Integer>( );
+            List<Integer> orderFirstLevel = new ArrayList<>( );
             initOrderFirstLevel( listEntryFirstLevel, orderFirstLevel );
             Integer nbChildEntryToChangeOrder = 0;
             if ( entryToChangeOrder.getChildren( ) != null )
@@ -214,8 +210,8 @@ public final class EntryService extends RemovalListenerService implements Serial
             {
                 for ( int i = 0; i < orderFirstLevel.size( ); i++ )
                 {
-                    if ( ( orderFirstLevel.get( i ).equals( Integer.valueOf( entry.getPosition( ) ) ) )
-                            && ( entry.getPosition( ) > entryToChangeOrder.getPosition( ) ) && ( entry.getPosition( ) <= nOrderToSet ) )
+                    if ( orderFirstLevel.get( i ).equals( Integer.valueOf( entry.getPosition( ) ) ) && entry.getPosition( ) > entryToChangeOrder.getPosition( )
+                            && entry.getPosition( ) <= nOrderToSet )
                     {
                         if ( nNbChild == 0 )
                         {
@@ -227,7 +223,7 @@ public final class EntryService extends RemovalListenerService implements Serial
                         }
                         else
                         {
-                            nNewOrder += ( nNbChild + 1 );
+                            nNewOrder += nNbChild + 1;
                         }
                         entry.setPosition( nNewOrder );
                         EntryHome.update( entry );
@@ -263,7 +259,7 @@ public final class EntryService extends RemovalListenerService implements Serial
             List<Entry> listAllEntry = EntryHome.getEntryList( filter );
             for ( Entry entry : listAllEntry )
             {
-                if ( ( entry.getPosition( ) > entryToChangeOrder.getPosition( ) ) && ( entry.getPosition( ) <= nOrderToSet ) )
+                if ( entry.getPosition( ) > entryToChangeOrder.getPosition( ) && entry.getPosition( ) <= nOrderToSet )
                 {
                     entry.setPosition( entry.getPosition( ) - 1 );
                     EntryHome.update( entry );
@@ -275,7 +271,7 @@ public final class EntryService extends RemovalListenerService implements Serial
     }
 
     /**
-     * Change the attribute's order to a lower one (move up in the list)
+     * Change the attribute's order to a lower one (move up in the list).
      * 
      * @param nOrderToSet
      *            the new order for the attribute
@@ -291,7 +287,7 @@ public final class EntryService extends RemovalListenerService implements Serial
         if ( entryToChangeOrder.getParent( ) == null )
         {
             filter.setEntryParentNull( EntryFilter.FILTER_TRUE );
-            List<Integer> orderFirstLevel = new ArrayList<Integer>( );
+            List<Integer> orderFirstLevel = new ArrayList<>( );
             int nNbChild = 0;
             int nNewOrder = nOrderToSet;
             int nEntryToMoveOrder = entryToChangeOrder.getPosition( );
@@ -303,8 +299,8 @@ public final class EntryService extends RemovalListenerService implements Serial
                 Integer entryInitialPosition = entry.getPosition( );
                 for ( int i = 0; i < orderFirstLevel.size( ); i++ )
                 {
-                    if ( ( orderFirstLevel.get( i ).equals( entryInitialPosition ) ) && ( entryInitialPosition < nEntryToMoveOrder )
-                            && ( entryInitialPosition >= nOrderToSet ) )
+                    if ( orderFirstLevel.get( i ).equals( entryInitialPosition ) && entryInitialPosition < nEntryToMoveOrder
+                            && entryInitialPosition >= nOrderToSet )
                     {
                         if ( entryToChangeOrder.getPosition( ) == nEntryToMoveOrder )
                         {
@@ -336,7 +332,7 @@ public final class EntryService extends RemovalListenerService implements Serial
             List<Entry> listAllEntry = EntryHome.getEntryList( filter );
             for ( Entry entry : listAllEntry )
             {
-                if ( ( entry.getPosition( ) < entryToChangeOrder.getPosition( ) ) && ( entry.getPosition( ) >= nOrderToSet ) )
+                if ( entry.getPosition( ) < entryToChangeOrder.getPosition( ) && entry.getPosition( ) >= nOrderToSet )
                 {
                     entry.setPosition( entry.getPosition( ) + 1 );
                     EntryHome.update( entry );
@@ -348,7 +344,7 @@ public final class EntryService extends RemovalListenerService implements Serial
     }
 
     /**
-     * Init the list of the attribute's orders (first level only)
+     * Init the list of the attribute's orders (first level only).
      * 
      * @param listEntryFirstLevel
      *            the list of all the attributes of the first level
@@ -364,7 +360,7 @@ public final class EntryService extends RemovalListenerService implements Serial
     }
 
     /**
-     * Move EntryToMove into entryGroup
+     * Move EntryToMove into entryGroup.
      * 
      * @param entryToMove
      *            the entry which will be moved
@@ -373,7 +369,7 @@ public final class EntryService extends RemovalListenerService implements Serial
      */
     public void moveEntryIntoGroup( Entry entryToMove, Entry entryGroup )
     {
-        if ( ( entryToMove != null ) && ( entryGroup != null ) )
+        if ( entryToMove != null && entryGroup != null )
         {
             // If the entry already has a parent, we must remove it before
             // adding it to a new one
@@ -398,7 +394,7 @@ public final class EntryService extends RemovalListenerService implements Serial
     }
 
     /**
-     * Remove an entry from a group
+     * Remove an entry from a group.
      * 
      * @param entryToMove
      *            the entry to remove from a group
@@ -414,7 +410,7 @@ public final class EntryService extends RemovalListenerService implements Serial
     }
 
     /**
-     * Get the list of entries filtered
+     * Get the list of entries filtered.
      * 
      * @param iform
      *            the form id
@@ -433,7 +429,6 @@ public final class EntryService extends RemovalListenerService implements Serial
         {
             filter.setIsOnlyDisplayInBack( EntryFilter.FILTER_FALSE );
         }
-        List<Entry> listEntryFirstLevel = EntryHome.getEntryList( filter );
-        return listEntryFirstLevel;
+        return EntryHome.getEntryList( filter );
     }
 }

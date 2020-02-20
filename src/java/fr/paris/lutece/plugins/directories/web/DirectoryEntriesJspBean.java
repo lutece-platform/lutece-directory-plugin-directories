@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.directories.web;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
@@ -77,6 +76,7 @@ import fr.paris.lutece.util.url.UrlItem;
 @Controller( controllerJsp = "ManageDirectoryEntries.jsp", controllerPath = "jsp/admin/plugins/directories/", right = "DIRECTORIES_MANAGEMENT" )
 public class DirectoryEntriesJspBean extends MVCAdminJspBean
 {
+    private static final long serialVersionUID = -6682482064278399335L;
     // Parameters
     private static final String PARAMETER_ID_ENTRY_TYPE = "id_type";
     private static final String PARAMETER_ID_DIRECTORYITEM_FORM = "id";
@@ -148,7 +148,6 @@ public class DirectoryEntriesJspBean extends MVCAdminJspBean
      * @throws AccessDeniedException
      *             If the user is not authorized to access this feature
      */
-    @SuppressWarnings( "unchecked" )
     @View( VIEW_CREATE_DIRECTORYITEM_FORM_ENTRIES_RESPONSE )
     public synchronized String getViewCreateDirectories( HttpServletRequest request ) throws AccessDeniedException
     {
@@ -195,7 +194,7 @@ public class DirectoryEntriesJspBean extends MVCAdminJspBean
         }
         entry.setIdResource( nIdForm );
         entry.setResourceType( DirectoriesPlugin.RESOURCE_TYPE );
-        Map<String, Object> model = new HashMap<String, Object>( );
+        Map<String, Object> model = new HashMap<>( );
         model.put( MARK_ENTRY, entry );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
@@ -351,7 +350,7 @@ public class DirectoryEntriesJspBean extends MVCAdminJspBean
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdEntry = Integer.parseInt( strIdEntry );
         Entry entry = EntryHome.findByPrimaryKey( nIdEntry );
-        List<String> listErrors = new ArrayList<String>( );
+        List<String> listErrors = new ArrayList<>( );
         if ( !_entryService.checkForRemoval( strIdEntry, listErrors, getLocale( ) ) )
         {
             String strCause = AdminMessageService.getFormattedList( listErrors, getLocale( ) );

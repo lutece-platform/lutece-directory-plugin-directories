@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directories.business;
 
-import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.io.Serializable;
 

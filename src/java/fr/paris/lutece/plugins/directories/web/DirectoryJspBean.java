@@ -53,6 +53,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller( controllerJsp = "ManageDirectories.jsp", controllerPath = "jsp/admin/plugins/directories/", right = "DIRECTORIES_MANAGEMENT" )
 public class DirectoryJspBean extends AbstractDirectoriesManagerJspBean
 {
+    private static final long serialVersionUID = -1760898157231830659L;
     // Templates
     private static final String TEMPLATE_MANAGE_DIRECTORIES = "/admin/plugins/directories/manage_directories.html";
     private static final String TEMPLATE_CREATE_DIRECTORY = "/admin/plugins/directories/create_directory.html";
