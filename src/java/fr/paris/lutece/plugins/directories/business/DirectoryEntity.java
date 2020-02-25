@@ -34,9 +34,11 @@
 package fr.paris.lutece.plugins.directories.business;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
-
 import fr.paris.lutece.plugins.genericattributes.business.Response;
+import fr.paris.lutece.portal.business.user.AdminUser;
+import fr.paris.lutece.portal.business.user.AdminUserHome;
 
 /**
  * This is the business class for the object DirectoryEntity
@@ -44,13 +46,14 @@ import fr.paris.lutece.plugins.genericattributes.business.Response;
 public class DirectoryEntity implements Serializable
 {
     private static final long serialVersionUID = 1L;
-
     // Variables declarations
     private int _nId;
-
     private int _nIdDirectory;
-
     private List<Response> _listResponses;
+    private int _nIdCreator;
+    private Timestamp _dateCreation;
+    private int _nIdModificator;
+    private Timestamp _dateUpdate;
 
     /**
      * Returns the Id
@@ -115,4 +118,90 @@ public class DirectoryEntity implements Serializable
         _listResponses = listResponses;
     }
 
+    /**
+     * @return the _dateCreation
+     */
+    public Timestamp getCreation( )
+    {
+        return _dateCreation;
+    }
+
+    /**
+     * @param dateCreation
+     *            the dateCreation to set
+     */
+    public void setDateCreation( Timestamp dateCreation )
+    {
+        this._dateCreation = dateCreation;
+    }
+
+    /**
+     * @return the _dateUpdate
+     */
+    public Timestamp getUpdate( )
+    {
+        return _dateUpdate;
+    }
+
+    /**
+     * @param dateUpdate
+     *            the dateUpdate to set
+     */
+    public void setUpdate( Timestamp dateUpdate )
+    {
+        this._dateUpdate = dateUpdate;
+    }
+
+    /**
+     * Returns the _nIdCreator
+     * 
+     * @return The _nIdCreator
+     */
+    public int getIdCreator( )
+    {
+        return _nIdCreator;
+    }
+
+    /**
+     * Sets the _nIdCreator
+     * 
+     * @param nIdCreator
+     *            The Id Creator
+     */
+    public void setIdCreator( int nIdCreator )
+    {
+        _nIdCreator = nIdCreator;
+    }
+
+    /**
+     * Returns the _nIdModificator
+     * 
+     * @return The _nIdModificator
+     */
+    public int getIdModificator( )
+    {
+        return _nIdModificator;
+    }
+
+    /**
+     * Sets the _nIdModificator
+     * 
+     * @param nIdModificator
+     *            The Id Modificator
+     */
+    public void setIdModificator( int nIdModificator )
+    {
+        _nIdModificator = nIdModificator;
+    }
+
+    /**
+     * get the Admin user
+     * 
+     * @param nUserId
+     *            The Id Admin User
+     */
+    public AdminUser getUserAdmin( int nUserId )
+    {
+        return AdminUserHome.findByPrimaryKey( nUserId );
+    }
 }

@@ -49,7 +49,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     private static final String SQL_QUERY_SELECT = "SELECT id_directory_response, id_directory, id_response, id_entity FROM directories_directory_response WHERE id_directory_response = ?";
     private static final String SQL_QUERY_INSERT = "INSERT INTO directories_directory_response ( id_directory, id_response, id_entity ) VALUES ( ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directories_directory_response WHERE id_directory_response = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE directories_directory_response SET id_directory_response = ?, id_directory = ?, id_response = ?, id_entity = ? WHERE id_directory_response = ?";
+    private static final String SQL_QUERY_UPDATE = "UPDATE directories_directory_response SET id_directory_response = ?, id_directory = ?, id_response = ?, id_entity = ? FROM directories_directory_response WHERE id_directory_response = ?";
     private static final String SQL_QUERY_SELECTALL = "SELECT id_directory_response, id_directory, id_response, id_entity FROM directories_directory_response";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_directory_response FROM directories_directory_response";
     private static final String SQL_QUERY_SELECTALL_BY_ENTITY = "SELECT id_directory_response, id_directory, id_response, id_entity FROM directories_directory_response WHERE id_entity = ?";
@@ -189,6 +189,9 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
         return directoryResponseList;
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<DirectoryResponse> selectDirectoryResponsesListByIdEntity( int nKey, Plugin plugin )
     {

@@ -36,8 +36,6 @@ package fr.paris.lutece.plugins.directories.business;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
-import fr.paris.lutece.util.ReferenceList;
-
 import java.util.List;
 
 /**
@@ -129,23 +127,4 @@ public final class DirectoryResponseHome
         return _dao.selectDirectoryResponsesListByIdEntity( nKey, _plugin );
     }
 
-    /**
-     * Load the id of all the directoryResponse objects and returns them as a list
-     * 
-     * @return the list which contains the id of all the directoryResponse objects
-     */
-    public static List<Integer> getIdDirectoryResponsesList( )
-    {
-        return _dao.selectIdDirectoryResponsesList( _plugin );
-    }
-
-    /**
-     * Load the data of all the directoryResponse objects and returns them as a referenceList
-     * 
-     * @return the referenceList which contains the data of all the directoryResponse objects
-     */
-    public static ReferenceList getDirectoryResponsesReferenceList( )
-    {
-        return _dao.selectDirectoryResponsesReferenceList( _plugin );
-    }
 }

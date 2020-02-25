@@ -35,18 +35,26 @@ package fr.paris.lutece.plugins.directories.service;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
+import fr.paris.lutece.plugins.directories.util.DirectoriesConstants;
 import fr.paris.lutece.plugins.genericattributes.business.Entry;
 import fr.paris.lutece.plugins.genericattributes.business.EntryFilter;
 import fr.paris.lutece.plugins.genericattributes.business.EntryHome;
 import fr.paris.lutece.plugins.genericattributes.business.Field;
 import fr.paris.lutece.plugins.genericattributes.business.FieldHome;
+import fr.paris.lutece.plugins.genericattributes.business.Response;
 import fr.paris.lutece.plugins.genericattributes.service.entrytype.AbstractEntryTypeUpload;
 import fr.paris.lutece.plugins.genericattributes.service.entrytype.EntryTypeServiceManager;
 import fr.paris.lutece.plugins.genericattributes.service.entrytype.IEntryTypeService;
+import fr.paris.lutece.plugins.genericattributes.util.GenericAttributesUtils;
+import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.RemovalListenerService;
@@ -120,15 +128,15 @@ public final class EntryService extends RemovalListenerService implements Serial
     /**
      * Add the entries to the model.
      * 
-     * @param nIdForm
+     * @param nIdDirectory
      *            The form Id
      * @param model
      *            the model
      */
-    public static void addListEntryToModel( Map<String, Object> model, int nIdForm )
+    public static void addListEntryToModel( Map<String, Object> model, int nIdDirectory )
     {
         EntryFilter entryFilter = new EntryFilter( );
-        entryFilter.setIdResource( nIdForm );
+        entryFilter.setIdResource( nIdDirectory );
         entryFilter.setResourceType( RESOURCE_TYPE );
         entryFilter.setEntryParentNull( EntryFilter.FILTER_TRUE );
         entryFilter.setFieldDependNull( EntryFilter.FILTER_TRUE );
@@ -142,7 +150,7 @@ public final class EntryService extends RemovalListenerService implements Serial
             if ( entry.getEntryType( ).getGroup( ) )
             {
                 entryFilter = new EntryFilter( );
-                entryFilter.setIdResource( nIdForm );
+                entryFilter.setIdResource( nIdDirectory );
                 entryFilter.setResourceType( RESOURCE_TYPE );
                 entryFilter.setFieldDependNull( EntryFilter.FILTER_TRUE );
                 entryFilter.setIdEntryParent( entry.getIdEntry( ) );
@@ -151,7 +159,7 @@ public final class EntryService extends RemovalListenerService implements Serial
                 listEntry.addAll( listEntryGroup );
             }
         }
-        model.put( MARK_GROUP_ENTRY_LIST, getRefListGroups( nIdForm ) );
+        model.put( MARK_GROUP_ENTRY_LIST, getRefListGroups( nIdDirectory ) );
         model.put( MARK_ENTRY_TYPE_LIST, EntryTypeService.getInstance( ).getEntryTypeReferenceList( ) );
         model.put( MARK_ENTRY_LIST, listEntry );
         model.put( MARK_LIST_ORDER_FIRST_LEVEL, listOrderFirstLevel );
@@ -160,14 +168,14 @@ public final class EntryService extends RemovalListenerService implements Serial
     /**
      * Get the reference list of groups.
      * 
-     * @param nIdForm
+     * @param nIdDirectory
      *            the id of the directories form
      * @return The reference list of groups of the given form
      */
-    private static ReferenceList getRefListGroups( int nIdForm )
+    private static ReferenceList getRefListGroups( int nIdDirectory )
     {
         EntryFilter entryFilter = new EntryFilter( );
-        entryFilter.setIdResource( nIdForm );
+        entryFilter.setIdResource( nIdDirectory );
         entryFilter.setResourceType( RESOURCE_TYPE );
         entryFilter.setIdIsGroup( 1 );
         List<Entry> listEntry = EntryHome.getEntryList( entryFilter );
@@ -410,18 +418,18 @@ public final class EntryService extends RemovalListenerService implements Serial
     }
 
     /**
-     * Get the list of entries filtered.
+     * Get the list of directory entries.
      * 
-     * @param iform
-     *            the form id
+     * @param nIdDirectory
+     *            the directory id
      * @param bDisplayFront
      *            true if it is displayed on FO
      * @return the list of entries
      */
-    public static List<Entry> getFilter( int iform, boolean bDisplayFront )
+    public static List<Entry> getDirectoryEntryList( int nIdDirectory, boolean bDisplayFront )
     {
         EntryFilter filter = new EntryFilter( );
-        filter.setIdResource( iform );
+        filter.setIdResource( nIdDirectory );
         filter.setResourceType( RESOURCE_TYPE );
         filter.setEntryParentNull( EntryFilter.FILTER_TRUE );
         filter.setFieldDependNull( EntryFilter.FILTER_TRUE );
@@ -429,6 +437,72 @@ public final class EntryService extends RemovalListenerService implements Serial
         {
             filter.setIsOnlyDisplayInBack( EntryFilter.FILTER_FALSE );
         }
+        List<Entry> listEntry = EntryHome.getEntryList( filter );
+        getEntryFields( listEntry );
+        return listEntry;
+    }
+
+    /**
+     * Get the list of directory entries filtered by type.
+     * 
+     * @param nIdEntryType
+     *            The Id of EntryType
+     * @param nIdDirectory
+     *            The id of Directory
+     * @return the list of entries
+     */
+    public static List<Entry> getEntryListFromType( int nIdEntryType, int nIdDirectory )
+    {
+        EntryFilter filter = new EntryFilter( );
+        filter.setIdEntryType( nIdEntryType );
+        filter.setIdResource( nIdDirectory );
         return EntryHome.getEntryList( filter );
     }
+
+    /**
+     * Create entry
+     * 
+     * @param nIdEntryType
+     *            The Id of EntryType
+     * @return the list of entries
+     */
+    public static String doCreateEntry( Entry entry, HttpServletRequest request )
+    {
+        String strError = EntryTypeServiceManager.getEntryTypeService( entry ).getRequestData( entry, request, AdminUserService.getLocale( request ) );
+        return strError;
+    }
+
+    /**
+     * Modify entry
+     * 
+     * @param nIdEntryType
+     *            The Id of EntryType
+     * @return error
+     */
+    public static String doModifyEntry( Entry entry, HttpServletRequest request )
+    {
+        String strError = EntryTypeServiceManager.getEntryTypeService( entry ).getRequestData( entry, request, AdminUserService.getLocale( request ) );
+        return strError;
+    }
+
+    /**
+     * fill entries fields
+     * 
+     * @param listEntry
+     *            The entry list to feed
+     */
+    private static void getEntryFields( List<Entry> listEntry )
+    {
+        for ( Entry entry : listEntry )
+        {
+            List<Field> listField = new ArrayList<>( );
+            for ( Field field : EntryHome.findByPrimaryKey( entry.getIdEntry( ) ).getFields( ) )
+            {
+                field = FieldHome.findByPrimaryKey( field.getIdField( ) );
+                listField.add( field );
+            }
+            entry.setFields( listField );
+        }
+    }
+
 }

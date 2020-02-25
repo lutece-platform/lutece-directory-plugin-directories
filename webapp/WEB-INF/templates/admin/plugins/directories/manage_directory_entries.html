@@ -3,55 +3,42 @@
 	entryIconList=['dot-circle-o','check-square-o','comment-o','calendar','list-alt','file-text-o','file-text','phone','indent','database','map-o','sign-in','user','image','file','phone'] />
 <@tabs>
 	<@tabList>
-		<@tabLink href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=modifyDirectory&id=${id}'
+		<@tabLink
+			href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=modifyDirectory&id_directory=${id_directory}'
 			title='#i18n{directories.modify_directory.directoryTabName}' />
 		<@tabLink active=true
-			href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=manageDirectoryEntries&id=${id}'
+			href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=manageDirectoryEntries&id_directory=${id_directory}'
 			title='#i18n{directories.modify_directory.directoryEntriesTabName}' />
-		<@tabLink href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id=${id}'
+		<@tabLink
+			href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id_directory=${id_directory}'
 			title='#i18n{directories.manage_directory_response.directoryResponseTabName}' />
-		<@tabLink href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=manageDirectorySearchEngine&id=${id}'
-			title='#i18n{directories.modify_directory.directorySearchEngineTabName}' />
 	</@tabList>
 	<@tabContent>
 		<@box>
-			<@boxHeader title='#i18n{directories.manage_directoryformentries.title}' />
+			<@boxHeader title='#i18n{directories.manage_directory_entries.title}' />
 			<@boxBody>
 				<div class="row">
 					<div class="col-md-8">
 						<@tform class='form-inline' action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp'>
-							<input type="hidden" name="action" value="doChangeOrderEntry">
-							<input name="id" value="${id}" type="hidden">
+							<@input type="hidden" name="action" value="doChangeOrderEntry" />
+							<@input name="id_directory" value="${id_directory}" type="hidden" />
 							<@table>
 								<thead>
-									<tr>
-										<th>
-											<input type="checkbox" name="selectAll" id="selectAll" value="selectAll"
-												title="#i18n{directories.manage_directoryformentries.selectAll}">
-										</th>
-										<th>#i18n{directories.manage_directoryformentries.labelTitle}</th>
-										<th>#i18n{directories.manage_directoryformentries.typeName}</th>
-										<th>#i18n{directories.manage_directoryformentries.rowOrder}</th>
-										<th>#i18n{directories.manage_directoryformentries.labelActions}&nbsp;</th>
-									</tr>
+									<@tr>
+										<@th>#i18n{directories.manage_directory_entries.labelTitle}</@th>
+										<@th>#i18n{directories.manage_directory_entries.typeName}</@th>
+										<@th>#i18n{directories.manage_directory_entries.rowOrder}</@th>
+										<@th>#i18n{directories.manage_directory_entries.labelActions}&nbsp;
+										</@th>
+									</@tr>
 								</thead>
 								<tbody>
 									<#list entry_list as entry>
 										<#if entry.entryType.group>
 											<#assign lastGroup=entry>
 										</#if>
-										<tr>
-											<td>
-												<!--  add checkbox if entry isn't a group -->
-												<#if entry.entryType.group>
-													<@icon style='indent' />
-													<#else>
-														<input type="checkbox" name="entry_id_move"
-															id='entry_id_${entry.idEntry}' value="${entry.idEntry!}"
-															title="#i18n{directories.manage_directoryformentries.select}">
-												</#if>
-											</td>
-											<td>
+										<@tr>
+											<@td>
 												<#if entry.entryType.group>
 													<h4 class="text-primary">${entry.title}</h4>
 													<#elseif entry.parent?exists>
@@ -74,8 +61,8 @@
 																		${entry.title}
 																</#if>
 												</#if>
-											</td>
-											<td>
+											</@td>
+											<@td>
 												<#if !entry.entryType.group>
 													<@tag>
 														<#list entryIconList as entryIcon>
@@ -86,10 +73,10 @@
 														&#160;${entry.entryType.title}
 													</@tag>
 												</#if>
-											</td>
+											</@td>
 											<!--  Change the order of the attribute -->
 											<#if entry.parent?exists>
-												<td>
+												<@td>
 													<@formGroup rows=2>
 														<@inputGroup>
 															<@comboOrders name="order_id_${entry.idEntry!}"
@@ -97,47 +84,39 @@
 																idParent=entry.parent.idEntry />
 															<@inputGroupItem>
 																<@button type='submit' name='id_entry'
-																	value='${entry.idEntry}'
-																	title='#i18n{directories.manage_directoryformentries.move}'
-																	buttonIcon='check' showTitle=false />
+																	value='${entry.idEntry}' buttonIcon='check' />
 															</@inputGroupItem>
 														</@inputGroup>
 													</@formGroup>
-												</td>
+												</@td>
 												<#else>
-													<td>
+													<@td>
 														<@formGroup rows=2>
 															<@inputGroup>
 																<@comboOrders name="order_id_${entry.idEntry!}"
 																	default_value=entry.position idParent=0 />
 																<@inputGroupItem>
 																	<@button type='submit' name='id_entry'
-																		title='#i18n{directories.manage_directoryformentries.move}'
-																		value='${entry.idEntry}' buttonIcon='check'
-																		showTitle=false />
+																		value='${entry.idEntry}' buttonIcon='check' />
 																</@inputGroupItem>
 															</@inputGroup>
 														</@formGroup>
-													</td>
+													</@td>
 											</#if>
-											<td>
-												<!-- <#if !entry.entryType.myLuteceUser>
-													<@aButton
-														href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=getModifyEntry&id_entry=${entry.idEntry}'
-														buttonIcon='edit' />
-												</#if> -->
+											<@td>
+												<@aButton
+													href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=getModifyEntry&id_directory=${id_directory}&id_entry=${entry.idEntry}'
+													buttonIcon='edit' />
 												<#if entry.parent?exists>
 													<@aButton
-														href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?action=doMoveOutEntry&id_entry=${entry.idEntry}#list'
-														title='#i18n{directories.manage_directoryformentries.titleGoOut}'
-														showTitle=false buttonIcon='outdent' />
+														href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?action=doMoveOutEntry&id_directory=${id_directory}&id_entry=${entry.idEntry}'
+														buttonIcon='outdent' />
 												</#if>
 												<@aButton
-													href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=confirmRemoveEntry&id_entry=${entry.idEntry}#list'
-													title='#i18n{directories.manage_directoryformentries.delete}'
-													showTitle=false buttonIcon='trash' color='btn-danger' />
-											</td>
-										</tr>
+													href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=confirmRemoveEntry&id_directory=${id_directory}&id_entry=${entry.idEntry}'
+													buttonIcon='trash' color='danger' />
+											</@td>
+										</@tr>
 									</#list>
 								</tbody>
 							</@table>
@@ -146,10 +125,10 @@
 					<div class="col-md-4">
 						<@listGroup>
 							<a
-								class="list-group-item list-group-item-action active"><strong>#i18n{directories.manage_directoryformentries.labelInsertEntry}</strong></a>
+								class="list-group-item list-group-item-action active"><strong>#i18n{directories.manage_directory_entries.labelInsertEntry}</strong></a>
 							<#list entry_type_list as item>
 								<a class="list-group-item list-group-item-action"
-									href="jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=getCreateEntry&id=${id}&id_type=${item.code}">
+									href="jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=getCreateEntry&id_directory=${id_directory}&id_type=${item.code}">
 									<#list entryIconList as entryIcon>
 										<#if item.code?number==100+entryIcon?index+1>
 											<@icon style='${entryIcon}' />
@@ -165,16 +144,6 @@
 		</@box>
 	</@tabContent>
 </@tabs>
-<script>
-	// fix tabs lutece7
-	const elements = document.querySelectorAll("a");
-	const attr = "data-toggle";
-	elements && elements.forEach(element => {
-		if (element.hasAttribute(attr)) {
-			element.setAttribute(attr, "#")
-		}
-	});
-</script>
 <#macro comboOrders name default_value idParent>
 	<select id="${name}" name="${name}" class="form-control input-sm">
 		<#if idParent &gt; 0 && lastGroup??>

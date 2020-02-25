@@ -1,0 +1,20 @@
+.autoComplete_result {
+    margin: 0;
+    padding: .6rem;
+    max-width: 100%;
+    border: .05rem solid #e3e3e3;
+    font-size: 1.4rem;
+    background-color: #fff;
+}
+
+#result_list {
+    position: absolute;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 30px;
+    z-index: 2;
+}
+
+.autoComplete_result:last-child {
+    border-radius: 0 0 1rem 1rem;
+}

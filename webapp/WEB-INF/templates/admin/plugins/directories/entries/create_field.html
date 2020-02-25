@@ -1,0 +1,36 @@
+<#include "/admin/plugins/directories/commons.html" />
+<@row>
+	<@columns>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directories.createField.title} : "${field.parentEntry.title}"' />
+			<@boxBody>
+        		<fieldset>
+					<legend class="sr-only">#i18n{directories.createField.title} : "${field.parentEntry.title}"</legend>
+					<@tform action='jsp/admin/plugins/directories/ManageDirectoryFields.jsp'>
+					<@input name="id_entry" value="${entry.idEntry}" type="hidden" />
+					<@input name="id_directory" value="${entry.idResource}" type="hidden" />						
+					<@formGroup labelFor='title' labelKey='#i18n{directories.createField.labelTitle}' mandatory=true><@input type='text' name='title' id='title' value='' maxlength=255 />
+						</@formGroup>
+						<@formGroup labelFor='value' labelKey='#i18n{directories.createField.labelValue}' mandatory=true><@input type='text' name='value' id='value' value='' />
+						</@formGroup>
+						<@formGroup labelFor='comment' labelKey='#i18n{directories.createField.labelComment}'><@input type='textarea' name='comment' id='comment'></@input>
+						</@formGroup>
+						<@formGroup labelFor='default_value' labelKey='#i18n{directories.createField.labelDefaultValue}'>
+							<@checkBox id="default_value" name='default_value' value='1' />
+						</@formGroup>
+						<#if option_no_display_title??>
+							<@formGroup labelFor='no_display_title' labelKey='#i18n{directories.createField.labelNoDisplayTitle}'>
+								<#if field.noDisplayTitle><#assign checked = true /></#if>
+								<@checkBox id="no_display_title" name='no_display_title' value='1' checked=checked />
+							</@formGroup>
+						</#if>
+						<@formGroup>
+							<@button type='submit' name='action_createField' buttonIcon='save' title='#i18n{directories.labelSave}'  />
+							<@aButton href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=getModifyEntry&id_directory=${entry.idResource}&id_entry=${entry.idEntry}' title='#i18n{directories.labelCancel}' buttonIcon='close'  color='btn-secondary' />
+						</@formGroup>
+					</@tform>
+        		</fieldset>
+			</@boxBody>
+		</@box>
+	</@columns>
+ </@row>

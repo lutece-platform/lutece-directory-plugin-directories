@@ -124,4 +124,5 @@ public interface IDirectoryEntityDAO
      * @return The referenceList which contains the data of all the directoryEntity objects
      */
     ReferenceList selectDirectoryEntitiesReferenceList( Plugin plugin );
+
 }

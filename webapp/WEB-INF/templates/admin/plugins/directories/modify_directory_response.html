@@ -1,0 +1,26 @@
+<#include "/admin/plugins/directories/commons.html" />
+<@row>
+    <@columns>
+        <@box>
+            <@boxHeader title='#i18n{directories.modifyResponse.title}' />
+            <@boxBody>
+                <@tform id="create_directory_response"
+                    action='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp' method='post'
+                    params='enctype="multipart/form-data"'>
+                    <@input type="hidden" id="id_directory" name="id_directory" value="${id_directory!''}" />
+                    <@input type="hidden" id="id_entity" name="id_entity" value="${id_entity!''}" />
+                    <@input name="action" value="modifyDirectoryResponse" type="hidden" />
+                    <fieldset>
+                        ${form_html!}
+                    </fieldset>
+                    <@formGroup>
+                        <@button type='submit' name='save' buttonIcon='save' title='#i18n{directories.labelSave}'
+                            size='' />
+                        <@button type='submit' name='cancel' value='cancel' buttonIcon='times'
+                            title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
+                    </@formGroup>
+                </@tform>
+            </@boxBody>
+        </@box>
+    </@columns>
+</@row>

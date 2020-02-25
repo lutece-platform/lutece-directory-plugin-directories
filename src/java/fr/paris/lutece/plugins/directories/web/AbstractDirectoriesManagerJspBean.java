@@ -34,6 +34,8 @@
 
 package fr.paris.lutece.plugins.directories.web;
 
+import fr.paris.lutece.plugins.directories.util.DirectoriesConstants;
+import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.util.mvc.admin.MVCAdminJspBean;
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
@@ -101,4 +103,29 @@ public abstract class AbstractDirectoriesManagerJspBean extends MVCAdminJspBean
 
         return model;
     }
+
+    /**
+     * Return the URL of the JSP manage Directory Entries
+     * 
+     * @param request
+     *            The HTTP request
+     * @return The URL of the JSP manage Directory Entries
+     */
+    protected String getJspManageDirectoryEntries( HttpServletRequest request )
+    {
+        return AppPathService.getBaseUrl( request ) + DirectoriesConstants.JSP_MANAGE_DIRECTORY_ENTRIES;
+    }
+
+    /**
+     * Redirect to the URL of view manage Directory Entries
+     * 
+     * @param request
+     *            The HTTP request
+     * @return The URL of the JSP manage Directory Entries
+     */
+    protected String redirectToViewManageDirectoryEntries( HttpServletRequest request )
+    {
+        return redirect( request, getJspManageDirectoryEntries( request ) );
+    }
+
 }

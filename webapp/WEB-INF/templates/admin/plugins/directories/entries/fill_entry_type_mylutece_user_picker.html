@@ -1,0 +1,8 @@
+<#include "/admin/plugins/directories/commons.html" />
+<#assign idName=buildEntryName( entry, entry_iteration_number )>
+	<@formGroup id="search_user_attribute_form" labelFor='${idName}' labelKey='${entry.title}'
+		mandatory=entry.mandatory!'false'>
+		<@input type='text' name='picker_${idName}' id='picker_${idName}' class="my_lutece_user_picker"
+			params='tabindex="1"' />
+		<@input type='hidden' name='${idName}' id='${idName}' />
+	</@formGroup>

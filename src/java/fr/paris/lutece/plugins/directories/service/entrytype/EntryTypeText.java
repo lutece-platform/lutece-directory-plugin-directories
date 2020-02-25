@@ -45,8 +45,8 @@ import fr.paris.lutece.plugins.genericattributes.service.entrytype.AbstractEntry
 public class EntryTypeText extends AbstractEntryTypeText
 {
     private static final String TEMPLATE_MODIFY = "admin/plugins/directories/entries/modify_entry_type_text.html";
-    private static final String TEMPLATE_HTML_CODE_ADMIN = "admin/plugins/directories/entries/html_code_entry_type_text.html";
-    private static final String TEMPLATE_HTML_CODE = "skin/plugins/directories/entries/html_code_entry_type_text.html";
+    private static final String TEMPLATE_HTML_CODE_ADMIN = "admin/plugins/directories/entries/fill_entry_type_text.html";
+    private static final String TEMPLATE_HTML_CODE = "skin/plugins/directories/entries/fill_entry_type_text.html";
     private static final String TEMPLATE_CREATE = "admin/plugins/directories/entries/create_entry_type_text.html";
 
     /**

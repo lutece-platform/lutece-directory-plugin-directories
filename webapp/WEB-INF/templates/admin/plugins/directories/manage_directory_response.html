@@ -1,48 +1,95 @@
 <#include "directoriesmanager_tabs.html" />
-
 <@tabs>
     <@tabList>
-        <@tabLink href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=modifyDirectory&id=${id}'
+        <@tabLink
+            href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=modifyDirectory&id_directory=${id_directory}'
             title='#i18n{directories.modify_directory.directoryTabName}' />
-        <@tabLink href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=manageDirectoryEntries&id=${id}'
+        <@tabLink
+            href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=manageDirectoryEntries&id_directory=${id_directory}'
             title='#i18n{directories.modify_directory.directoryEntriesTabName}' />
-        <@tabLink active=true href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id=${id}'
+        <@tabLink active=true
+            href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id_directory=${id_directory}'
             title='#i18n{directories.manage_directory_response.directoryResponseTabName}' />
-            <@tabLink href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=manageDirectorySearchEngine&id=${id}'
-            title='#i18n{directories.modify_directory.directorySearchEngineTabName}' />
     </@tabList>
     <@tabContent>
         <@box>
-            <@boxHeader boxTools=true >
-            <@aButton href="jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=createDirectoryResponse&id=${id}" 
-                title='#i18n{directories.buttonAddResponse}' />
-                </@boxHeader>
+            <@boxHeader boxTools=true>
+                <@aButton
+                    href="jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=createDirectoryResponse&id_directory=${id_directory}"
+                    title='#i18n{directories.manage_directories.labelAddResponse}' />
+            </@boxHeader>
             <@boxBody>
-                <@tform class='form-inline' action='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp'>
                     <@table>
                         <thead>
-                            <tr>
-                                <th>
-                                    hello
-                                </th>
-                            </tr>
+                            <@tr>
+                                <@th>
+                                    #i18n{directories.manage_directory_entity.idEntity}
+                                </@th>
+                                <@th>
+                                    #i18n{directories.manage_directory_entity.creator}
+                                </@th>
+                                <@th>
+                                    #i18n{directories.manage_directory_entity.dateCreation}
+                                </@th>
+                                <@th>
+                                    #i18n{directories.manage_directory_entity.modificator}
+                                </@th>
+                                <@th>
+                                    #i18n{directories.manage_directory_entity.dateUpdate}
+                                </@th>
+                                <@th>
+                                    Actions
+                                </@th>
+                            </@tr>
                         </thead>
                         <tbody>
+                            <#list list_directory_entity as entity>
+                                <@tr>
+                                    <@td>
+                                        ${entity.id}
+                                    </@td>
+
+                                    <@td>
+                                        ${entity.userAdmin( entity.idCreator ).firstName} ${entity.userAdmin(
+                                        entity.idCreator ).lastName}
+                                    </@td>
+                                    <@td>
+                                        ${entity.creation}
+                                    </@td>
+                                    <@td>
+                                        <#if entity.idModificator !=0>
+                                            ${entity.userAdmin( entity.idModificator ).firstName} ${entity.userAdmin(
+                                            entity.idModificator ).lastName}
+                                            <#else>
+                                                -
+                                        </#if>
+                                    </@td>
+                                    <@td>
+                                        ${entity.update!'-'}
+                                    </@td>
+                                    <@td>
+                                        <@aButton
+                                            href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=modifyDirectoryResponse&id_entity=${entity.id}&id_directory=${id_directory}'
+                                            buttonIcon='pencil' />
+                                        <@aButton
+                                            href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?action=confirmRemoveDirectoryResponse&id_entity=${entity.id}&id_directory=${id_directory}'
+                                            buttonIcon='trash' color='danger' />
+                                    </@td>
+                                </@tr>
+                            </#list>
                         </tbody>
                     </@table>
-                </@tform>
             </@boxBody>
         </@box>
     </@tabContent>
 </@tabs>
-
 <script>
-	// fix tabs lutece7
-	const elements = document.querySelectorAll("a");
-	const attr = "data-toggle";
-	elements && elements.forEach(element => {
-		if (element.hasAttribute(attr)) {
-			element.setAttribute(attr, "#")
-		}
-	});
+    // fix tabs lutece7
+    const elements = document.querySelectorAll("a");
+    const attr = "data-toggle";
+    elements && elements.forEach(element => {
+        if (element.hasAttribute(attr)) {
+            element.setAttribute(attr, "#")
+        }
+    });
 </script>

@@ -31,71 +31,81 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.directories.service.upload;
+package fr.paris.lutece.plugins.directories.service.entrytype;
 
+import fr.paris.lutece.plugins.directories.service.upload.DirectoriesAsynchronousUploadHandler;
+import fr.paris.lutece.plugins.genericattributes.business.Entry;
+import fr.paris.lutece.plugins.genericattributes.service.entrytype.AbstractEntryTypeFile;
 import fr.paris.lutece.plugins.genericattributes.service.upload.AbstractGenAttUploadHandler;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 /**
- * DirectoriesAsynchronousUploadHandler.
- * 
- * @see #getFileItems(String, String)
- * @see #removeFileItem(String, String, int)
+ * class EntryTypeImage
  * 
  * @author
- * 
+ *
  */
-public final class DirectoryItemFormAsynchronousUploadHandler extends AbstractGenAttUploadHandler
+public class EntryTypeFile extends AbstractEntryTypeFile
 {
-    private static final String UPLOAD_SUBMIT_PREFIX = "_directories_upload_submit_";
-    private static final String UPLOAD_DELETE_PREFIX = "_directories_upload_delete_";
-    private static final String UPLOAD_CHECKBOX_PREFIX = "_directories_upload_checkbox_";
-    private static final String BEAN_DIRECTORIES_ASYNCHRONOUS_UPLOAD_HANDLER = "directories.directoryItemFormAsynchronousUploadHandler";
-    private static final String HANDLER_NAME = "directoryItemFormAsynchronousUploadHandler";
+    /**
+     * Name of the bean of this service
+     */
+    public static final String BEAN_NAME = "directories.entryTypeFile";
+    private static final String TEMPLATE_CREATE = "admin/plugins/directories/entries/create_entry_type_file.html";
+    private static final String TEMPLATE_MODIFY = "admin/plugins/directories/entries/modify_entry_type_file.html";
+    private static final String TEMPLATE_HTML_CODE_ADMIN = "admin/plugins/directories/entries/fill_entry_type_file.html";
+    private static final String TEMPLATE_HTML_CODE = "skin/plugins/directories/entries/fill_entry_type_file.html";
 
     /**
-     * Get the handler
-     * 
-     * @return the handler
+     * {@inheritDoc}
      */
-    public static DirectoryItemFormAsynchronousUploadHandler getHandler( )
+    @Override
+    public String getTemplateCreate( Entry entry, boolean bDisplayFront )
     {
-        return SpringContextService.getBean( BEAN_DIRECTORIES_ASYNCHRONOUS_UPLOAD_HANDLER );
+        return TEMPLATE_CREATE;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getUploadSubmitPrefix( )
+    protected boolean checkForImages( )
     {
-        return UPLOAD_SUBMIT_PREFIX;
+        return false;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getUploadDeletePrefix( )
+    public String getTemplateModify( Entry entry, boolean bDisplayFront )
     {
-        return UPLOAD_DELETE_PREFIX;
+        return TEMPLATE_MODIFY;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getUploadCheckboxPrefix( )
+    public AbstractGenAttUploadHandler getAsynchronousUploadHandler( )
     {
-        return UPLOAD_CHECKBOX_PREFIX;
+        return DirectoriesAsynchronousUploadHandler.getHandler( );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getHandlerName( )
+    public String getTemplateHtmlForm( Entry entry, boolean bDisplayFront )
     {
-        return HANDLER_NAME;
+        return bDisplayFront ? TEMPLATE_HTML_CODE : TEMPLATE_HTML_CODE_ADMIN;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getUrlDownloadFile( int nResponseId, String strBaseUrl )
+    {
+        return null;
     }
 }

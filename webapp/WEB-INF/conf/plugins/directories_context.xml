@@ -3,7 +3,18 @@
     <bean id="directories.directoryDAO" class="fr.paris.lutece.plugins.directories.business.DirectoryDAO" />
     <bean id="directories.directoryResponseDAO" class="fr.paris.lutece.plugins.directories.business.DirectoryResponseDAO" />
     <bean id="directories.directoryEntityDAO" class="fr.paris.lutece.plugins.directories.business.DirectoryEntityDAO" />
-    <bean id="directories.directoryItemFormAsynchronousUploadHandler" class="fr.paris.lutece.plugins.directories.service.upload.DirectoryItemFormAsynchronousUploadHandler" />
+    <bean id="directories.directoriesAsynchronousUploadHandler" class="fr.paris.lutece.plugins.directories.service.upload.DirectoriesAsynchronousUploadHandler" />
     <bean id="directories.entryService" class="fr.paris.lutece.plugins.directories.service.EntryService" />
     <bean id="directories.entryTypeText" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeText" />
+    <bean id="directories.entryTypeCheckBox" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeCheckBox" />
+    <bean id="directories.entryTypeComment" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeComment" />
+    <bean id="directories.entryTypeDate" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeDate" />
+    <bean id="directories.entryTypeRadioButton" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeRadioButton" />
+    <bean id="directories.entryTypeSelect" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeSelect" />
+    <bean id="directories.entryTypeTextArea" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeTextArea" />
+    <bean id="directories.entryTypeImage" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeImage" />
+    <bean id="directories.entryTypeFile" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeFile" />
+    <bean id="directories.entryTypeMyLuteceAttribute" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeMyLuteceAttribute" />
+    <bean id="directories.entryTypeMyLuteceUserPicker" class="fr.paris.lutece.plugins.directories.service.entrytype.EntryTypeMyLuteceUserPicker" />
+    <bean id="directories.directoriesService" class=" fr.paris.lutece.plugins.directories.service.DirectoriesService" />
 </beans>

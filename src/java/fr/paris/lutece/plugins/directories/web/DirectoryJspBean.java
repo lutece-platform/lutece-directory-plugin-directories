@@ -60,7 +60,7 @@ public class DirectoryJspBean extends AbstractDirectoriesManagerJspBean
     private static final String TEMPLATE_MODIFY_DIRECTORY = "/admin/plugins/directories/modify_directory.html";
 
     // Parameters
-    private static final String PARAMETER_ID_DIRECTORY = "id";
+    private static final String PARAMETER_ID_DIRECTORY = "id_directory";
 
     // Properties for page titles
     private static final String PROPERTY_PAGE_TITLE_MANAGE_DIRECTORIES = "directories.manage_directories.pageTitle";

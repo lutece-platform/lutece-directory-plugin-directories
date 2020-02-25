@@ -2,15 +2,14 @@
 <@tabs>
 	<@tabList>
 		<@tabLink active=true
-			href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=modifyDirectory&id=${directory.id}'
+			href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=modifyDirectory&id_directory=${directory.id}'
 			title='#i18n{directories.modify_directory.directoryTabName}' />
 		<@tabLink
-			href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=manageDirectoryEntries&id=${directory.id}'
+			href='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp?view=manageDirectoryEntries&id_directory=${directory.id}'
 			title='#i18n{directories.modify_directory.directoryEntriesTabName}' />
-			<@tabLink href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id=${directory.id}'
+		<@tabLink
+			href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id_directory=${directory.id}'
 			title='#i18n{directories.manage_directory_response.directoryResponseTabName}' />
-			<@tabLink href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=manageDirectorySearchEngine&id=${directory.id}'
-			title='#i18n{directories.modify_directory.directorySearchEngineTabName}' />
 	</@tabList>
 	<@tabContent>
 		<@box>
@@ -19,7 +18,7 @@
 				<@tform class="form-horizontal" method="post" name="modify_directory"
 					action="jsp/admin/plugins/directories/ManageDirectories.jsp">
 					<@messages errors=errors />
-					<input type="hidden" id="id" name="id" value="${directory.id}" />
+					<@input type="hidden" id="id_directory" name="id_directory" value="${directory.id}" />
 					<@formGroup labelKey='#i18n{directories.modify_directory.labelName}'
 						helpKey='#i18n{directories.modify_directory.labelName.help}' mandatory=true>
 						<@input type='text' name='name' value='${directory.name}' />
@@ -39,13 +38,10 @@
 		</@box>
 	</@tabContent>
 </@tabs>
-
 <script>
 	// fix tabs with wrong macro
-
 	const elements = document.querySelectorAll("a");
 	const attr = "data-toggle";
-
 	elements && elements.forEach(element => {
 		if (element.hasAttribute(attr)) {
 			element.setAttribute(attr, "#")
