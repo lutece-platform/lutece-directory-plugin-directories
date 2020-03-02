@@ -1,8 +1,17 @@
 <#include "/admin/plugins/directories/commons.html" />
 <#assign idName=buildEntryName( entry, entry_iteration_number )>
   <#assign fieldMyLuteceAttributeName=getFieldByCode( entry, "attribute_name" )>
+    <#if list_responses?has_content>
+      <#list list_responses as response>
+        <#if response.entry.idEntry==entry.idEntry>
+          <#if response.toStringValueResponse??>
+            <#assign attrValue=response.toStringValueResponse>
+          </#if>
+          </#if>
+      </#list>
+    </#if>
     <@formGroup labelFor='${idName}' labelKey='${entry.title}'>
       <@input type='text' name='${idName}' id='${idName}'
         params='myLuteceAttributeId="attribute_${fieldMyLuteceAttributeName.value!}" searchEngine="picker_attribute${entry.code!}"'
-         value='' />
+        value='${attrValue!""}' />
     </@formGroup>
