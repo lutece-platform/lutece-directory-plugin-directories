@@ -19,66 +19,71 @@
                     title='#i18n{directories.manage_directories.labelAddResponse}' />
             </@boxHeader>
             <@boxBody>
-                    <@table>
-                        <thead>
+                <@table>
+                    <thead>
+                        <@tr>
+                            <@th>
+                                #i18n{directories.manage_directory_entity.idEntity}
+                            </@th>
+                            <@th>
+                                #i18n{directories.manage_directory_entity.title}
+                            </@th>
+                            <@th>
+                                #i18n{directories.manage_directory_entity.creator}
+                            </@th>
+                            <@th>
+                                #i18n{directories.manage_directory_entity.dateCreation}
+                            </@th>
+                            <@th>
+                                #i18n{directories.manage_directory_entity.modificator}
+                            </@th>
+                            <@th>
+                                #i18n{directories.manage_directory_entity.dateUpdate}
+                            </@th>
+                            <@th>
+                                Actions
+                            </@th>
+                        </@tr>
+                    </thead>
+                    <tbody>
+                        <#list list_directory_entity as entity>
                             <@tr>
-                                <@th>
-                                    #i18n{directories.manage_directory_entity.idEntity}
-                                </@th>
-                                <@th>
-                                    #i18n{directories.manage_directory_entity.creator}
-                                </@th>
-                                <@th>
-                                    #i18n{directories.manage_directory_entity.dateCreation}
-                                </@th>
-                                <@th>
-                                    #i18n{directories.manage_directory_entity.modificator}
-                                </@th>
-                                <@th>
-                                    #i18n{directories.manage_directory_entity.dateUpdate}
-                                </@th>
-                                <@th>
-                                    Actions
-                                </@th>
+                                <@td>
+                                    ${entity.id}
+                                </@td>
+                                <@td>
+                                    ${entity.title!''}
+                                </@td>
+                                <@td>
+                                    ${entity.userAdmin( entity.idCreator ).firstName} ${entity.userAdmin(
+                                    entity.idCreator ).lastName}
+                                </@td>
+                                <@td>
+                                    ${entity.creation}
+                                </@td>
+                                <@td>
+                                    <#if entity.idModificator !=0>
+                                        ${entity.userAdmin( entity.idModificator ).firstName} ${entity.userAdmin(
+                                        entity.idModificator ).lastName}
+                                        <#else>
+                                            -
+                                    </#if>
+                                </@td>
+                                <@td>
+                                    ${entity.update!'-'}
+                                </@td>
+                                <@td>
+                                    <@aButton
+                                        href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=modifyDirectoryResponse&id_entity=${entity.id}&id_directory=${id_directory}'
+                                        buttonIcon='pencil' />
+                                    <@aButton
+                                        href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?action=confirmRemoveDirectoryResponse&id_entity=${entity.id}&id_directory=${id_directory}'
+                                        buttonIcon='trash' color='danger' />
+                                </@td>
                             </@tr>
-                        </thead>
-                        <tbody>
-                            <#list list_directory_entity as entity>
-                                <@tr>
-                                    <@td>
-                                        ${entity.id}
-                                    </@td>
-
-                                    <@td>
-                                        ${entity.userAdmin( entity.idCreator ).firstName} ${entity.userAdmin(
-                                        entity.idCreator ).lastName}
-                                    </@td>
-                                    <@td>
-                                        ${entity.creation}
-                                    </@td>
-                                    <@td>
-                                        <#if entity.idModificator !=0>
-                                            ${entity.userAdmin( entity.idModificator ).firstName} ${entity.userAdmin(
-                                            entity.idModificator ).lastName}
-                                            <#else>
-                                                -
-                                        </#if>
-                                    </@td>
-                                    <@td>
-                                        ${entity.update!'-'}
-                                    </@td>
-                                    <@td>
-                                        <@aButton
-                                            href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=modifyDirectoryResponse&id_entity=${entity.id}&id_directory=${id_directory}'
-                                            buttonIcon='pencil' />
-                                        <@aButton
-                                            href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?action=confirmRemoveDirectoryResponse&id_entity=${entity.id}&id_directory=${id_directory}'
-                                            buttonIcon='trash' color='danger' />
-                                    </@td>
-                                </@tr>
-                            </#list>
-                        </tbody>
-                    </@table>
+                        </#list>
+                    </tbody>
+                </@table>
             </@boxBody>
         </@box>
     </@tabContent>

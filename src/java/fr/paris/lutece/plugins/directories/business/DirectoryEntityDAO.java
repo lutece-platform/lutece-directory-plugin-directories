@@ -46,12 +46,12 @@ import java.util.List;
 public final class DirectoryEntityDAO implements IDirectoryEntityDAO
 {
     // Constants
-    private static final String SQL_QUERY_SELECT = "SELECT id_reference, id_directory, id_creator, date_creation, id_modificator, date_update  FROM directories_directory_entity WHERE id_reference = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directories_directory_entity ( id_directory, id_creator, date_creation ) VALUES ( ?, ?, ? ) ";
+    private static final String SQL_QUERY_SELECT = "SELECT id_reference, id_directory, id_creator, date_creation, id_modificator, date_update, title  FROM directories_directory_entity WHERE id_reference = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directories_directory_entity ( id_directory, id_creator, date_creation, title ) VALUES ( ?, ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directories_directory_entity WHERE id_reference = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE directories_directory_entity SET id_reference = ?, id_directory = ?, id_creator = ?, date_creation = ?,id_modificator = ?, date_update = ? WHERE id_reference = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_reference, id_directory, id_creator, date_creation, id_modificator, date_update FROM directories_directory_entity";
-    private static final String SQL_QUERY_SELECTALL_BY_DIRECTORY = "SELECT id_reference, id_directory, id_creator, date_creation, id_modificator, date_update FROM directories_directory_entity WHERE id_directory = ?";
+    private static final String SQL_QUERY_UPDATE = "UPDATE directories_directory_entity SET id_reference = ?, id_directory = ?, id_creator = ?, date_creation = ?,id_modificator = ?, date_update = ?, title = ? WHERE id_reference = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_reference, id_directory, id_creator, date_creation, id_modificator, date_update, title FROM directories_directory_entity";
+    private static final String SQL_QUERY_SELECTALL_BY_DIRECTORY = "SELECT id_reference, id_directory, id_creator, date_creation, id_modificator, date_update, title FROM directories_directory_entity WHERE id_directory = ?";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_reference FROM directories_directory_entity";
 
     /**
@@ -66,6 +66,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
             daoUtil.setInt( nIndex++, directoryEntity.getIdDirectory( ) );
             daoUtil.setInt( nIndex++, directoryEntity.getIdCreator( ) );
             daoUtil.setTimestamp( nIndex++, directoryEntity.getCreation( ) );
+            daoUtil.setString( nIndex++, directoryEntity.getTitle( ) );
             daoUtil.executeUpdate( );
             if ( daoUtil.nextGeneratedKey( ) )
             {
@@ -95,6 +96,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
                 directoryEntity.setDateCreation( daoUtil.getTimestamp( nIndex++ ) );
                 directoryEntity.setIdModificator( daoUtil.getInt( nIndex++ ) );
                 directoryEntity.setUpdate( daoUtil.getTimestamp( nIndex++ ) );
+                directoryEntity.setTitle( daoUtil.getString( nIndex++ ) );
             }
         }
         return directoryEntity;
@@ -128,6 +130,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
             daoUtil.setTimestamp( nIndex++, directoryEntity.getCreation( ) );
             daoUtil.setInt( nIndex++, directoryEntity.getIdModificator( ) );
             daoUtil.setTimestamp( nIndex++, directoryEntity.getUpdate( ) );
+            daoUtil.setString( nIndex++, directoryEntity.getTitle( ) );
             daoUtil.setInt( nIndex, directoryEntity.getId( ) );
             daoUtil.executeUpdate( );
         }
@@ -153,6 +156,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
                 directoryEntity.setDateCreation( daoUtil.getTimestamp( nIndex++ ) );
                 directoryEntity.setIdModificator( daoUtil.getInt( nIndex++ ) );
                 directoryEntity.setUpdate( daoUtil.getTimestamp( nIndex++ ) );
+                directoryEntity.setTitle( daoUtil.getString( nIndex++ ) );
                 directoryEntityList.add( directoryEntity );
             }
         }
@@ -216,6 +220,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
                 directoryEntity.setDateCreation( daoUtil.getTimestamp( nIndex++ ) );
                 directoryEntity.setIdModificator( daoUtil.getInt( nIndex++ ) );
                 directoryEntity.setUpdate( daoUtil.getTimestamp( nIndex++ ) );
+                directoryEntity.setTitle( daoUtil.getString( nIndex++ ) );
                 directoryEntityList.add( directoryEntity );
             }
         }

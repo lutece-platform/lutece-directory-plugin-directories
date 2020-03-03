@@ -54,6 +54,7 @@ public class DirectoryEntity implements Serializable
     private Timestamp _dateCreation;
     private int _nIdModificator;
     private Timestamp _dateUpdate;
+    private String _strTitle;
 
     /**
      * Returns the Id
@@ -203,5 +204,26 @@ public class DirectoryEntity implements Serializable
     public AdminUser getUserAdmin( int nUserId )
     {
         return AdminUserHome.findByPrimaryKey( nUserId );
+    }
+
+     /**
+     * Returns the title
+     * 
+     * @return The title
+     */
+    public String getTitle( )
+    {
+        return _strTitle;
+    }
+
+    /**
+     * Sets the title
+     * 
+     * @param strTitle
+     *            The title
+     */
+    public void setTitle( String strTitle )
+    {
+        _strTitle = strTitle;
     }
 }

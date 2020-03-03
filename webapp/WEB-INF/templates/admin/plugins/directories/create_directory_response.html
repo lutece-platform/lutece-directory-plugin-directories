@@ -5,10 +5,15 @@
             <@boxHeader title='#i18n{directories.createResponse.title}' />
             <@boxBody>
                 <@tform id="create_directory_response"
-                    action='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp' method='post'  params='enctype="multipart/form-data"'>
+                    action='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp' method='post'
+                    params='enctype="multipart/form-data"'>
                     <@input type="hidden" id="id_directory" name="id_directory" value="${id_directory}" />
                     <@input name="action" value="createDirectoryResponse" type="hidden" />
                     <fieldset>
+                        <@formGroup labelFor='entity_title' labelKey='#i18n{directories.manage_directory_entity.title}' mandatory=true>
+                            <@input type='text' name='entity_title' id='entity_title'
+                                value="${entity_title!''}" />
+                        </@formGroup>
                         ${form_html!}
                     </fieldset>
                     <@formGroup>

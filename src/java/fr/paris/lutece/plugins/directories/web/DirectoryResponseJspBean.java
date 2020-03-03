@@ -107,7 +107,10 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
     // Parameters
     private static final String PARAMETER_ID_DIRECTORY = "id_directory";
     private static final String PARAMETER_ID_ENTITY = "id_entity";
+    private static final String PARAMETER_ENTITY_TITLE = "entity_title";
     private static final String MARK_LIST_RESPONSES = "list_responses";
+    private static final String MARK_ENTITY = "entity";
+
 
     /**
      * Build the Manage View
@@ -138,7 +141,7 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
      * @return The HTML code to display or the next URL to redirect to
      */
     @View( VIEW_CREATE_DIRECTORY_RESPONSE )
-    public String getModifyDirectoryResponse( HttpServletRequest request )
+    public String getCreateDirectoryResponse( HttpServletRequest request )
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = Integer.parseInt( strIdDirectory );
@@ -164,12 +167,13 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
      * @return The HTML code to display or the next URL to redirect to
      */
     @View( VIEW_MODIFY_DIRECTORY_RESPONSE )
-    public String getCreateDirectoryResponse( HttpServletRequest request )
+    public String getModifyDirectoryResponse( HttpServletRequest request )
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = Integer.parseInt( strIdDirectory );
         String strIdEntity = request.getParameter( PARAMETER_ID_ENTITY );
         int nIdEntity = Integer.parseInt( strIdEntity );
+        DirectoryEntity entity = DirectoryEntityHome.findByPrimaryKey( nIdEntity );
         Map<String, Object> model = getModel( );
         List<Entry> listEntryFirstLevel = EntryService.getDirectoryEntryList( nIdDirectory, true );
         StringBuffer strBuffer = new StringBuffer( );
@@ -199,6 +203,7 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
         }
         model.put( PARAMETER_ID_DIRECTORY, strIdDirectory );
         model.put( PARAMETER_ID_ENTITY, strIdEntity );
+        model.put( PARAMETER_ENTITY_TITLE, entity.getTitle( ) );
         model.put( DirectoriesConstants.MARK_STR_ENTRY, strBuffer.toString( ) );
         HtmlTemplate templateForm = AppTemplateService.getTemplate( TEMPLATE_HTML_CODE_FORM_ADMIN, getLocale( ), model );
         model.put( DirectoriesConstants.MARK_FORM_HTML, templateForm.getHtml( ) );
@@ -216,6 +221,7 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
     public String doCreateDirectoryResponse( HttpServletRequest request )
     {
         int nIdDirectory = Integer.parseInt( request.getParameter( PARAMETER_ID_DIRECTORY ) );
+        String strEntityTitle = request.getParameter( PARAMETER_ENTITY_TITLE );
         List<Entry> listEntryFirstLevel = EntryService.getDirectoryEntryList( nIdDirectory, true );
         List<Response> listResponse = new ArrayList<>( );
         for ( Entry entry : listEntryFirstLevel )
@@ -228,6 +234,7 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
         entity.setIdDirectory( nIdDirectory );
         entity.setDateCreation( Timestamp.valueOf( LocalDateTime.now( ) ) );
         entity.setIdCreator( currentUser.getUserId( ) );
+        entity.setTitle( strEntityTitle );
         DirectoryEntityHome.create( entity );
         for ( Response response : listResponse )
         {
@@ -256,6 +263,7 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
     {
         int nIdDirectory = Integer.parseInt( request.getParameter( PARAMETER_ID_DIRECTORY ) );
         String strIdEntity = request.getParameter( PARAMETER_ID_ENTITY );
+        String strEntityTitle = request.getParameter( PARAMETER_ENTITY_TITLE );
         int nIdEntity = Integer.parseInt( strIdEntity );
         List<Entry> listEntryFirstLevel = EntryService.getDirectoryEntryList( nIdDirectory, true );
         List<Response> listResponse = new ArrayList<>( );
@@ -281,6 +289,7 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
         }
         AdminUser currentUser = AdminUserService.getAdminUser( request );
         DirectoryEntity entity = DirectoryEntityHome.findByPrimaryKey( nIdEntity );
+        entity.setTitle( strEntityTitle );
         entity.setUpdate( Timestamp.valueOf( LocalDateTime.now( ) ) );
         entity.setIdModificator( currentUser.getUserId( ) );
         DirectoryEntityHome.update( entity );

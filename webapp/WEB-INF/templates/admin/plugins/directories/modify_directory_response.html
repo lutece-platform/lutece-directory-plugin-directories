@@ -11,6 +11,10 @@
                     <@input type="hidden" id="id_entity" name="id_entity" value="${id_entity!''}" />
                     <@input name="action" value="modifyDirectoryResponse" type="hidden" />
                     <fieldset>
+                        <@formGroup labelFor='entity_title' labelKey='#i18n{directories.manage_directory_entity.title}' mandatory=true>
+                            <@input type='text' name='entity_title' id='entity_title'
+                                value="${entity_title!''}" />
+                        </@formGroup>
                         ${form_html!}
                     </fieldset>
                     <@formGroup>

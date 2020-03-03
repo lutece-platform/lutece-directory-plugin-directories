@@ -30,5 +30,6 @@ id_creator int NOT NULL,
 date_creation timestamp NULL,
 id_modificator int DEFAULT NULL,
 date_update timestamp NULL,
+title long varchar NOT NULL,
 PRIMARY KEY (id_reference)
 );
