@@ -30,10 +30,13 @@
     </admin-features>
     <!-- XPages parameters -->
     <applications>
+        <application>
+            <application-id>directories</application-id>
+            <application-class>fr.paris.lutece.plugins.directories.web.DirectoriesApp</application-class>
+        </application>
     </applications>
     <!-- Search Indexer Service -->
-    <search-indexers>
-    </search-indexers>
+    <search-indexers></search-indexers>
     <!-- Portlet parameters -->
     <portlets></portlets>
 </plug-in>

@@ -109,8 +109,6 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
     private static final String PARAMETER_ID_ENTITY = "id_entity";
     private static final String PARAMETER_ENTITY_TITLE = "entity_title";
     private static final String MARK_LIST_RESPONSES = "list_responses";
-    private static final String MARK_ENTITY = "entity";
-
 
     /**
      * Build the Manage View
