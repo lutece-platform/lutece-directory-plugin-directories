@@ -48,6 +48,8 @@ public final class EntryTypeDate extends AbstractEntryTypeDate
     private static final String TEMPLATE_CREATE = "admin/plugins/directories/entries/create_entry_type_date.html";
     private static final String TEMPLATE_MODIFY = "admin/plugins/directories/entries/modify_entry_type_date.html";
     private static final String TEMPLATE_HTML_CODE = "skin/plugins/directories/entries/fill_entry_type_date.html";
+    private static final String TEMPLATE_READONLY_FRONTOFFICE = "skin/plugins/directories/entries/readonly_entry_type_date.html";
+    private static final String TEMPLATE_READONLY_BACKOFFICE = "admin/plugins/directories/entries/readonly_entry_type_date.html";
 
     /**
      * {@inheritDoc}
@@ -76,4 +78,17 @@ public final class EntryTypeDate extends AbstractEntryTypeDate
         return TEMPLATE_CREATE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTemplateEntryReadOnly( boolean bDisplayFront )
+    {
+        if ( bDisplayFront )
+        {
+            return TEMPLATE_READONLY_FRONTOFFICE;
+        }
+
+        return TEMPLATE_READONLY_BACKOFFICE;
+    }
 }

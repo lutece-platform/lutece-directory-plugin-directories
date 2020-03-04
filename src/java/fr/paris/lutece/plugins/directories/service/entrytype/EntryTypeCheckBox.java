@@ -48,6 +48,8 @@ public final class EntryTypeCheckBox extends AbstractEntryTypeCheckBox
     private static final String TEMPLATE_HTML_CODE_ADMIN = "admin/plugins/directories/entries/fill_entry_type_check_box.html";
     private static final String TEMPLATE_HTML_CODE = "skin/plugins/directories/entries/fill_entry_type_check_box.html";
     private static final String TEMPLATE_CREATE = "admin/plugins/directories/entries/create_entry_type_check_box.html";
+    private static final String TEMPLATE_READONLY_FRONTOFFICE = "skin/plugins/directories/entries/readonly_entry_type_check_box.html";
+    private static final String TEMPLATE_READONLY_BACKOFFICE = "admin/plugins/directories/entries/readonly_entry_type_check_box.html";
 
     /**
      * {@inheritDoc}
@@ -74,6 +76,20 @@ public final class EntryTypeCheckBox extends AbstractEntryTypeCheckBox
     public String getTemplateHtmlForm( Entry entry, boolean bDisplayFront )
     {
         return bDisplayFront ? TEMPLATE_HTML_CODE : TEMPLATE_HTML_CODE_ADMIN;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTemplateEntryReadOnly( boolean bDisplayFront )
+    {
+        if ( bDisplayFront )
+        {
+            return TEMPLATE_READONLY_FRONTOFFICE;
+        }
+
+        return TEMPLATE_READONLY_BACKOFFICE;
     }
 
 }

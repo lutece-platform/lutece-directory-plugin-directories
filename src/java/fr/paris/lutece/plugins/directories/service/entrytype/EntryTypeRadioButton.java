@@ -66,6 +66,8 @@ public final class EntryTypeRadioButton extends AbstractEntryTypeRadioButton
     private static final String TEMPLATE_CREATE = "admin/plugins/directories/entries/create_entry_type_radio_button.html";
     private static final String TEMPLATE_HTML_CODE_ADMIN = "admin/plugins/directories/entries/fill_entry_type_radio_button.html";
     private static final String TEMPLATE_MODIFY = "admin/plugins/directories/entries/modify_entry_type_radio_button.html";
+    private static final String TEMPLATE_READONLY_FRONTOFFICE = "skin/plugins/directories/entries/readonly_entry_type_radio_button.html";
+    private static final String TEMPLATE_READONLY_BACKOFFICE = "admin/plugins/directories/entries/readonly_entry_type_radio_button.html";
 
     /**
      * {@inheritDoc}
@@ -209,4 +211,16 @@ public final class EntryTypeRadioButton extends AbstractEntryTypeRadioButton
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTemplateEntryReadOnly( boolean bDisplayFront )
+    {
+        if ( bDisplayFront )
+        {
+            return TEMPLATE_READONLY_FRONTOFFICE;
+        }
+        return TEMPLATE_READONLY_BACKOFFICE;
+    }
 }

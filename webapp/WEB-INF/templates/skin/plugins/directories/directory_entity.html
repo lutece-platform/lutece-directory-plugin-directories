@@ -1,20 +1,8 @@
 <h3>${entity.title!''}</h3>
-<#list entity.responses as response>
-    <div>
-        <strong>${response.entry.title}</strong> : ${response.responseValue!''}
-        <#if response.file??>
-            <a
-                href="jsp/site/plugins/directories/DoDownloadFile.jsp?id_file=${response.file.idFile}&id_response=${response.idResponse}">
-                <#if response.entry.entryType.beanName="directories.entryTypeImage">
-                    <img src="jsp/site/plugins/directories/DoDownloadFile.jsp?id_file=${response.file.idFile}&id_response=${response.idResponse}"
-                        <#if response.entry.displayWidth?? && response.entry.displayWidth!=-1>
-                    width="${response.entry.displayWidth}"</#if>
-                <#if response.entry.displayHeight?? && response.entry.displayHeight!=-1>
-                    height="${response.entry.displayHeight}" </#if> />
-                <#else>
-                    ${response.file.idFile}
-        </#if>
-        </a>
-        </#if>
-    </div>
-</#list>
+<@row>
+    <@columns>
+        <@tform>
+                ${form_html!}
+        </@tform>
+    </@columns>
+</@row>

@@ -48,6 +48,8 @@ public class EntryTypeText extends AbstractEntryTypeText
     private static final String TEMPLATE_HTML_CODE_ADMIN = "admin/plugins/directories/entries/fill_entry_type_text.html";
     private static final String TEMPLATE_HTML_CODE = "skin/plugins/directories/entries/fill_entry_type_text.html";
     private static final String TEMPLATE_CREATE = "admin/plugins/directories/entries/create_entry_type_text.html";
+    private static final String TEMPLATE_READONLY_BACKOFFICE = "admin/plugins/directories/entries/readonly_entry_type_text.html";
+    private static final String TEMPLATE_READONLY_FRONTOFFICE = "skin/plugins/directories/entries/readonly_entry_type_text.html";
 
     /**
      * {@inheritDoc}
@@ -74,5 +76,18 @@ public class EntryTypeText extends AbstractEntryTypeText
     public String getTemplateCreate( Entry entry, boolean bDisplayFront )
     {
         return TEMPLATE_CREATE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTemplateEntryReadOnly( boolean bDisplayFront )
+    {
+        if ( bDisplayFront )
+        {
+            return TEMPLATE_READONLY_FRONTOFFICE;
+        }
+        return TEMPLATE_READONLY_BACKOFFICE;
     }
 }

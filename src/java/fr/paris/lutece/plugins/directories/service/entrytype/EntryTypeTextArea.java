@@ -49,6 +49,8 @@ public final class EntryTypeTextArea extends AbstractEntryTypeTextArea
     private static final String TEMPLATE_CREATE = "admin/plugins/directories/entries/create_entry_type_text_area.html";
     private static final String TEMPLATE_HTML_CODE = "skin/plugins/directories/entries/fill_entry_type_text_area.html";
     private static final String TEMPLATE_HTML_CODE_ADMIN = "admin/plugins/directories/entries/fill_entry_type_text_area.html";
+    private static final String TEMPLATE_READONLY_FRONTOFFICE = "skin/plugins/directories/entries/readonly_entry_type_text_area.html";
+    private static final String TEMPLATE_READONLY_BACKOFFICE = "admin/plugins/directories/entries/readonly_entry_type_text_area.html";
 
     /**
      * {@inheritDoc}
@@ -75,5 +77,18 @@ public final class EntryTypeTextArea extends AbstractEntryTypeTextArea
     public String getTemplateModify( Entry entry, boolean bDisplayFront )
     {
         return TEMPLATE_MODIFY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTemplateEntryReadOnly( boolean bDisplayFront )
+    {
+        if ( bDisplayFront )
+        {
+            return TEMPLATE_READONLY_FRONTOFFICE;
+        }
+        return TEMPLATE_READONLY_BACKOFFICE;
     }
 }

@@ -65,10 +65,10 @@ public class EntryTypeImage extends AbstractEntryTypeFile
     private static final String TEMPLATE_HTML_CODE = "skin/plugins/directories/entries/fill_entry_type_image.html";
     private static final String TEMPLATE_HTML_CODE_ADMIN = "admin/plugins/directories/entries/fill_entry_type_image.html";
     private static final String TEMPLATE_FILE_IMAGE = "skin/plugins/directories/entries/recap_entry_type_image.html";
-
     private static final String TEMPLATE_CREATE = "admin/plugins/directories/entries/create_entry_type_file.html";
     private static final String TEMPLATE_MODIFY = "admin/plugins/directories/entries/modify_entry_type_file.html";
-
+    private static final String TEMPLATE_READONLY_FRONTOFFICE = "skin/plugins/directories/entries/readonly_entry_type_image.html";
+    private static final String TEMPLATE_READONLY_BACKOFFICE = "admin/plugins/directories/entries/readonly_entry_type_image.html";
     public static final String BEAN_NAME = "directories.entryTypeImage";
     private static final String MARK_FILE_NAME = "file_name";
     private static final String MARK_IMG_URL = "img_url";
@@ -125,6 +125,9 @@ public class EntryTypeImage extends AbstractEntryTypeFile
         return StringUtils.EMPTY;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateCreate( Entry entry, boolean bDisplayFront )
     {
@@ -132,6 +135,9 @@ public class EntryTypeImage extends AbstractEntryTypeFile
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateModify( Entry entry, boolean bDisplayFront )
     {
@@ -139,11 +145,28 @@ public class EntryTypeImage extends AbstractEntryTypeFile
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AbstractGenAttUploadHandler getAsynchronousUploadHandler( )
     {
         return DirectoriesAsynchronousUploadHandler.getHandler( );
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTemplateEntryReadOnly( boolean bDisplayFront )
+    {
+        if ( bDisplayFront )
+        {
+            return TEMPLATE_READONLY_FRONTOFFICE;
+        }
+
+        return TEMPLATE_READONLY_BACKOFFICE;
     }
 
 }

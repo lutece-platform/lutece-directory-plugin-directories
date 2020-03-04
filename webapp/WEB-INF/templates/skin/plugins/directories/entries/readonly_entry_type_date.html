@@ -1,0 +1,10 @@
+<#if !entry.onlyDisplayInBack>
+<@formGroup labelFor='' labelKey='${entry.title!""}'>
+	    <#if list_responses?has_content>
+	        <#assign first = true>
+	        <#list list_responses as response>
+	                ${response.toStringValueResponse!''}
+	        </#list>
+	    </#if>
+</@formGroup>
+</#if>

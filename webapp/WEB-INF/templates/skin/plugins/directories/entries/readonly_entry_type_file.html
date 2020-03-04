@@ -1,0 +1,15 @@
+<#if !entry.onlyDisplayInBack>
+	<@formGroup labelFor='' labelKey='${entry.title!""}'>
+		<#if list_responses?has_content>
+			<#assign first=true>
+				<#list list_responses as response>
+					<#if response.file?exists>
+						<a
+							href="jsp/site/plugins/directories/DoDownloadFile.jsp?id_file=${response.file.idFile}&id_response=${response.idResponse}">
+							${response.file.title} (${response.file.size} O)
+						</a>
+					</#if>
+				</#list>
+		</#if>
+	</@formGroup>
+</#if>

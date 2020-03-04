@@ -1,0 +1,19 @@
+<#if !entry.onlyDisplayInBack>
+	<@formGroup labelFor='' labelKey='${entry.title!""}'>
+		<#if list_responses?has_content>
+			<#assign first=true>
+				<#list list_responses as response>
+					<#if response.file?exists>
+						<a href="jsp/site/plugins/directories/DoDownloadFile.jsp?id_file=${response.file.idFile}&id_response=${response.idResponse}"
+							title="${response.file.title} (${response.file.size} O)">
+							<img src="jsp/site/plugins/directories/DoDownloadFile.jsp?id_file=${response.file.idFile}&id_response=${response.idResponse}"
+								<#if response.entry.displayWidth?? && response.entry.displayWidth!=-1>
+							width="${response.entry.displayWidth}"</#if>
+					<#if response.entry.displayHeight?? && response.entry.displayHeight!=-1>
+						height="${response.entry.displayHeight}" </#if> />
+					</a>
+		</#if>
+		</#list>
+</#if>
+</@formGroup>
+</#if>

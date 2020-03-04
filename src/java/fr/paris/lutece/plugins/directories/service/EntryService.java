@@ -72,6 +72,7 @@ public final class EntryService extends RemovalListenerService implements Serial
     private static final String MARK_ENTRY = "entry";
     private static final String RESOURCE_TYPE = "DIRECTORIES";
     private static final String MARK_UPLOAD_HANDLER = "uploadHandler";
+    private static final String MARK_ENTRY_TYPE_SERVICE = "entryTypeService";
 
     /**
      * Get an instance of the service.
@@ -115,6 +116,43 @@ public final class EntryService extends RemovalListenerService implements Serial
             model.put( MARK_UPLOAD_HANDLER, ( (AbstractEntryTypeUpload) entryTypeService ).getAsynchronousUploadHandler( ) );
         }
         template = AppTemplateService.getTemplate( entryTypeService.getTemplateHtmlForm( entry, bDisplayFront ), locale, model );
+        stringBuffer.append( template.getHtml( ) );
+    }
+
+    /**
+     * Get the html part of the additional entry of the form.
+     * 
+     * @param nIdEntry
+     *            the entry id
+     * @param stringBuffer
+     *            the string buffer
+     * @param locale
+     * @param bDisplayFront
+     * @param request
+     */
+    public static void getHtmlEntryReadOnly( Map<String, Object> model, int nIdEntry, StringBuffer stringBuffer, Locale locale, boolean bDisplayFront,
+            HttpServletRequest request )
+    {
+        HtmlTemplate template;
+        Entry entry = EntryHome.findByPrimaryKey( nIdEntry );
+        List<Field> listField = new ArrayList<>( entry.getFields( ).size( ) );
+        for ( Field field : entry.getFields( ) )
+        {
+            field = FieldHome.findByPrimaryKey( field.getIdField( ) );
+            listField.add( field );
+        }
+        entry.setFields( listField );
+        model.put( MARK_ENTRY, entry );
+        model.put( MARK_LOCALE, locale );
+        IEntryTypeService entryTypeService = EntryTypeServiceManager.getEntryTypeService( entry );
+        model.put( MARK_ENTRY_TYPE_SERVICE, entryTypeService );
+
+        // If the entry type is a file, we add the
+        if ( entryTypeService instanceof AbstractEntryTypeUpload )
+        {
+            model.put( MARK_UPLOAD_HANDLER, ( (AbstractEntryTypeUpload) entryTypeService ).getAsynchronousUploadHandler( ) );
+        }
+        template = AppTemplateService.getTemplate( entryTypeService.getTemplateEntryReadOnly( bDisplayFront ), locale, model );
         stringBuffer.append( template.getHtml( ) );
     }
 

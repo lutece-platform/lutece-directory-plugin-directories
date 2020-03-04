@@ -1,0 +1,15 @@
+<#if !entry.onlyDisplayInBack>
+	<@formGroup labelFor='' labelKey='${entry.title!""}'>
+		<#if list_responses?has_content>
+			<#list list_responses as response>
+				<div>
+					<#if entryTypeService.getResponseValueForRecap(null, null, response, null)??>
+						${entryTypeService.getResponseValueForRecap(null, null, response, null)}
+						<#else>
+							${response.toStringValueResponse!''}
+					</#if>
+				</div>
+			</#list>
+		</#if>
+	</@formGroup>
+</#if>
