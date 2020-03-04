@@ -53,6 +53,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     private static final String SQL_QUERY_SELECTALL = "SELECT id_directory_response, id_directory, id_response, id_entity FROM directories_directory_response";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_directory_response FROM directories_directory_response";
     private static final String SQL_QUERY_SELECTALL_BY_ENTITY = "SELECT id_directory_response, id_directory, id_response, id_entity FROM directories_directory_response WHERE id_entity = ?";
+    private static final String SQL_QUERY_SELECT_BY_ID_RESPONSE = "SELECT id_directory_response, id_directory, id_response, id_entity FROM directories_directory_response WHERE id_response = ?";
 
     /**
      * {@inheritDoc }
@@ -213,4 +214,29 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
         }
         return directoryResponseList;
     }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public DirectoryResponse selectDirectoryResponseByIdResponse( int nKey, Plugin plugin )
+    {
+        DirectoryResponse directoryResponse = null;
+        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_ID_RESPONSE, plugin ) )
+        {
+            daoUtil.setInt( 1, nKey );
+            daoUtil.executeQuery( );
+            while ( daoUtil.next( ) )
+            {
+                directoryResponse = new DirectoryResponse( );
+                int nIndex = 1;
+                directoryResponse.setId( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdDirectory( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdResponse( daoUtil.getInt( nIndex++ ) );
+                directoryResponse.setIdEntity( daoUtil.getInt( nIndex++ ) );
+            }
+        }
+        return directoryResponse;
+    }
+
 }

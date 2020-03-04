@@ -206,7 +206,7 @@ public class DirectoryEntity implements Serializable
         return AdminUserHome.findByPrimaryKey( nUserId );
     }
 
-     /**
+    /**
      * Returns the title
      * 
      * @return The title

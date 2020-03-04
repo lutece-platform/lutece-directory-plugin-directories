@@ -33,6 +33,9 @@
  */
 package fr.paris.lutece.plugins.directories.util;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * 
  * Constants class for directories plugin
@@ -53,6 +56,25 @@ public final class DirectoriesUtils
     private DirectoriesUtils( )
     {
         throw new AssertionError( );
+    }
+
+    /**
+     * write the http header in the response
+     *
+     * @param request
+     *            the httpServletRequest
+     * @param response
+     *            the http response
+     * @param strFileName
+     *            the name of the file who must insert in the response
+     *
+     */
+    public static void addHeaderResponse( HttpServletRequest request, HttpServletResponse response, String strFileName )
+    {
+        response.setHeader( "Content-Disposition", "attachment ;filename=\"" + strFileName + "\"" );
+        response.setHeader( "Pragma", "public" );
+        response.setHeader( "Expires", "0" );
+        response.setHeader( "Cache-Control", "must-revalidate,post-check=0,pre-check=0" );
     }
 
 }

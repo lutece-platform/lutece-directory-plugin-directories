@@ -106,7 +106,7 @@ public interface IDirectoryResponseDAO
     List<Integer> selectIdDirectoryResponsesList( Plugin plugin );
 
     /**
-     * Load the data of all the directoryResponse objects and returns them as a referenceList
+     * Load the data of all the directoryResponse objects
      * 
      * @param plugin
      *            the Plugin
@@ -115,7 +115,7 @@ public interface IDirectoryResponseDAO
     ReferenceList selectDirectoryResponsesReferenceList( Plugin plugin );
 
     /**
-     * Load the data of all the entity directoryResponse objects and returns them as a referenceList
+     * Load the data of all the entity directoryResponse objects
      * 
      * @param nKey
      *            The identifier of the Entity
@@ -124,5 +124,16 @@ public interface IDirectoryResponseDAO
      * @return List of directory Response
      */
     List<DirectoryResponse> selectDirectoryResponsesListByIdEntity( int nKey, Plugin plugin );
+
+    /**
+     * Load the data of directoryResponse object
+     * 
+     * @param nKey
+     *            The identifier of the id Response
+     * @param plugin
+     *            the Plugin
+     * @return the directory Response
+     */
+    DirectoryResponse selectDirectoryResponseByIdResponse( int nKey, Plugin plugin );
 
 }

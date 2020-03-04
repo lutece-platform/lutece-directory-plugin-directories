@@ -127,4 +127,16 @@ public final class DirectoryResponseHome
         return _dao.selectDirectoryResponsesListByIdEntity( nKey, _plugin );
     }
 
+    /**
+     * Load the data of directoryResponse object
+     * 
+     * @param nKey
+     *            The directoryResponse Id
+     * @return the list which contains the data of all the directoryResponse objects
+     */
+    public static DirectoryResponse getDirectoryResponsesListByIdResponse( int nKey )
+    {
+        return _dao.selectDirectoryResponseByIdResponse( nKey, _plugin );
+    }
+
 }

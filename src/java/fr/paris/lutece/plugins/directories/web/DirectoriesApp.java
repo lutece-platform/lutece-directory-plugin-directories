@@ -51,8 +51,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * This class provides a simple implementation of an XPage
  */
-@Controller(xpageName = "directories", pageTitleI18nKey = "directories.xpage.directories.pageTitle", pagePathI18nKey = "directories.xpage.directories.pagePathLabel")
-public class DirectoriesApp extends MVCApplication {
+@Controller( xpageName = "directories", pageTitleI18nKey = "directories.xpage.directories.pageTitle", pagePathI18nKey = "directories.xpage.directories.pagePathLabel" )
+public class DirectoriesApp extends MVCApplication
+{
     private static final long serialVersionUID = -7930244683357483911L;
     private static final String TEMPLATE_ENTITY = "/skin/plugins/directories/directory_entity.html";
     private static final String VIEW_DIRECTORY_ENTITY = "viewDirectoryEntity";
@@ -62,21 +63,24 @@ public class DirectoriesApp extends MVCApplication {
     /**
      * Returns Entity Data.
      * 
-     * @param request The HTTP request
+     * @param request
+     *            The HTTP request
      * @return The view
      */
-    @View(value = VIEW_DIRECTORY_ENTITY)
-    public XPage viewDirectoryEntity(HttpServletRequest request) {
-        int nId = Integer.parseInt(request.getParameter(PARAMETER_ID_ENTITY));
-        Map<String, Object> model = getModel();
-        List<Response> listResponse = new ArrayList<>();
-        DirectoryEntity directoryEntity = DirectoryEntityHome.findByPrimaryKey(nId);
-        for (DirectoryResponse directoryResponse : DirectoryResponseHome.getDirectoryResponsesListByIdEntity(nId)) {
-            Response response = ResponseHome.findByPrimaryKey(directoryResponse.getIdResponse());
-            listResponse.add(response);
+    @View( value = VIEW_DIRECTORY_ENTITY )
+    public XPage viewDirectoryEntity( HttpServletRequest request )
+    {
+        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_ENTITY ) );
+        Map<String, Object> model = getModel( );
+        List<Response> listResponse = new ArrayList<>( );
+        DirectoryEntity directoryEntity = DirectoryEntityHome.findByPrimaryKey( nId );
+        for ( DirectoryResponse directoryResponse : DirectoryResponseHome.getDirectoryResponsesListByIdEntity( nId ) )
+        {
+            Response response = ResponseHome.findByPrimaryKey( directoryResponse.getIdResponse( ) );
+            listResponse.add( response );
         }
-        directoryEntity.setResponses(listResponse);
-        model.put(MARK_ENTITY, directoryEntity);
-        return getXPage(TEMPLATE_ENTITY, request.getLocale(), model);
+        directoryEntity.setResponses( listResponse );
+        model.put( MARK_ENTITY, directoryEntity );
+        return getXPage( TEMPLATE_ENTITY, request.getLocale( ), model );
     }
 }
