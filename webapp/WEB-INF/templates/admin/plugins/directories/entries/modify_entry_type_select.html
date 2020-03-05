@@ -1,122 +1,119 @@
 <#include "/admin/plugins/directories/commons.html" />
 <@row>
-	<fieldset>
-		<legend class="sr-only">#i18n{directories.modifyEntry.titleQuestion} : ""</legend>
-		<@columns md=3 lg=3 xl=3>
-			<@box color='primary'>
-				<@boxHeader title='#i18n{directories.modifyEntry.titleQuestion} : "${entry.entryType.title}"' />
-				<@boxBody>
-					<@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp' method='post'>
-						<fieldset>
-							<@input name="id_entry" value="${entry.idEntry}" type="hidden" />
-							<@input name="id_directory" value="${id_directory}" type="hidden" />
-							<@input name="action" value="doModifyEntry" type="hidden" />
-							<@input name="id_type" value="${entry.entryType.idType}" type="hidden" />
-							<#if entry.fieldDepend?exists>
-								<@input name="id_field" value="${entry.fieldDepend.idField}" type="hidden" />
+	<legend class="sr-only">#i18n{directories.modifyEntry.titleQuestion} : ""</legend>
+	<@columns md=3 lg=3 xl=3>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directories.modifyEntry.titleQuestion} : "${entry.entryType.title}"' />
+			<@boxBody>
+				<@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp' method='post'>
+					
+						<@input name="id_entry" value="${entry.idEntry}" type="hidden" />
+						<@input name="id_directory" value="${id_directory}" type="hidden" />
+						<@input name="action" value="doModifyEntry" type="hidden" />
+						<@input name="id_type" value="${entry.entryType.idType}" type="hidden" />
+						<#if entry.fieldDepend?exists>
+							<@input name="id_field" value="${entry.fieldDepend.idField}" type="hidden" />
+						</#if>
+						<@formGroup labelFor='type' labelKey='#i18n{directories.createEntry.labelType}' rows=2>
+							<@input type='text' name='type' id='type' readonly=true disabled=true
+								value='${entry.entryType.title}' />
+						</@formGroup>
+						<@formGroup labelFor='title' labelKey='#i18n{directories.createEntry.labelTitle}'
+							helpKey='#i18n{directories.createEntry.labelTitleComment}' mandatory=true rows=2>
+							<@input type='text' name='title' id='title' value='${entry.title}' maxlength=255 />
+						</@formGroup>
+						<@formGroup labelFor='help_message' labelKey='#i18n{directories.createEntry.labelHelpMessage}'
+							helpKey='#i18n{directories.createEntry.labelHelpMessageComment}' rows=2>
+							<@input type="textarea" name='help_message' id='help_message' rows=2>
+								${entry.helpMessage}
+							</@input>
+						</@formGroup>
+						<@formGroup labelFor='comment' labelKey='#i18n{directories.comment.name}' rows=2>
+							<@input type="textarea" name='comment' id='comment' rows=2>${entry.comment}</@input>
+						</@formGroup>
+						<@formGroup labelFor='mandatory' labelKey='#i18n{directories.createEntry.labelMandatory}'
+							rows=2>
+							<#if entry.mandatory>
+								<#assign checked=true>
+									<#else>
+										<#assign checked=false>
 							</#if>
-							<@formGroup labelFor='type' labelKey='#i18n{directories.createEntry.labelType}' rows=2>
-								<@input type='text' name='type' id='type' readonly=true disabled=true
-									value='${entry.entryType.title}' />
-							</@formGroup>
-							<@formGroup labelFor='title' labelKey='#i18n{directories.createEntry.labelTitle}'
-								helpKey='#i18n{directories.createEntry.labelTitleComment}' mandatory=true rows=2>
-								<@input type='text' name='title' id='title' value='${entry.title}' maxlength=255 />
-							</@formGroup>
-							<@formGroup labelFor='help_message'
-								labelKey='#i18n{directories.createEntry.labelHelpMessage}'
-								helpKey='#i18n{directories.createEntry.labelHelpMessageComment}' rows=2>
-								<@input type="textarea" name='help_message' id='help_message' rows=2>
-									${entry.helpMessage}
-								</@input>
-							</@formGroup>
-							<@formGroup labelFor='comment' labelKey='#i18n{directories.comment.name}' rows=2>
-								<@input type="textarea" name='comment' id='comment' rows=2>${entry.comment}</@input>
-							</@formGroup>
-							<@formGroup labelFor='mandatory' labelKey='#i18n{directories.createEntry.labelMandatory}'
-								rows=2>
-								<#if entry.mandatory>
-									<#assign checked=true>
-										<#else>
-											<#assign checked=false>
-								</#if>
-								<@checkBox name='mandatory' id="mandatory" value='1' checked=checked
-									labelKey='#i18n{directories.createEntry.labelMandatory}' />
-							</@formGroup>
-							${question_modify_template!}
-							<@formGroup rows=2>
-								<@button type='submit' name='action_doModifyEntry' buttonIcon='save'
-									title='#i18n{directories.labelSave}' size='' />
-								<@button type='submit' name='cancel' value='cancel' buttonIcon='times'
-									title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
-							</@formGroup>
-					</@tform>
-				</@boxBody>
-			</@box>
-		</@columns>
-		<@columns md=9 lg=9 xl=9>
-			<@box color='primary'>
-				<@boxHeader title='#i18n{directories.createEntry.manageField.title}' boxTools=true>
-					<@tform class='form-inline pull-right'
-						action='jsp/admin/plugins/directories/ManageDirectoryFields.jsp?id_entry=${entry.idEntry}&id_directory=${id_directory}'>
+							<@checkBox name='mandatory' id="mandatory" value='1' checked=checked
+								labelKey='#i18n{directories.createEntry.labelMandatory}' />
+						</@formGroup>
+						${question_modify_template!}
+						<@formGroup rows=2>
+							<@button type='submit' name='action_doModifyEntry' buttonIcon='save'
+								title='#i18n{directories.labelSave}' size='' />
+							<@button type='submit' name='cancel' value='cancel' buttonIcon='times'
+								title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
+						</@formGroup>
+					
+				</@tform>
+			</@boxBody>
+		</@box>
+	</@columns>
+	<@columns md=9 lg=9 xl=9>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directories.createEntry.manageField.title}' boxTools=true>
+				<@tform class='form-inline pull-right'
+					action='jsp/admin/plugins/directories/ManageDirectoryFields.jsp?id_entry=${entry.idEntry}&id_directory=${id_directory}'>
+					
 						<@button type='submit' name='view_createField'
 							title='#i18n{directories.createEntry.manageField.buttonInsert}' buttonIcon='plus' size='' />
-					</@tform>
-				</@boxHeader>
-				<@boxBody>
-					<fieldset>
-						<legend class="sr-only">#i18n{directories.createEntry.manageField.title}</legend>
-						<a name="list" id="list"></a>
-						<@table>
-							<@tr>
-								<@th>#i18n{directories.createEntry.manageField.rowTitle}</@th>
-								<@th>#i18n{directories.createEntry.manageField.rowValue}</@th>
-								<@th>#i18n{directories.createEntry.manageField.rowDefaultValue}</@th>
-								<@th> #i18n{directories.createEntry.manageField.rowActions}</@th>
-							</@tr>
-							<#assign cpt=0>
-								<#list list as field>
-									<#if field.code=='answer_choice'>
-										<#assign cpt=cpt+1>
-											<@tr>
-												<@td>${field.title}</@td>
-												<@td>${field.value}</@td>
-												<@td>
-													<#if field.defaultValue>
-														<@tag color='success'>
-															<@icon style='check'
-																title='#i18n{directories.createEntry.manageField.rowDefaultValue}' />
-														</@tag>
-													</#if>
-												</@td>
-												<@td>
-													<@aButton
-														href='jsp/admin/plugins/directories/ManageDirectoryFields.jsp?view=modifyField&id_field=${field.idField}&id_directory=${id_directory}&id_entry=${entry.idEntry}'
-														title='#i18n{portal.util.labelModify}' buttonIcon='edit' />
-													<#if cpt!=1>
-														<@aButton
-															href='jsp/admin/plugins/directories/ManageDirectoryFields.jsp?action=moveFieldUp&id_field=${field.idField}&id_directory=${id_directory}&id_entry=${entry.idEntry}#list'
-															title='#i18n{directories.createEntry.manageField.titleMoveUp}'
-															buttonIcon='chevron-up' />
-													</#if>
-													<#if field_has_next>
-														<@aButton
-															href='jsp/admin/plugins/directories/ManageDirectoryFields.jsp?action=moveFieldDown&id_field=${field.idField}&id_directory=${id_directory}&id_entry=${entry.idEntry}#list'
-															title='#i18n{directories.createEntry.manageField.titleMoveDown}'
-															buttonIcon='chevron-down' />
-													</#if>
-													<@aButton
-														href='jsp/admin/plugins/directories/ManageDirectoryFields.jsp?view=confirmRemoveField&id_field=${field.idField}&id_directory=${id_directory}&id_entry=${entry.idEntry}#list'
-														title='#i18n{directories.createEntry.manageField.titleDelete}'
-														buttonIcon='trash' color='danger' />
-												</@td>
-											</@tr>
-									</#if>
-								</#list>
-						</@table>
-					</fieldset>
-				</@boxBody>
-			</@box>
-		</@columns>
-	</fieldset>
+					
+				</@tform>
+			</@boxHeader>
+			<@boxBody>
+				<legend class="sr-only">#i18n{directories.createEntry.manageField.title}</legend>
+				<@table>
+					<@tr>
+						<@th>#i18n{directories.createEntry.manageField.rowTitle}</@th>
+						<@th>#i18n{directories.createEntry.manageField.rowValue}</@th>
+						<@th>#i18n{directories.createEntry.manageField.rowDefaultValue}</@th>
+						<@th> #i18n{directories.createEntry.manageField.rowActions}</@th>
+					</@tr>
+					<#assign cpt=0>
+						<#list list as field>
+							<#if field.code=='answer_choice'>
+								<#assign cpt=cpt+1>
+									<@tr>
+										<@td>${field.title}</@td>
+										<@td>${field.value}</@td>
+										<@td>
+											<#if field.defaultValue>
+												<@tag color='success'>
+													<@icon style='check'
+														title='#i18n{directories.createEntry.manageField.rowDefaultValue}' />
+												</@tag>
+											</#if>
+										</@td>
+										<@td>
+											<@aButton
+												href='jsp/admin/plugins/directories/ManageDirectoryFields.jsp?view=modifyField&id_field=${field.idField}&id_directory=${id_directory}&id_entry=${entry.idEntry}'
+												title='#i18n{portal.util.labelModify}' buttonIcon='edit' />
+											<#if cpt!=1>
+												<@aButton
+													href='jsp/admin/plugins/directories/ManageDirectoryFields.jsp?action=moveFieldUp&id_field=${field.idField}&id_directory=${id_directory}&id_entry=${entry.idEntry}#list'
+													title='#i18n{directories.createEntry.manageField.titleMoveUp}'
+													buttonIcon='chevron-up' />
+											</#if>
+											<#if field_has_next>
+												<@aButton
+													href='jsp/admin/plugins/directories/ManageDirectoryFields.jsp?action=moveFieldDown&id_field=${field.idField}&id_directory=${id_directory}&id_entry=${entry.idEntry}#list'
+													title='#i18n{directories.createEntry.manageField.titleMoveDown}'
+													buttonIcon='chevron-down' />
+											</#if>
+											<@aButton
+												href='jsp/admin/plugins/directories/ManageDirectoryFields.jsp?view=confirmRemoveField&id_field=${field.idField}&id_directory=${id_directory}&id_entry=${entry.idEntry}#list'
+												title='#i18n{directories.createEntry.manageField.titleDelete}'
+												buttonIcon='trash' color='danger' />
+										</@td>
+									</@tr>
+							</#if>
+						</#list>
+				</@table>
+			</@boxBody>
+		</@box>
+	</@columns>
 </@row>

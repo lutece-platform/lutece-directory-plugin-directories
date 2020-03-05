@@ -5,7 +5,7 @@
 		<@boxHeader title='#i18n{directories.modifyEntry.titleQuestion} : "${entry.entryType.title}"' />
 		<@boxBody>
 				<@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp' method='post'>
-					<fieldset>
+					
 						<legend class="sr-only">#i18n{directories.modifyEntry.titleQuestion} : ""</legend>
 						<#assign config=getFieldByCode( entry, "text_config" )>
 							<@input name="id_entry" value="${entry.idEntry}" type="hidden" />
@@ -86,7 +86,7 @@
 								<@button type='submit' name='cancel' value='cancel' buttonIcon='times'
 									title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
 									</@formGroup>
-					</fieldset>
+					
 				</@tform>
 			</@boxBody>
 		</@box>

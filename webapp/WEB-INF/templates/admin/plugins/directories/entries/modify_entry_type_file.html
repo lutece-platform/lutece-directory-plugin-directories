@@ -3,12 +3,12 @@
 <@row>
 	<@columns>
 		<@box color='primary'>
-		<@boxHeader title='#i18n{directories.modifyEntry.titleQuestion} : "${entry.entryType.title}"' />
-		<@boxBody>
-				<fieldset>
-					<legend class="sr-only">#i18n{directories.modifyEntry.titleQuestion} : '${entry.entryType.title}'
-					</legend>
-					<@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp'>
+			<@boxHeader title='#i18n{directories.modifyEntry.titleQuestion} : "${entry.entryType.title}"' />
+			<@boxBody>
+				<legend class="sr-only">#i18n{directories.modifyEntry.titleQuestion} : '${entry.entryType.title}'
+				</legend>
+				<@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp'>
+					
 						<@input name="id_entry" value="${entry.idEntry}" type="hidden" />
 						<@input name="id_directory" value="${entry.idResource}" type="hidden" />
 						<@formGroup labelFor='type' labelKey='#i18n{directories.createEntry.labelType}'>
@@ -50,12 +50,13 @@
 								maxlength=255 />
 						</@formGroup>
 						<@formGroup>
-						<@button type='submit' name='action_doModifyEntry' buttonIcon='save'
-						title='#i18n{directories.labelSave}' size='' />
-					<@button type='submit' name='cancel' value='cancel' buttonIcon='times'
-						title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
+							<@button type='submit' name='action_doModifyEntry' buttonIcon='save'
+								title='#i18n{directories.labelSave}' size='' />
+							<@button type='submit' name='cancel' value='cancel' buttonIcon='times'
+								title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
 						</@formGroup>
-					</@tform>
+					
+				</@tform>
 			</@boxBody>
 		</@box>
 	</@columns>
@@ -64,9 +65,9 @@
 			<@box color='primary'>
 				<@boxHeader title='#i18n{directories.createEntry.manageRegularExpression.title}' />
 				<@boxBody>
-					<fieldset>
-						<legend class="sr-only">#i18n{directories.createEntry.manageRegularExpression.title}</legend>
-						<@tform action='jsp/admin/plugins/directories/DoInsertVerification.jsp#list'>
+					<legend class="sr-only">#i18n{directories.createEntry.manageRegularExpression.title}</legend>
+					<@tform action='jsp/admin/plugins/directories/DoInsertVerification.jsp#list'>
+						
 							<@input name="id_field" value="${id_field}" type="hidden" />
 							<@formGroup labelFor='id_expression'
 								labelKey='#i18n{directories.createEntry.manageRegularExpression.labelInsert}'
@@ -81,9 +82,8 @@
 									</@inputGroupItem>
 								</@inputGroup>
 							</@formGroup>
-						</@tform>
-					</fieldset>
-					<a name="list" id="list"></a>
+						
+					</@tform>
 					<@table>
 						<@tr>
 							<@th>#i18n{directories.createEntry.manageRegularExpression.rowTitle}</@th>

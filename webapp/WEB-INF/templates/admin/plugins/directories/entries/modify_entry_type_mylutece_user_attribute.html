@@ -6,7 +6,7 @@
         <@boxHeader title='#i18n{directories.modifyEntry.titleQuestion} : "${entry.entryType.title}"' />
         <@boxBody>
           <@tform action='jsp/admin/plugins/forms/ManageQuestions.jsp'>
-            <fieldset>
+            
               <@input name="id_entry" value="${entry.idEntry}" type="hidden" />
               <@input name="id_directory" value="${id_directory}" type="hidden" />
               <@input name="action" value="doModifyEntry" type="hidden" />
@@ -43,7 +43,7 @@
               <@button type='submit' name='cancel' value='cancel' buttonIcon='times'
                 title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
               </@formGroup>
-            </fieldset>
+            
           </@tform>
         </@boxBody>
       </@box>

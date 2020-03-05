@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -83,6 +83,9 @@ public class DirectoryEntriesJspBean extends MVCAdminJspBean
     private static final String MESSAGE_CANT_REMOVE_ENTRY = "advert.message.cantRemoveEntry";
     private static final String MESSAGE_CANT_REMOVE_ENTRY_RESOURCES_ATTACHED = "directories.message.cantRemoveEntry.resourceAttached";
     private static final String PROPERTY_CREATE_ENTRY_TITLE = "directories.createEntry.titleQuestion";
+    private static final String PROPERTY_MANAGE_DIRECTORY_ENTRIES = "directories.manage_directory_entries.lightTitle";
+    private static final String PROPERTY_CREATE_ENTITY = "directories.entity.create.title";
+
     // Views
     private static final String VIEW_GET_CREATE_ENTRY = "getCreateEntry";
     private static final String VIEW_GET_MODIFY_ENTRY = "getModifyEntry";
@@ -95,7 +98,7 @@ public class DirectoryEntriesJspBean extends MVCAdminJspBean
     private static final String ACTION_DO_REMOVE_ENTRY = "doRemoveEntry";
     private static final String ACTION_DO_CHANGE_ORDER_ENTRY = "doChangeOrderEntry";
     // Templates
-    private static final String TEMPLATE_MANAGE_DIRECTORY_ = "/admin/plugins/directories/manage_directory_entries.html";
+    private static final String TEMPLATE_MANAGE_DIRECTORY = "/admin/plugins/directories/manage_directory_entries.html";
     private static final String TEMPLATE_CREATE_DIRECTORY_ENTRIES_RESPONSE = "/admin/plugins/directories/create_directory_response.html";
     private static final String TEMPLATE_HTML_CODE_FORM_ADMIN = "admin/plugins/directories/html_code_form.html";
     // Local variables
@@ -116,7 +119,7 @@ public class DirectoryEntriesJspBean extends MVCAdminJspBean
         Map<String, Object> model = getModel( );
         model.put( DirectoriesConstants.PARAMETER_ID_DIRECTORY, nIdDirectory );
         EntryService.addListEntryToModel( model, nIdDirectory );
-        return getPage( "Formulaire du modèle", TEMPLATE_MANAGE_DIRECTORY_, model );
+        return getPage( PROPERTY_MANAGE_DIRECTORY_ENTRIES, TEMPLATE_MANAGE_DIRECTORY, model );
     }
 
     /**
@@ -135,15 +138,15 @@ public class DirectoryEntriesJspBean extends MVCAdminJspBean
         int nIdDirectory = Integer.parseInt( strIdDirectory );
         Map<String, Object> model = getModel( );
         List<Entry> listEntryFirstLevel = EntryService.getDirectoryEntryList( nIdDirectory, true );
-        StringBuffer strBuffer = new StringBuffer( );
+        StringBuilder strBuilder = new StringBuilder( );
         for ( Entry entry : listEntryFirstLevel )
         {
-            EntryService.getHtmlEntry( model, entry.getIdEntry( ), strBuffer, getLocale( ), false, request );
+            EntryService.getHtmlEntry( model, entry.getIdEntry( ), strBuilder, getLocale( ), false );
         }
-        model.put( DirectoriesConstants.MARK_STR_ENTRY, strBuffer.toString( ) );
+        model.put( DirectoriesConstants.MARK_STR_ENTRY, strBuilder.toString( ) );
         HtmlTemplate templateForm = AppTemplateService.getTemplate( TEMPLATE_HTML_CODE_FORM_ADMIN, getLocale( ), model );
         model.put( DirectoriesConstants.MARK_FORM_HTML, templateForm.getHtml( ) );
-        return getPage( "création d'une réponse", TEMPLATE_CREATE_DIRECTORY_ENTRIES_RESPONSE, model );
+        return getPage( PROPERTY_CREATE_ENTITY, TEMPLATE_CREATE_DIRECTORY_ENTRIES_RESPONSE, model );
     }
 
     /**
@@ -218,7 +221,7 @@ public class DirectoryEntriesJspBean extends MVCAdminJspBean
                 fieldDepend.setIdField( nIdField );
                 entry.setFieldDepend( fieldDepend );
             }
-            String strError = EntryService.doCreateEntry( entry, request );
+            String strError = EntryService.doCreateOrModifyEntry( entry, request );
             if ( strError != null )
             {
                 return redirect( request, strError );
@@ -291,7 +294,7 @@ public class DirectoryEntriesJspBean extends MVCAdminJspBean
             Entry entry = EntryHome.findByPrimaryKey( nIdEntry );
             if ( request.getParameter( DirectoriesConstants.PARAMETER_CANCEL ) == null )
             {
-                String strError = EntryService.doModifyEntry( entry, request );
+                String strError = EntryService.doCreateOrModifyEntry( entry, request );
                 if ( strError != null )
                 {
                     return redirect( request, strError );
@@ -410,7 +413,7 @@ public class DirectoryEntriesJspBean extends MVCAdminJspBean
         {
             String strCause = AdminMessageService.getFormattedList( listErrors, getLocale( ) );
             Object [ ] args = {
-                strCause
+                    strCause
             };
             return AdminMessageService.getMessageUrl( request, MESSAGE_CANT_REMOVE_ENTRY, args, AdminMessage.TYPE_STOP );
         }
@@ -446,8 +449,8 @@ public class DirectoryEntriesJspBean extends MVCAdminJspBean
         String strIdDirectory = request.getParameter( DirectoriesConstants.PARAMETER_ID_DIRECTORY );
         int nIdDirectory = Integer.parseInt( strIdDirectory );
         Integer nEntryId = Integer.parseInt( request.getParameter( DirectoriesConstants.PARAMETER_ID_ENTRY ) );
-        Integer nOrderToSet = Integer.parseInt( request.getParameter( DirectoriesConstants.PARAMETER_ORDER_ID
-                + request.getParameter( DirectoriesConstants.PARAMETER_ID_ENTRY ) ) );
+        Integer nOrderToSet = Integer
+                .parseInt( request.getParameter( DirectoriesConstants.PARAMETER_ORDER_ID + request.getParameter( DirectoriesConstants.PARAMETER_ID_ENTRY ) ) );
         Entry entryToChangeOrder = EntryHome.findByPrimaryKey( nEntryId );
         int nActualOrder = entryToChangeOrder.getPosition( );
         if ( nOrderToSet != nActualOrder )

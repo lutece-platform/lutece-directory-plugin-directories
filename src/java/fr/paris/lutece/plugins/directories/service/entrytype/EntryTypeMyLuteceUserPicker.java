@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -145,7 +145,7 @@ public class EntryTypeMyLuteceUserPicker extends AbstractEntryTypeText
         if ( StringUtils.isNotBlank( strFieldError ) )
         {
             Object [ ] tabRequiredFields = {
-                I18nService.getLocalizedString( strFieldError, locale )
+                    I18nService.getLocalizedString( strFieldError, locale )
             };
 
             return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
@@ -175,7 +175,7 @@ public class EntryTypeMyLuteceUserPicker extends AbstractEntryTypeText
         if ( StringUtils.isNotBlank( strFieldError ) )
         {
             Object [ ] tabRequiredFields = {
-                I18nService.getLocalizedString( strFieldError, locale )
+                    I18nService.getLocalizedString( strFieldError, locale )
             };
 
             return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
@@ -261,10 +261,13 @@ public class EntryTypeMyLuteceUserPicker extends AbstractEntryTypeText
         response.setIterationNumber( getResponseIterationValue( request ) );
         listResponse.add( response );
 
-        return checkErrors( entry, confirmField, strValueEntry, strValueEntryConfirmField, listRegularExpression, bConfirmField, locale );
+        return checkEntryErrors( entry, confirmField, strValueEntry, strValueEntryConfirmField, listRegularExpression, bConfirmField, locale );
     }
 
-    private GenericAttributeError checkErrors( Entry entry, Field confirmField, String strValueEntry, String strValueEntryConfirmField,
+    /**
+     * {@inheritDoc}
+     */
+    private GenericAttributeError checkEntryErrors( Entry entry, Field confirmField, String strValueEntry, String strValueEntryConfirmField,
             List<RegularExpression> listRegularExpression, boolean bConfirmField, Locale locale )
     {
         // Checks if the entry value contains XSS characters
@@ -315,7 +318,7 @@ public class EntryTypeMyLuteceUserPicker extends AbstractEntryTypeText
             error.setMandatoryError( false );
             error.setTitleQuestion( confirmField.getTitle( ) );
             error.setErrorMessage( I18nService.getLocalizedString( MESSAGE_CONFIRM_FIELD, new String [ ] {
-                entry.getTitle( )
+                    entry.getTitle( )
             }, locale ) );
 
             return error;

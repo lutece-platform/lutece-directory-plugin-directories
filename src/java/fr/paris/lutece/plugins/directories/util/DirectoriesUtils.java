@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directories.util;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -61,15 +60,13 @@ public final class DirectoriesUtils
     /**
      * write the http header in the response
      *
-     * @param request
-     *            the httpServletRequest
      * @param response
      *            the http response
      * @param strFileName
      *            the name of the file who must insert in the response
      *
      */
-    public static void addHeaderResponse( HttpServletRequest request, HttpServletResponse response, String strFileName )
+    public static void addHeaderResponse( HttpServletResponse response, String strFileName )
     {
         response.setHeader( "Content-Disposition", "attachment ;filename=\"" + strFileName + "\"" );
         response.setHeader( "Pragma", "public" );

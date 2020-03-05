@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -112,7 +112,7 @@ public final class DirectoryEntityHome
      * 
      * @return the list which contains the data of all the directoryEntity objects
      */
-    public static List<DirectoryEntity> getDirectoryEntitiesListByIdDirectory( int nKey )
+    public static List<DirectoryEntity> getDirectoryEntityListByIdDirectory( int nKey )
     {
         return _dao.selectDirectoryEntitiesListByIdDirectory( nKey, _plugin );
     }

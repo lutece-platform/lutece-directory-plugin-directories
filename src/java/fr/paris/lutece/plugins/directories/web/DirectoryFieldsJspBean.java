@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -125,9 +125,9 @@ public class DirectoryFieldsJspBean extends AbstractDirectoriesManagerJspBean
     @View( value = VIEW_CREATE_FIELD )
     public String getCreateField( HttpServletRequest request )
     {
-        String _strIdEntry = request.getParameter( DirectoriesConstants.PARAMETER_ID_ENTRY );
-        int _nIdEntry = Integer.parseInt( _strIdEntry );
-        Entry entry = EntryHome.findByPrimaryKey( _nIdEntry );
+        String strIdEntry = request.getParameter( DirectoriesConstants.PARAMETER_ID_ENTRY );
+        int nIdEntry = Integer.parseInt( strIdEntry );
+        Entry entry = EntryHome.findByPrimaryKey( nIdEntry );
         Field field = new Field( );
         field.setParentEntry( entry );
         Map<String, Object> model = new HashMap<>( );
@@ -296,7 +296,7 @@ public class DirectoryFieldsJspBean extends AbstractDirectoriesManagerJspBean
         if ( strFieldError != null )
         {
             Object [ ] tabRequiredFields = {
-                I18nService.getLocalizedString( strFieldError, getLocale( ) )
+                    I18nService.getLocalizedString( strFieldError, getLocale( ) )
             };
             return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }

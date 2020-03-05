@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -69,7 +69,6 @@ public class EntryTypeMyLuteceAttribute extends AbstractEntryTypeMyLuteceUser
     private static final String PROPERTY_ENTRY_TITLE = "directories.entryTypeMyLuteceUserAttribute.title";
     private static final String PARAMETER_ONLY_DISPLAY_IN_BACK = "only_display_in_back";
     private static final String PARAMETER_MYLUTECE_ATTRIBUTE_NAME = "mylutece_attribute_name";
-    private ReferenceList _refListUserAttributes;
 
     /**
      * {@inheritDoc}
@@ -119,7 +118,8 @@ public class EntryTypeMyLuteceAttribute extends AbstractEntryTypeMyLuteceUser
         entry.setIndexed( request.getParameter( PARAMETER_INDEXED ) != null );
         entry.setOnlyDisplayInBack( strOnlyDisplayInBack != null );
         entry.setCode( request.getParameter( PARAMETER_ENTRY_CODE ) );
-        GenericAttributesUtils.createOrUpdateField( entry, FIELD_MYLUTECE_ATTRIBUTE_NAME_CODE, null, request.getParameter( PARAMETER_MYLUTECE_ATTRIBUTE_NAME ) );
+        GenericAttributesUtils.createOrUpdateField( entry, FIELD_MYLUTECE_ATTRIBUTE_NAME_CODE, null,
+                request.getParameter( PARAMETER_MYLUTECE_ATTRIBUTE_NAME ) );
         return null;
     }
 
@@ -169,8 +169,7 @@ public class EntryTypeMyLuteceAttribute extends AbstractEntryTypeMyLuteceUser
             item.setCode( String.valueOf( attribute.getIdAttribute( ) ) );
             referenceList.add( item );
         }
-        _refListUserAttributes = referenceList;
-        return _refListUserAttributes;
+        return referenceList;
     }
 
     /**

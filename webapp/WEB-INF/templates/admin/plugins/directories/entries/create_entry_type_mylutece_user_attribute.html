@@ -2,8 +2,8 @@
 <@box color='primary'>
 	<@boxHeader title='#i18n{directories.type.name} : ${entry.entryType.title}' />
 	<@boxBody>
-	<@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp' method='post'>
-	<fieldset>
+		<@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp' method='post'>
+			
 				<@input name="id_directory" value="${id_directory}" type="hidden" />
 				<@input name="action" value="doCreateEntry" type="hidden" />
 				<@input name="id_type" value="${entry.entryType.idType}" type="hidden" />
@@ -20,7 +20,7 @@
 				</@formGroup>
 				<@formGroup labelFor='entry_code' labelKey='#i18n{directories.createEntry.labelMyLuteceUserPickerId}'>
 					<@select name='entry_code' id='entry_code' default_value=''
-					items=entryTypeService.getMyLuteceUserPickerList( "214", "${id_directory}" ) />
+						items=entryTypeService.getMyLuteceUserPickerList( "214" , "${id_directory}" ) />
 				</@formGroup>
 				<@formGroup labelFor='help_message' labelKey='#i18n{directories.createEntry.labelHelpMessage}'
 					helpKey='#i18n{directories.createEntry.labelHelpMessageComment}'>
@@ -29,7 +29,7 @@
 				<@formGroup labelFor='mylutece_attribute_name'
 					labelKey='#i18n{directories.createEntry.labelMyLuteceUserAttributeId}'>
 					<@select name='mylutece_attribute_name' id='mylutece_attribute_name' default_value=''
-						items=entryTypeService.getLuteceUserAttributesRefList( locale ) /> 
+						items=entryTypeService.getLuteceUserAttributesRefList( locale ) />
 				</@formGroup>
 				<@formGroup labelFor='mandatory' labelKey='#i18n{directories.createEntry.labelMandatory}'>
 					<@checkBox name='mandatory' id='mandatory' value='true' />
@@ -45,7 +45,7 @@
 					<@button type='submit' name='cancel' value='cancel' buttonIcon='times'
 						title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
 				</@formGroup>
-			</fieldset>
+			
 		</@tform>
 	</@boxBody>
 </@box>

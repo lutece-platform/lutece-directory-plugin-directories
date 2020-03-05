@@ -5,10 +5,10 @@
 		<@box color='primary'>
 			<@boxHeader title='#i18n{directories.modifyEntry.titleQuestion} : "${entry.entryType.title}"' />
 			<@boxBody>
-				<fieldset>
-					<legend class="sr-only">#i18n{directories.modifyEntry.titleComment} : '${entry.entryType.title}'
-					</legend>
-					<@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp'>
+				<legend class="sr-only">#i18n{directories.modifyEntry.titleComment} : '${entry.entryType.title}'
+				</legend>
+				<@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp'>
+					
 						<@input name="id_entry" value="${entry.idEntry}" type="hidden" />
 						<@input name="id_directory" value="${entry.idResource}" type="hidden" />
 						<@formGroup labelFor='type' labelKey='#i18n{directories.createEntry.labelType}'>
@@ -31,8 +31,8 @@
 							<@button type='submit' name='cancel' value='cancel' buttonIcon='times'
 								title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
 						</@formGroup>
-					</@tform>
-				</fieldset>
+					
+				</@tform>
 			</@boxBody>
 		</@box>
 	</@columns>
