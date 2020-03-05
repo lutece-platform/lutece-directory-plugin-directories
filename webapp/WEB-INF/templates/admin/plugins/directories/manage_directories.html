@@ -10,7 +10,6 @@
     <@boxBody>
         <@messages infos=infos />
         <@paginationAdmin paginator=paginator combo=1 />
-        <div class="clearfix"></div>
         <@table>
             <@tr>
                 <@input type="hidden" id="id_directory" name="id_directory" />
@@ -31,10 +30,7 @@
                     <@td>
                         <@aButton
                             href='jsp/admin/plugins/directories/ManageDirectories.jsp?view=modifyDirectory&id_directory=${directory.id}'
-                            buttonIcon='pencil' />
-                        <@aButton
-                            href='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=createDirectoryResponse&id_directory=${directory.id}'
-                            buttonIcon='plus' />
+                            buttonIcon='eye' />
                         <@aButton
                             href='jsp/admin/plugins/directories/ManageDirectories.jsp?action=confirmRemoveDirectory&id_directory=${directory.id}'
                             buttonIcon='trash' color='danger' />

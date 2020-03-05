@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     myLuteceUserPickers && myLuteceUserPickers.forEach(el => {
         const id = el.getAttribute('id');
         const idMyLuteceUser = id.replace("picker_", "");
-        new autoComplete({
+        let autoCompleteEl = new autoComplete({
             data: {
                 src: async () => {
                     // User search query
                     const query = el.value;
                     // Fetch External Data Source
-                    const source = await fetch(`http://localhost:8080/habili/rest/mylutece/users/api?keywords=${query}`);
+                    const source = await fetch(`rest/mylutece/users/api?keywords=${query}`);
                     data = await source.json();
                     return data.result;
                 },
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 element: "li"
             },
             noResults: () => {
-                const result = document.createElement("li");
+                let result = document.createElement("li");
                 result.setAttribute("class", "no_result");
                 result.setAttribute("tabindex", "1");
                 result.innerHTML = "Pas de résultat";

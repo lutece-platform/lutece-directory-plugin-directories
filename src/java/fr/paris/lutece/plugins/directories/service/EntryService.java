@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -93,10 +93,8 @@ public final class EntryService extends RemovalListenerService implements Serial
      *            the string buffer
      * @param locale
      * @param bDisplayFront
-     * @param request
      */
-    public static void getHtmlEntry( Map<String, Object> model, int nIdEntry, StringBuffer stringBuffer, Locale locale, boolean bDisplayFront,
-            HttpServletRequest request )
+    public static void getHtmlEntry( Map<String, Object> model, int nIdEntry, StringBuilder strBuilder, Locale locale, boolean bDisplayFront )
     {
         HtmlTemplate template;
         Entry entry = EntryHome.findByPrimaryKey( nIdEntry );
@@ -116,7 +114,7 @@ public final class EntryService extends RemovalListenerService implements Serial
             model.put( MARK_UPLOAD_HANDLER, ( (AbstractEntryTypeUpload) entryTypeService ).getAsynchronousUploadHandler( ) );
         }
         template = AppTemplateService.getTemplate( entryTypeService.getTemplateHtmlForm( entry, bDisplayFront ), locale, model );
-        stringBuffer.append( template.getHtml( ) );
+        strBuilder.append( template.getHtml( ) );
     }
 
     /**
@@ -124,14 +122,12 @@ public final class EntryService extends RemovalListenerService implements Serial
      * 
      * @param nIdEntry
      *            the entry id
-     * @param stringBuffer
+     * @param StringBuilder
      *            the string buffer
      * @param locale
      * @param bDisplayFront
-     * @param request
      */
-    public static void getHtmlEntryReadOnly( Map<String, Object> model, int nIdEntry, StringBuffer stringBuffer, Locale locale, boolean bDisplayFront,
-            HttpServletRequest request )
+    public static void getHtmlEntryReadOnly( Map<String, Object> model, int nIdEntry, StringBuilder strBuilder, Locale locale, boolean bDisplayFront )
     {
         HtmlTemplate template;
         Entry entry = EntryHome.findByPrimaryKey( nIdEntry );
@@ -153,7 +149,7 @@ public final class EntryService extends RemovalListenerService implements Serial
             model.put( MARK_UPLOAD_HANDLER, ( (AbstractEntryTypeUpload) entryTypeService ).getAsynchronousUploadHandler( ) );
         }
         template = AppTemplateService.getTemplate( entryTypeService.getTemplateEntryReadOnly( bDisplayFront ), locale, model );
-        stringBuffer.append( template.getHtml( ) );
+        strBuilder.append( template.getHtml( ) );
     }
 
     /**
@@ -491,29 +487,17 @@ public final class EntryService extends RemovalListenerService implements Serial
     }
 
     /**
-     * Create entry
+     * Create or Modify entry
      * 
-     * @param nIdEntryType
-     *            The Id of EntryType
-     * @return the list of entries
+     * @param entry
+     *            The entry
+     * @param request
+     *            The Request
+     * @return The errors
      */
-    public static String doCreateEntry( Entry entry, HttpServletRequest request )
+    public static String doCreateOrModifyEntry( Entry entry, HttpServletRequest request )
     {
-        String strError = EntryTypeServiceManager.getEntryTypeService( entry ).getRequestData( entry, request, AdminUserService.getLocale( request ) );
-        return strError;
-    }
-
-    /**
-     * Modify entry
-     * 
-     * @param nIdEntryType
-     *            The Id of EntryType
-     * @return error
-     */
-    public static String doModifyEntry( Entry entry, HttpServletRequest request )
-    {
-        String strError = EntryTypeServiceManager.getEntryTypeService( entry ).getRequestData( entry, request, AdminUserService.getLocale( request ) );
-        return strError;
+        return EntryTypeServiceManager.getEntryTypeService( entry ).getRequestData( entry, request, AdminUserService.getLocale( request ) );
     }
 
     /**

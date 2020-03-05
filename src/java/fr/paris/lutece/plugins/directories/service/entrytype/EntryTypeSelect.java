@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -122,7 +122,7 @@ public final class EntryTypeSelect extends AbstractEntryTypeSelect
         if ( StringUtils.isNotBlank( strFieldError ) )
         {
             Object [ ] tabRequiredFields = {
-                I18nService.getLocalizedString( strFieldError, locale )
+                    I18nService.getLocalizedString( strFieldError, locale )
             };
 
             return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );

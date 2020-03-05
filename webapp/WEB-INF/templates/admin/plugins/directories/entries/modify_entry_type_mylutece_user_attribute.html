@@ -5,8 +5,7 @@
       <@box color='primary'>
         <@boxHeader title='#i18n{directories.modifyEntry.titleQuestion} : "${entry.entryType.title}"' />
         <@boxBody>
-          <@tform action='jsp/admin/plugins/forms/ManageQuestions.jsp'>
-            <fieldset>
+          <@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp'>
               <@input name="id_entry" value="${entry.idEntry}" type="hidden" />
               <@input name="id_directory" value="${id_directory}" type="hidden" />
               <@input name="action" value="doModifyEntry" type="hidden" />
@@ -27,7 +26,7 @@
                 <@input type='textarea' name='help_message' id='help_message' rows=2>${entry.helpMessage}</@input>
               </@formGroup>
               <@formGroup labelFor='mylutece_attribute_name'
-                labelKey='#i18n{directories.createEntry.labelMyLuteceUserAttribute}'>
+                labelKey='#i18n{directories.createEntry.labelMyLuteceUserAttributeId}' mandatory=true>
                 <@select items=entryTypeService.getLuteceUserAttributesRefList(locale) name='mylutece_attribute_name'
                   default_value=fieldMyLuteceAttributeName.value />
               </@formGroup>
@@ -38,12 +37,12 @@
                 helpKey='#i18n{directories.createEntry.labelCSSClassComment}'>
                 <@input type='text' name='css_class' id='css_class' value='${entry.CSSClass!}' maxlength=255 />
               </@formGroup>
+              <@formGroup>
               <@button type='submit' name='action_doModifyEntry' buttonIcon='save' title='#i18n{directories.labelSave}'
                 size='' />
               <@button type='submit' name='cancel' value='cancel' buttonIcon='times'
                 title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
               </@formGroup>
-            </fieldset>
           </@tform>
         </@boxBody>
       </@box>

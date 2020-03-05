@@ -5,30 +5,30 @@
             <@boxHeader title='#i18n{directories.type.name} : ${entry.entryType.title}' />
             <@boxBody>
                 <@tform action='jsp/admin/plugins/directories/ManageDirectoryEntries.jsp' method='post'>
-                    <fieldset>
-                        <@input name="id_directory" value="${id_directory}" type="hidden"/>
-                        <@input name="action" value="doCreateEntry" type="hidden"/>
-                        <@input name="id_type" value="${entry.entryType.idType}" type="hidden"/>
+                    
+                        <@input name="id_directory" value="${id_directory}" type="hidden" />
+                        <@input name="action" value="doCreateEntry" type="hidden" />
+                        <@input name="id_type" value="${entry.entryType.idType}" type="hidden" />
                         <#if entry.fieldDepend?exists>
-                            <@input name="id_field" value="${entry.fieldDepend.idField}" type="hidden"/>
+                            <@input name="id_field" value="${entry.fieldDepend.idField}" type="hidden" />
                         </#if>
                         <@formGroup labelFor='type' labelKey='#i18n{directories.createEntry.labelType}'>
-                          <@input type='text' name='type' id='type' readonly=true disabled=true
+                            <@input type='text' name='type' id='type' readonly=true disabled=true
                                 value='${entry.entryType.title}' />
                         </@formGroup>
                         <@formGroup labelFor='title' labelKey='#i18n{directories.createEntry.labelTitle}'
                             helpKey='#i18n{directories.createEntry.labelTitleComment}' mandatory=true>
-                          <@input type='text' name='title' id='title' value='' maxlength=255 />
+                            <@input type='text' name='title' id='title' value='' maxlength=255 />
                         </@formGroup>
                         <@formGroup labelFor='help_message' labelKey='#i18n{directories.createEntry.labelHelpMessage}'
                             helpKey='#i18n{directories.createEntry.labelHelpMessageComment}'>
-                             <@input type="textarea" name='help_message' id='help_message' rows=2></@input>
+                            <@input type="textarea" name='help_message' id='help_message' rows=2></@input>
                         </@formGroup>
                         <@formGroup labelFor='comment' labelKey='#i18n{directories.comment.name}'>
-                        <@input type="textarea"  name='comment' id='comment' rows=2></@input>
+                            <@input type="textarea" name='comment' id='comment' rows=2></@input>
                         </@formGroup>
                         <@formGroup labelFor='value' labelKey='#i18n{directories.defaultValue.name}'>
-                          <@input type='text' name='value' id='value' />
+                            <@input type='text' name='value' id='value' />
                         </@formGroup>
                         <@formGroup labelFor='mandatory' labelKey='#i18n{directories.createEntry.labelMandatory}'>
                             <@checkBox name='mandatory' id='mandatory' value='1' />
@@ -36,15 +36,15 @@
                         <@formGroup labelFor='errorMessage'
                             labelKey='#i18n{directories.createEntry.labelMandatoryErrorMessage}'
                             helpKey='#i18n{directories.createEntry.labelMandatoryErrorMessageHelp}'>
-                            <@input type="textarea"  name='errorMessage' id='errorMessage' rows=2></@input>
+                            <@input type="textarea" name='errorMessage' id='errorMessage' rows=2></@input>
                         </@formGroup>
                         <@formGroup labelFor='width' labelKey='#i18n{directories.createEntry.labelWidth}'
                             mandatory=true>
-                          <@input type='text' name='width' id='width' value='50' />
+                            <@input type='text' name='width' id='width' value='50' />
                         </@formGroup>
                         <@formGroup labelFor='max_size_enter'
                             labelKey='#i18n{directories.createEntry.labelMaxSizeEnter}'>
-                          <@input type='text' name='max_size_enter' id='max_size_enter' value='' />
+                            <@input type='text' name='max_size_enter' id='max_size_enter' value='' />
                         </@formGroup>
                         <@formGroup>
                             <@checkBox labelFor='confirm_field'
@@ -54,21 +54,21 @@
                         </@formGroup>
                         <@formGroup labelFor='confirm_field_title' id="confirm_field_title_group"
                             labelKey='#i18n{directories.createEntry.labelConfirmFieldTitle}'>
-                          <@input type='text' name='confirm_field_title' id='confirm_field_title' maxlength=255 />
+                            <@input type='text' name='confirm_field_title' id='confirm_field_title' maxlength=255 />
                         </@formGroup>
                         <@formGroup labelFor='css_class' labelKey='#i18n{directories.createEntry.labelCSSClass}'
                             helpKey='#i18n{directories.createEntry.labelCSSClassComment}'>
-                          <@input type='text' name='css_class' id='css_class' value='${entry.CSSClass!}'
+                            <@input type='text' name='css_class' id='css_class' value='${entry.CSSClass!}'
                                 maxlength=255 />
                         </@formGroup>
                         ${question_create_template!}
                         <@formGroup>
-                                <@button type='submit' name='action_doCreateEntry' buttonIcon='save'
+                            <@button type='submit' name='action_doCreateEntry' buttonIcon='save'
                                 title='#i18n{directories.labelSave}' size='' />
                             <@button type='submit' name='cancel' value='cancel' buttonIcon='times'
                                 title='#i18n{directories.labelCancel}' color='btn-secondary' size='' />
                         </@formGroup>
-                    </fieldset>
+                    
                 </@tform>
             </@boxBody>
         </@box>

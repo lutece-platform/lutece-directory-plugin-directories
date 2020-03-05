@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.directories.business;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import fr.paris.lutece.plugins.genericattributes.business.Response;
 import fr.paris.lutece.portal.business.user.AdminUser;
@@ -105,7 +106,7 @@ public class DirectoryEntity implements Serializable
      */
     public List<Response> getResponses( )
     {
-        return _listResponses;
+        return new ArrayList<>( _listResponses );
     }
 
     /**
@@ -116,7 +117,7 @@ public class DirectoryEntity implements Serializable
      */
     public void setResponses( List<Response> listResponses )
     {
-        _listResponses = listResponses;
+        _listResponses = new ArrayList<>( listResponses );
     }
 
     /**
@@ -124,7 +125,7 @@ public class DirectoryEntity implements Serializable
      */
     public Timestamp getCreation( )
     {
-        return _dateCreation;
+        return (Timestamp) _dateCreation.clone( );
     }
 
     /**
@@ -133,7 +134,7 @@ public class DirectoryEntity implements Serializable
      */
     public void setDateCreation( Timestamp dateCreation )
     {
-        this._dateCreation = dateCreation;
+        this._dateCreation = (Timestamp) dateCreation.clone( );
     }
 
     /**
@@ -141,7 +142,7 @@ public class DirectoryEntity implements Serializable
      */
     public Timestamp getUpdate( )
     {
-        return _dateUpdate;
+        return _dateUpdate != null ? (Timestamp) _dateUpdate.clone( ) : null;
     }
 
     /**
@@ -150,7 +151,7 @@ public class DirectoryEntity implements Serializable
      */
     public void setUpdate( Timestamp dateUpdate )
     {
-        this._dateUpdate = dateUpdate;
+        this._dateUpdate = dateUpdate != null ? (Timestamp) dateUpdate.clone( ) : null;
     }
 
     /**

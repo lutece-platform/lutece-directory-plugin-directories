@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,7 +61,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     @Override
     public void insert( DirectoryResponse directoryResponse, Plugin plugin )
     {
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin ) )
         {
             int nIndex = 1;
             daoUtil.setInt( nIndex++, directoryResponse.getIdDirectory( ) );
@@ -82,7 +82,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     public DirectoryResponse load( int nKey, Plugin plugin )
     {
         DirectoryResponse directoryResponse = null;
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin ) )
         {
             daoUtil.setInt( 1, nKey );
             daoUtil.executeQuery( );
@@ -105,7 +105,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     @Override
     public void delete( int nKey, Plugin plugin )
     {
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
         {
             daoUtil.setInt( 1, nKey );
             daoUtil.executeUpdate( );
@@ -118,7 +118,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     @Override
     public void store( DirectoryResponse directoryResponse, Plugin plugin )
     {
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
         {
             int nIndex = 1;
             daoUtil.setInt( nIndex++, directoryResponse.getId( ) );
@@ -137,7 +137,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     public List<DirectoryResponse> selectDirectoryResponsesList( Plugin plugin )
     {
         List<DirectoryResponse> directoryResponseList = new ArrayList<>( );
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
             daoUtil.executeQuery( );
             while ( daoUtil.next( ) )
@@ -161,7 +161,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     public List<Integer> selectIdDirectoryResponsesList( Plugin plugin )
     {
         List<Integer> directoryResponseList = new ArrayList<>( );
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin ) )
         {
             daoUtil.executeQuery( );
             while ( daoUtil.next( ) )
@@ -179,7 +179,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     public ReferenceList selectDirectoryResponsesReferenceList( Plugin plugin )
     {
         ReferenceList directoryResponseList = new ReferenceList( );
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
             daoUtil.executeQuery( );
             while ( daoUtil.next( ) )
@@ -197,7 +197,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     public List<DirectoryResponse> selectDirectoryResponsesListByIdEntity( int nKey, Plugin plugin )
     {
         List<DirectoryResponse> directoryResponseList = new ArrayList<>( );
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_BY_ENTITY, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_BY_ENTITY, plugin ) )
         {
             daoUtil.setInt( 1, nKey );
             daoUtil.executeQuery( );
@@ -222,7 +222,7 @@ public final class DirectoryResponseDAO implements IDirectoryResponseDAO
     public DirectoryResponse selectDirectoryResponseByIdResponse( int nKey, Plugin plugin )
     {
         DirectoryResponse directoryResponse = null;
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_ID_RESPONSE, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_ID_RESPONSE, plugin ) )
         {
             daoUtil.setInt( 1, nKey );
             daoUtil.executeQuery( );

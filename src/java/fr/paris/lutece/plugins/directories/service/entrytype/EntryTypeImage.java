@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -110,7 +110,7 @@ public class EntryTypeImage extends AbstractEntryTypeFile
         {
             if ( response.getIdResponse( ) > 0 )
             {
-                Map<String, Object> model = new HashMap<String, Object>( );
+                Map<String, Object> model = new HashMap<>( );
                 model.put( MARK_FILE_NAME, response.getFile( ).getTitle( ) );
                 model.put( MARK_IMG_URL, getUrlDownloadFile( response.getIdResponse( ), AppPathService.getBaseUrl( request ) ) );
 

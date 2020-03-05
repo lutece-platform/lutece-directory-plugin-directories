@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -60,7 +60,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
     @Override
     public void insert( DirectoryEntity directoryEntity, Plugin plugin )
     {
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, Statement.RETURN_GENERATED_KEYS, plugin ) )
         {
             int nIndex = 1;
             daoUtil.setInt( nIndex++, directoryEntity.getIdDirectory( ) );
@@ -82,7 +82,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
     public DirectoryEntity load( int nKey, Plugin plugin )
     {
         DirectoryEntity directoryEntity = null;
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin ) )
         {
             daoUtil.setInt( 1, nKey );
             daoUtil.executeQuery( );
@@ -108,7 +108,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
     @Override
     public void delete( int nKey, Plugin plugin )
     {
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
         {
             daoUtil.setInt( 1, nKey );
             daoUtil.executeUpdate( );
@@ -121,7 +121,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
     @Override
     public void store( DirectoryEntity directoryEntity, Plugin plugin )
     {
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
         {
             int nIndex = 1;
             daoUtil.setInt( nIndex++, directoryEntity.getId( ) );
@@ -143,7 +143,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
     public List<DirectoryEntity> selectDirectoryEntitiesList( Plugin plugin )
     {
         List<DirectoryEntity> directoryEntityList = new ArrayList<>( );
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
             daoUtil.executeQuery( );
             while ( daoUtil.next( ) )
@@ -170,7 +170,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
     public List<Integer> selectIdDirectoryEntitiesList( Plugin plugin )
     {
         List<Integer> directoryEntityList = new ArrayList<>( );
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin ) )
         {
             daoUtil.executeQuery( );
             while ( daoUtil.next( ) )
@@ -188,7 +188,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
     public ReferenceList selectDirectoryEntitiesReferenceList( Plugin plugin )
     {
         ReferenceList directoryEntityList = new ReferenceList( );
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin ) )
         {
             daoUtil.executeQuery( );
             while ( daoUtil.next( ) )
@@ -206,7 +206,7 @@ public final class DirectoryEntityDAO implements IDirectoryEntityDAO
     public List<DirectoryEntity> selectDirectoryEntitiesListByIdDirectory( int nKey, Plugin plugin )
     {
         List<DirectoryEntity> directoryEntityList = new ArrayList<>( );
-        try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_BY_DIRECTORY, plugin ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_BY_DIRECTORY, plugin ) )
         {
             daoUtil.setInt( 1, nKey );
             daoUtil.executeQuery( );

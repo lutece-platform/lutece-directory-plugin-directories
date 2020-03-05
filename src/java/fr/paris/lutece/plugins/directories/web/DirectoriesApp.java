@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2019, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -85,7 +85,7 @@ public class DirectoriesApp extends MVCApplication
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_ENTITY ) );
         Map<String, Object> model = getModel( );
         List<Response> listResponse = new ArrayList<>( );
-        StringBuffer strBuffer = new StringBuffer( );
+        StringBuilder strBuilder = new StringBuilder( );
         DirectoryEntity directoryEntity = DirectoryEntityHome.findByPrimaryKey( nId );
         for ( DirectoryResponse directoryResponse : DirectoryResponseHome.getDirectoryResponsesListByIdEntity( nId ) )
         {
@@ -106,9 +106,9 @@ public class DirectoriesApp extends MVCApplication
             List<Response> listEntryResponse = listResponse.stream( ).filter( response -> response.getEntry( ).getIdEntry( ) == entry.getIdEntry( ) )
                     .collect( Collectors.toCollection( ArrayList::new ) );
             model.put( MARK_LIST_RESPONSES, listEntryResponse );
-            EntryService.getHtmlEntryReadOnly( model, entry.getIdEntry( ), strBuffer, getLocale( request ), true, request );
+            EntryService.getHtmlEntryReadOnly( model, entry.getIdEntry( ), strBuilder, getLocale( request ), true );
         }
-        model.put( DirectoriesConstants.MARK_STR_ENTRY, strBuffer.toString( ) );
+        model.put( DirectoriesConstants.MARK_STR_ENTRY, strBuilder.toString( ) );
         HtmlTemplate templateForm = AppTemplateService.getTemplate( TEMPLATE_HTML_CODE_FORM, getLocale( request ), model );
         model.put( DirectoriesConstants.MARK_FORM_HTML, templateForm.getHtml( ) );
 
@@ -128,7 +128,7 @@ public class DirectoriesApp extends MVCApplication
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_ENTITY ) );
         Map<String, Object> model = getModel( );
         List<Response> listResponse = new ArrayList<>( );
-        StringBuffer strBuffer = new StringBuffer( );
+        StringBuilder strBuilder = new StringBuilder( );
         DirectoryEntity directoryEntity = DirectoryEntityHome.findByPrimaryKey( nId );
         for ( DirectoryResponse directoryResponse : DirectoryResponseHome.getDirectoryResponsesListByIdEntity( nId ) )
         {
@@ -149,9 +149,9 @@ public class DirectoriesApp extends MVCApplication
             List<Response> listEntryResponse = listResponse.stream( ).filter( response -> response.getEntry( ).getIdEntry( ) == entry.getIdEntry( ) )
                     .collect( Collectors.toCollection( ArrayList::new ) );
             model.put( MARK_LIST_RESPONSES, listEntryResponse );
-            EntryService.getHtmlEntry( model, entry.getIdEntry( ), strBuffer, getLocale( request ), true, request );
+            EntryService.getHtmlEntry( model, entry.getIdEntry( ), strBuilder, getLocale( request ), true );
         }
-        model.put( DirectoriesConstants.MARK_STR_ENTRY, strBuffer.toString( ) );
+        model.put( DirectoriesConstants.MARK_STR_ENTRY, strBuilder.toString( ) );
         HtmlTemplate templateForm = AppTemplateService.getTemplate( TEMPLATE_HTML_CODE_FORM, getLocale( request ), model );
         model.put( DirectoriesConstants.MARK_FORM_HTML, templateForm.getHtml( ) );
 
