@@ -95,7 +95,6 @@ public class DirectoriesService
                 {
                     listResponse.add( response );
                 }
-                listResponse.add( response );
             }
             directoryEntity.setResponses( listResponse );
         }
