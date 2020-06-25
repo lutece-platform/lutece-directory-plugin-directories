@@ -46,7 +46,6 @@ import fr.paris.lutece.plugins.genericattributes.service.entrytype.IEntryTypeSer
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
-import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
@@ -88,22 +87,22 @@ public class DirectoryFieldsJspBean extends AbstractDirectoriesManagerJspBean
     private static final String VIEW_MODIFY_FIELD = "modifyField";
     private static final String VIEW_CREATE_FIELD = "createField";
     private static final String VIEW_CONFIRM_REMOVE_FIELD = "confirmRemoveField";
-    
+
     // Actions
     private static final String ACTION_CREATE_FIELD = "createField";
     private static final String ACTION_MODIFY_FIELD = "modifyField";
     private static final String ACTION_MOVE_FIELD_UP = "moveFieldUp";
     private static final String ACTION_MOVE_FIELD_DOWN = "moveFieldDown";
     private static final String ACTION_REMOVE_FIELD = "removeField";
-    
+
     // other constants
     private static final String FIELD_TITLE_FIELD = "directories.createField.labelTitle";
     private static final String FIELD_VALUE_FIELD = "directories.createField.labelValue";
+
     // Messages
     private static final String MESSAGE_MANDATORY_FIELD = "portal.util.message.mandatoryField";
     private static final String MESSAGE_FIELD_VALUE_FIELD = "directories.message.error.field_value_field";
     private static final String MESSAGE_CONFIRM_REMOVE_FIELD = "directories.message.confirmRemoveField";
-
 
     /**
      * Get the URL to modify a field. The field is assumed to allow conditional questions.

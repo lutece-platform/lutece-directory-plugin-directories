@@ -47,8 +47,14 @@ import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
+import fr.paris.lutece.util.html.AbstractPaginator;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import fr.paris.lutece.util.sort.AttributeComparator;
+import fr.paris.lutece.portal.web.constants.Parameters;
+import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.url.UrlItem;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -88,7 +94,16 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
     private static final String PARAMETER_ID_DIRECTORY = "id_directory";
     private static final String PARAMETER_ID_ENTITY = "id_entity";
     private static final String PARAMETER_ENTITY_TITLE = "entity_title";
+
+    // Markers
     private static final String MARK_LIST_RESPONSES = "list_responses";
+    private static final String MARK_PAGINATOR = "paginator";
+    private static final String MARK_NB_ITEMS_PER_PAGE = "nb_items_per_page";
+    private static final String MARK_SEARCH = "search";
+
+    // Datatable
+    private int _nItemsPerPage;
+    private String _strCurrentPageIndex;
 
     /**
      * Build the Manage View
@@ -102,9 +117,55 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = Integer.parseInt( strIdDirectory );
+        String strURL = request.getRequestURL( ).toString( );
+        UrlItem url = new UrlItem( strURL );
+
         List<DirectoryEntity> listEntity = DirectoryEntityHome.getDirectoryEntityListByIdDirectory( nIdDirectory );
+        DirectoryEntityHome.fillAdminUserName( listEntity );
         Map<String, Object> model = getModel( );
-        model.put( DirectoriesConstants.MARK_LIST_DIRECTORY_ENTITY, listEntity );
+
+        // Filter
+        String searchValue = request.getParameter( MARK_SEARCH );
+        if ( searchValue != null )
+        {
+            listEntity = DirectoryEntityHome.filter( searchValue, listEntity );
+            url.addParameter( MARK_SEARCH, searchValue );
+        }
+
+        // SORT
+        String strSortedAttributeName = request.getParameter( Parameters.SORTED_ATTRIBUTE_NAME );
+        String strAscSort = null;
+
+        if ( strSortedAttributeName != null )
+        {
+            strAscSort = request.getParameter( Parameters.SORTED_ASC );
+
+            boolean bIsAscSort = Boolean.parseBoolean( strAscSort );
+
+            Collections.sort( listEntity, new AttributeComparator( strSortedAttributeName, bIsAscSort ) );
+        }
+
+        _strCurrentPageIndex = AbstractPaginator.getPageIndex( request, AbstractPaginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
+        _nItemsPerPage = AbstractPaginator.getItemsPerPage( request, AbstractPaginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage, 10 );
+
+        if ( strSortedAttributeName != null )
+        {
+            url.addParameter( Parameters.SORTED_ATTRIBUTE_NAME, strSortedAttributeName );
+        }
+
+        if ( strAscSort != null )
+        {
+            url.addParameter( Parameters.SORTED_ASC, strAscSort );
+        }
+
+        // PAGINATOR
+        LocalizedPaginator<DirectoryEntity> paginator = new LocalizedPaginator<>( listEntity, _nItemsPerPage, url.getUrl( ),
+                AbstractPaginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale( ) );
+
+        model.put( MARK_NB_ITEMS_PER_PAGE, "" + _nItemsPerPage );
+        model.put( MARK_PAGINATOR, paginator );
+        model.put( MARK_SEARCH, searchValue );
+        model.put( DirectoriesConstants.MARK_LIST_DIRECTORY_ENTITY, paginator.getPageItems( ) );
         model.put( PARAMETER_ID_DIRECTORY, nIdDirectory );
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_DIRECTORY_RESPONSE, TEMPLATE_MANAGE_DIRECTORY_RESPONSE, model );
     }
@@ -119,7 +180,7 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
     @View( VIEW_CREATE_DIRECTORY_RESPONSE )
     public String getCreateDirectoryResponse( HttpServletRequest request )
     {
-        DirectoriesAsynchronousUploadHandler.getHandler( ).removeSessionFiles( request.getSession( ).getId( ) );
+        DirectoriesAsynchronousUploadHandler.getHandler( ).removeSessionFiles( request.getSession( ) );
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = Integer.parseInt( strIdDirectory );
         Map<String, Object> model = getModel( );

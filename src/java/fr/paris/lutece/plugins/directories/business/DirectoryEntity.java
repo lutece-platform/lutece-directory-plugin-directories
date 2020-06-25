@@ -52,8 +52,10 @@ public class DirectoryEntity implements Serializable
     private int _nIdDirectory;
     private List<Response> _listResponses;
     private int _nIdCreator;
+    private String _strCreator = "";
     private Timestamp _dateCreation;
     private int _nIdModificator;
+    private String _strModificator = "";
     private Timestamp _dateUpdate;
     private String _strTitle;
 
@@ -197,14 +199,62 @@ public class DirectoryEntity implements Serializable
     }
 
     /**
+     * Returns the _strCreator
+     * 
+     * @return The _strCreator
+     */
+    public String getCreator( )
+    {
+        return _strCreator;
+    }
+
+    /**
+     * Sets the _strCreator
+     * 
+     * @param nIdCreator
+     *            The Id Creator
+     */
+    public void setCreator( int nIdCreator )
+    {
+        _strCreator = getUserAdmin( nIdCreator );
+    }
+
+    /**
+     * Returns the _strModificator
+     * 
+     * @return The _strModificator
+     */
+    public String getModificator( )
+    {
+        return _strModificator;
+    }
+
+    /**
+     * Sets the _strModificator
+     * 
+     * @param nIdModificator
+     *            The Id Modificator
+     */
+    public void setModificator( int nIdModificator )
+    {
+        _strModificator = getUserAdmin( nIdModificator );
+    }
+
+    /**
      * get the Admin user
      * 
      * @param nUserId
      *            The Id Admin User
      */
-    public AdminUser getUserAdmin( int nUserId )
+    private String getUserAdmin( int nUserId )
     {
-        return AdminUserHome.findByPrimaryKey( nUserId );
+        AdminUser adminUser = AdminUserHome.findByPrimaryKey( nUserId );
+        String name = "";
+        if ( adminUser != null )
+        {
+            name = adminUser.getLastName( ) + " " + adminUser.getFirstName( );
+        }
+        return name;
     }
 
     /**

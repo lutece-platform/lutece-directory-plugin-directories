@@ -37,8 +37,9 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.ReferenceList;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class provides instances management methods (create, find, ...) for DirectoryEntity objects
@@ -66,7 +67,6 @@ public final class DirectoryEntityHome
     public static DirectoryEntity create( DirectoryEntity directoryEntity )
     {
         _dao.insert( directoryEntity, _plugin );
-
         return directoryEntity;
     }
 
@@ -80,7 +80,6 @@ public final class DirectoryEntityHome
     public static DirectoryEntity update( DirectoryEntity directoryEntity )
     {
         _dao.store( directoryEntity, _plugin );
-
         return directoryEntity;
     }
 
@@ -147,4 +146,43 @@ public final class DirectoryEntityHome
         return _dao.selectDirectoryEntitiesReferenceList( _plugin );
     }
 
+    /**
+     * Fill name for creator and modificator
+     * 
+     */
+    public static void fillAdminUserName( List<DirectoryEntity> listEntity )
+    {
+        for ( DirectoryEntity entity : listEntity )
+        {
+            int nIdCreator = entity.getIdCreator( );
+            int nIdModificator = entity.getIdModificator( );
+            if ( nIdCreator != 0 )
+            {
+                entity.setCreator( nIdCreator );
+            }
+            if ( nIdModificator != 0 )
+            {
+                entity.setModificator( nIdModificator );
+            }
+        }
+    }
+
+    /**
+     * Search in entity list ( title, creator , modificator )
+     * 
+     * @return a filtered list
+     */
+    public static List<DirectoryEntity> filter( String searchValue, List<DirectoryEntity> listEntity )
+    {
+        String [ ] terms = searchValue.split( " " );
+        List<DirectoryEntity> listEntityFilter = new ArrayList<>( listEntity );
+        for ( String term : terms )
+        {
+            List<DirectoryEntity> list = listEntityFilter.parallelStream( ).filter( x -> x.getCreator( ).matches( "(?i).*" + term + ".*" )
+                    || x.getModificator( ).matches( "(?i).*" + term + ".*" ) || x.getTitle( ).matches( "(?i).*" + term + ".*" ) )
+                    .collect( Collectors.toList( ) );
+            listEntityFilter = new ArrayList<>( list );
+        }
+        return listEntityFilter;
+    }
 }
