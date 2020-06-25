@@ -14,6 +14,20 @@
     <@tabContent>
         <@box>
             <@boxHeader boxTools=true>
+                <@tform method='post'
+                    action='jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id_directory=${id_directory}'
+                    type='inline' align='right' role='search'>
+                    <@formGroup formStyle='inline' labelKey='#i18n{portal.site.admin_page.buttonSearchPage}'
+                        hideLabel=['all']>
+                        <@inputGroup>
+                            <@input type='text' name='search' />
+                            <@inputGroupItem>
+                                <@button type='submit' title='#i18n{portal.site.admin_page.buttonSearchPage}'
+                                    buttonIcon='search' hideTitle=['all'] />
+                            </@inputGroupItem>
+                        </@inputGroup>
+                    </@formGroup>
+                </@tform>
                 <@aButton
                     href="jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=createDirectoryResponse&id_directory=${id_directory}"
                     title='#i18n{directories.manage_directories.labelAddResponse}' />
@@ -24,21 +38,39 @@
                         <@tr>
                             <@th>
                                 #i18n{directories.manage_directory_entity.idEntity}
+                                <@sort
+                                    jsp_url="jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id_directory=${id_directory}&search=${search!''}"
+                                    attribute="id" />
                             </@th>
                             <@th>
                                 #i18n{directories.manage_directory_entity.title}
+                                <@sort
+                                    jsp_url="jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id_directory=${id_directory}&search=${search!''}"
+                                    attribute="title" />
                             </@th>
                             <@th>
                                 #i18n{directories.manage_directory_entity.creator}
+                                <@sort
+                                    jsp_url="jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id_directory=${id_directory}&search=${search!''}"
+                                    attribute="idCreator" />
                             </@th>
                             <@th>
                                 #i18n{directories.manage_directory_entity.dateCreation}
+                                <@sort
+                                    jsp_url="jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id_directory=${id_directory}&search=${search!''}"
+                                    attribute="creation" />
                             </@th>
                             <@th>
                                 #i18n{directories.manage_directory_entity.modificator}
+                                <@sort
+                                    jsp_url="jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id_directory=${id_directory}&search=${search!''}"
+                                    attribute="idModificator" />
                             </@th>
                             <@th>
                                 #i18n{directories.manage_directory_entity.dateUpdate}
+                                <@sort
+                                    jsp_url="jsp/admin/plugins/directories/ManageDirectoryResponse.jsp?view=manageDirectoryResponse&id_directory=${id_directory}&search=${search!''}"
+                                    attribute="update" />
                             </@th>
                             <@th>
                                 Actions
@@ -55,19 +87,13 @@
                                     ${entity.title!''}
                                 </@td>
                                 <@td>
-                                    ${entity.userAdmin( entity.idCreator ).firstName} ${entity.userAdmin(
-                                    entity.idCreator ).lastName}
+                                    ${entity.creator}
                                 </@td>
                                 <@td>
                                     ${entity.creation}
                                 </@td>
                                 <@td>
-                                    <#if entity.idModificator !=0>
-                                        ${entity.userAdmin( entity.idModificator ).firstName} ${entity.userAdmin(
-                                        entity.idModificator ).lastName}
-                                        <#else>
-                                            -
-                                    </#if>
+                                    ${entity.modificator}
                                 </@td>
                                 <@td>
                                     ${entity.update!'-'}
@@ -84,6 +110,7 @@
                         </#list>
                     </tbody>
                 </@table>
+                <@paginationAdmin paginator=paginator combo=1 form=0 />
             </@boxBody>
         </@box>
     </@tabContent>

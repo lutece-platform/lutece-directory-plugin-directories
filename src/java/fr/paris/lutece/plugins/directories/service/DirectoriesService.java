@@ -136,7 +136,7 @@ public class DirectoriesService
      */
     public static List<Response> findAndBuildListResponse( HttpServletRequest request, int nIdEntity )
     {
-        DirectoriesAsynchronousUploadHandler.getHandler( ).removeSessionFiles( request.getSession( ).getId( ) );
+        DirectoriesAsynchronousUploadHandler.getHandler( ).removeSessionFiles( request.getSession( ) );
         List<DirectoryResponse> listDirectoryResponse = DirectoryResponseHome.getDirectoryResponsesListByIdEntity( nIdEntity );
         List<Response> listResponse = new ArrayList<>( );
         for ( DirectoryResponse directoryResponse : listDirectoryResponse )
@@ -183,7 +183,7 @@ public class DirectoriesService
         entity.setTitle( strEntityTitle );
         DirectoryEntityHome.create( entity );
         createEntityResponse( listResponse, nIdDirectory, entity.getId( ) );
-        DirectoriesAsynchronousUploadHandler.getHandler( ).removeSessionFiles( request.getSession( ).getId( ) );
+        DirectoriesAsynchronousUploadHandler.getHandler( ).removeSessionFiles( request.getSession( ) );
     }
 
     /**
