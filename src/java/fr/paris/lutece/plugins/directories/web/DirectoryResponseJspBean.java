@@ -94,6 +94,7 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
     private static final String PARAMETER_ID_DIRECTORY = "id_directory";
     private static final String PARAMETER_ID_ENTITY = "id_entity";
     private static final String PARAMETER_ENTITY_TITLE = "entity_title";
+    private static final String PARAMETER_VIEW = "view";
 
     // Markers
     private static final String MARK_LIST_RESPONSES = "list_responses";
@@ -117,11 +118,15 @@ public class DirectoryResponseJspBean extends AbstractDirectoriesManagerJspBean
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = Integer.parseInt( strIdDirectory );
+
         String strURL = request.getRequestURL( ).toString( );
         UrlItem url = new UrlItem( strURL );
+        url.addParameter( PARAMETER_ID_DIRECTORY, strIdDirectory );
+        url.addParameter( PARAMETER_VIEW, VIEW_MANAGE_DIRECTORY_RESPONSE );
 
         List<DirectoryEntity> listEntity = DirectoryEntityHome.getDirectoryEntityListByIdDirectory( nIdDirectory );
         DirectoryEntityHome.fillAdminUserName( listEntity );
+
         Map<String, Object> model = getModel( );
 
         // Filter
