@@ -37,6 +37,7 @@ import fr.paris.lutece.plugins.directories.util.DirectoriesConstants;
 import fr.paris.lutece.plugins.genericattributes.business.Entry;
 import fr.paris.lutece.plugins.genericattributes.service.entrytype.AbstractEntryTypeSelect;
 import fr.paris.lutece.plugins.genericattributes.business.Field;
+import fr.paris.lutece.plugins.genericattributes.business.FieldHome;
 import fr.paris.lutece.plugins.genericattributes.business.GenericAttributeError;
 import fr.paris.lutece.plugins.genericattributes.business.MandatoryError;
 import fr.paris.lutece.plugins.genericattributes.business.Response;
@@ -72,6 +73,15 @@ public final class EntryTypeSelect extends AbstractEntryTypeSelect
      * {@inheritDoc}
      */
     @Override
+    public String getTemplateModify( Entry entry, boolean bDisplayFront )
+    {
+        return TEMPLATE_MODIFY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getTemplateCreate( Entry entry, boolean bDisplayFront )
     {
         return TEMPLATE_CREATE;
@@ -90,117 +100,38 @@ public final class EntryTypeSelect extends AbstractEntryTypeSelect
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify( Entry entry, boolean bDisplayFront )
-    {
-        return TEMPLATE_MODIFY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getRequestData( Entry entry, HttpServletRequest request, Locale locale )
-    {
-        initCommonRequestData( entry, request );
-        String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strCode = request.getParameter( PARAMETER_ENTRY_CODE );
-        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim( ) : null;
-        String strComment = request.getParameter( PARAMETER_COMMENT );
-        String strMandatory = request.getParameter( PARAMETER_MANDATORY );
-        String strCSSClass = request.getParameter( PARAMETER_CSS_CLASS );
-        String strOnlyDisplayInBack = request.getParameter( PARAMETER_ONLY_DISPLAY_IN_BACK );
-        String strEditableBack = request.getParameter( PARAMETER_EDITABLE_BACK );
-        String strIndexed = request.getParameter( PARAMETER_INDEXED );
-
-        String strFieldError = StringUtils.EMPTY;
-
-        if ( StringUtils.isBlank( strTitle ) )
-        {
-            strFieldError = ERROR_FIELD_TITLE;
-        }
-
-        if ( StringUtils.isNotBlank( strFieldError ) )
-        {
-            Object [ ] tabRequiredFields = {
-                    I18nService.getLocalizedString( strFieldError, locale )
-            };
-
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
-        }
-
-        entry.setCode( strCode );
-        entry.setTitle( strTitle );
-        entry.setHelpMessage( strHelpMessage );
-        entry.setComment( strComment );
-        entry.setCSSClass( strCSSClass );
-
-        entry.setMandatory( strMandatory != null );
-        entry.setOnlyDisplayInBack( strOnlyDisplayInBack != null );
-        entry.setEditableBack( strEditableBack != null );
-        entry.setIndexed( strIndexed != null );
-        GenericAttributesUtils.createOrUpdateField( entry, DirectoriesConstants.FIELD_FILTER, null,
-                request.getParameter( DirectoriesConstants.PARAMETER_FILTER ) );
-
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GenericAttributeError getResponseData( Entry entry, HttpServletRequest request, List<Response> listResponse, Locale locale )
-    {
-        String strIdField = request.getParameter( PREFIX_ATTRIBUTE + entry.getIdEntry( ) );
-        int nIdField = -1;
-        Field field = null;
-        Response response = new Response( );
-        response.setEntry( entry );
-
-        if ( StringUtils.isNotEmpty( strIdField ) && StringUtils.isNumeric( strIdField ) )
-        {
-            nIdField = Integer.parseInt( strIdField );
-        }
-
-        if ( nIdField != -1 )
-        {
-            field = GenericAttributesUtils.findFieldByIdInTheList( nIdField, entry.getFields( ) );
-        }
-
-        if ( field != null )
-        {
-            response.setResponseValue( field.getValue( ) );
-            response.setField( field );
-        }
-
-        response.setIterationNumber( getResponseIterationValue( request ) );
-
-        listResponse.add( response );
-
-        if ( entry.isMandatory( ) && ( ( field == null ) || StringUtils.isBlank( field.getValue( ) ) ) )
-        {
-            return new MandatoryError( entry, locale );
-        }
-
-        String strFilter = entry.getFieldByCode( DirectoriesConstants.FIELD_FILTER ).getValue( );
-        response = new Response( );
-        response.setEntry( entry );
-        response.setResponseValue( strFilter );
-        response.setIterationNumber( getResponseIterationValue( request ) );
-        listResponse.add( response );
-
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getTemplateEntryReadOnly( boolean bDisplayFront )
     {
         if ( bDisplayFront )
         {
             return TEMPLATE_READONLY_FRONTOFFICE;
         }
+
         return TEMPLATE_READONLY_BACKOFFICE;
     }
+
+      /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getResponseValueForRecap( Entry entry, HttpServletRequest request, Response response, Locale locale )
+    {
+        if ( response.getField( ) != null )
+        {
+            if ( response.getField( ).getTitle( ) == null )
+            {
+                Field field = FieldHome.findByPrimaryKey( response.getField( ).getIdField( ) );
+
+                if ( field != null )
+                {
+                    response.setField( field );
+                }
+            }
+
+            return response.getField( ).getTitle( );
+        }
+
+        return response.getToStringValueResponse( );
+    }
+
 }
